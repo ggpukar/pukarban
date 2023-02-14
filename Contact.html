@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+   
+</head>
+<body background="bg.png">
+  
+    <div class="container-fluid py-5" id="contact">
+        <div class="container">
+            <div class="position-relative d-flex align-items-center justify-content-center">
+                <h1 class="display-1 text-uppercase text-white" style="-webkit-text-stroke: 1px #dee2e6;">Contact</h1>
+                <h1 class="position-absolute text-uppercase text-primary">Contact Me</h1>
+            </div>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="contact-form text-center">
+                        <div id="success"></div>
+                        <form name="sentMessage" id="contactForm" novalidate="novalidate">
+                            <div class="form-row">
+                                <div class="control-group col-sm-6">
+                                    <input type="text" class="form-control p-4" id="name" placeholder="Your Name"
+                                        required="required" data-validation-required-message="Please enter your name" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                                <div class="control-group col-sm-6">
+                                    <input type="email" class="form-control p-4" id="email" placeholder="Your Email"
+                                        required="required" data-validation-required-message="Please enter your email" />
+                                    <p class="help-block text-danger"></p>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <input type="text" class="form-control p-4" id="subject" placeholder="Subject"
+                                    required="required" data-validation-required-message="Please enter a subject" />
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div class="control-group">
+                                <textarea class="form-control py-3 px-4" rows="5" id="message" placeholder="Message"
+                                    required="required"
+                                    data-validation-required-message="Please enter your message"></textarea>
+                                <p class="help-block text-danger"></p>
+                            </div>
+                            <div>
+                                <button class="btn btn-outline-primary" type="submit" id="sendMessageButton">Send
+                                    Message</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <style>
+     body {
+    background-color: lightgray;
+    font-family: Arial, sans-serif;
+    
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+      
+        .container-fluid {
+          background-color: transparent;
+        }
+        
+        .display-1 {
+          font-size: 4rem;
+          font-weight: bold;
+        }
+        
+        .position-relative {
+          position: relative;
+        }
+        
+        .text-uppercase {
+          text-transform: uppercase;
+        }
+        
+        .text-white {
+          color: #581919;
+        }
+        
+        .text-primary {
+          color: #007bff;
+        }
+        
+        .align-items-center {
+          align-items: center;
+        }
+        
+        .justify-content-center {
+          justify-content: center;
+        }
+        
+        .py-5 {
+          padding-top: 3rem;
+          padding-bottom: 3rem;
+        }
+        
+        .control-group input {
+          width: 100%;
+          height: 50px;
+          border-radius: 25px;
+          border: 1px solid transparent;
+          padding: 0.5rem 1rem;
+          font-size: 1.2rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .control-group textarea {
+          width: 100%;
+          border-radius: 25px;
+          border: 1px solid transparent;
+          padding: 1rem;
+          font-size: 1.2rem;
+          margin-bottom: 1.5rem;
+        }
+        
+        .btn-outline-primary {
+          color: #007bff;
+          border-color: #007bff;
+          background-color: transparent;
+          padding: 0.5rem 1.5rem;
+          border-radius: 25px;
+          font-size: 1.2rem;
+          text-transform: uppercase;
+          transition: all 0.3s ease-in-out;
+        }
+        
+        .btn-outline-primary:hover {
+          background-color: #007bff;
+          color: #ffffff;
+          cursor: pointer;
+        }
+        </style>
+         
+    
+</body>
+</html>

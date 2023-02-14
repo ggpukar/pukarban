@@ -1,0 +1,298 @@
+
+<!doctype html>
+<html>
+<head><title></title>
+</head><body>
+
+    <header>
+        <nav>
+          <div class="logo">
+            <img src="logop.png" alt="Logo">
+          </div>
+          <h1>"The More You Go ..The More You Learn"</h1>
+          <div id="datetime"></div>
+        </nav>
+      </header>
+      <nav>
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div id="sidebar">
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Gallery.html">Gallery</a></li>
+        <li><a href="Contact.html">Contact</a></li>
+      </ul>
+      <div class="login-container">
+        <form action="/action_page.php">
+          <input type="text" placeholder="Username" name="username">
+          <input type="text" placeholder="Password" name="psw">
+          <button type="submit">Login</button>
+        </form>
+      </div>
+      </div> 
+    </nav>
+    <img src="menu-icon.png" onclick="openNav()" alt="Menu" class="logo">
+    <div class="container">
+        <footer>
+          <div id="footer">
+            <a href="https://www.facebook.com/pukar.ban.58" target="_blank">
+              <img src="fb.png" alt="Facebook">
+            </a>
+            <a href="https://www.instagram.com/__notpukar/" target="_blank">
+              <img src="insta.png" alt="Instagram">
+            </a>
+           <p>&copy; Pukar Ban</p>
+    </div>
+        </footer> 
+        <a href="#" class="btn btn-outline-dark px-0 back-to-top"><i class="fa fa-angle-double-up"></i></a>
+        <button onclick="topFunction()" id="myBtn" title="Go to top">Top</button>
+<style>
+    body {
+    background-color: lightgray;
+    font-family: Arial, sans-serif;
+    background-image: url("bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  
+  header {
+    background-color: #333;
+    padding: 1px;
+    height: 80px;
+  }
+  .sidenav {
+    height: 100%; /* 100% Full-height */
+    width: 0; /* 0 width - change this with JavaScript */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Stay on top */
+    top: 0; /* Stay at the top */
+    left: 0;
+    background-color: #111; /* Black*/
+    overflow-x: hidden; /* Disable horizontal scroll */
+    padding-top: 60px; /* Place content 60px from the top */
+    transition: 0.5s; /* 0.5 second transition effect to slide in the sidenav */
+  }
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #645a5a;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+    color: #771818;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  img.logo {
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    color: rgb(201, 16, 16);
+  }
+  
+  .fa {
+    font-family: "Font Awesome 5 Free";
+  }
+  footer {
+    background-color: lightgray;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    font-size: 14px;
+    position: absolute;
+  bottom: 0;
+  width: 50%;
+  
+  }
+  
+  nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .logo img {
+    width: 50px;
+    height: 40px;
+  }
+  #datetime {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-top: 20px;
+  }
+  
+  footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color:aquamarine;
+    padding: 10px;
+    text-align: center;
+ color: #ebd4d4;
+  }
+  
+  #footer img {
+    width: 30px;
+    height: 30px;
+    margin: 0 10px;
+  }
+  
+  
+  header {
+    background-color: #333;
+    padding: 1px;
+    height: 80px;
+    
+    
+  
+  }
+  #myBtn {
+    display: none; 
+    position: fixed; 
+    bottom: 20px; 
+    right: 30px; 
+    z-index: 99; 
+    border: none; 
+    outline: none; 
+    background-color: red; 
+    color: white; 
+    cursor: pointer; 
+    padding: 15px; 
+    border-radius: 10px;
+    font-size: 18px; 
+  }
+  
+  #myBtn:hover {
+    background-color: #555; 
+  }
+  
+  .dropdown {
+    position: relative  ;
+    display: inline-block;
+    bottom: 0% ;
+  }
+  
+  .dropdown {
+    position: relative;
+    display: inline-block;
+  }
+  
+  .dropbtn {
+    background-color: #007bff;
+    color: rgb(70, 36, 190);
+    padding: 8px;
+    font-size: 16px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 1;
+  }
+  
+  .dropdown-content a {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+  }
+  
+  .dropdown-content a:hover {
+    background-color: #961414;
+  }
+  
+  .dropdown:hover .dropdown-content {
+    display: block;
+  }
+  
+  
+</style>
+<script>
+        function getTime() {
+  const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+  document.getElementById("datetime").innerHTML = nepalTime;
+}
+
+setInterval(getTime, 1000);
+function getTime() {
+  const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+  document.getElementById("datetime").innerHTML = nepalTime;
+}
+
+setInterval(getTime, 1000);
+
+    function openNav() {
+    document.getElementById("mySidenav").style.width = "250px";
+  }
+  
+  function closeNav() {
+    document.getElementById("mySidenav").style.width = "0";
+    let mybutton = document.getElementById("myBtn");
+    window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    mybutton.style.display = "block";
+  } else {
+    mybutton.style.display = "none";
+  }
+}
+function topFunction() {
+  document.body.scrollTop = 0; // For Safari
+  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+}
+  }
+  // Get the button and dropdown content
+var dropdownBtn = document.querySelector(".dropbtn");
+var dropdownContent = document.querySelector(".dropdown-content");
+
+// Add event listener to button to toggle dropdown
+dropdownBtn.addEventListener("click", function() {
+  dropdownContent.classList.toggle("show");
+});
+
+// Close the dropdown if the user clicks outside of it
+window.addEventListener("click", function(event) {
+  if (!event.target.matches(".dropbtn") && !event.target.matches(".dropdown-content")) {
+    dropdownContent.classList.remove("show");
+  }
+});
+</script>
+<div class="dropdown">
+    <button class="dropbtn">Go to page</button>
+    <div class="dropdown-content">
+      <a href="Home.html">Home</a>
+      <a href="About.html">About</a>
+      <a href="Gallery.html">Gallery</a>
+      <a href="Contact.html">Contact</a>
+    </div>
+  </div>
+  </body>
+</html>
+
+
+
+
+
+
+
+
