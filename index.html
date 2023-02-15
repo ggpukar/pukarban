@@ -25,7 +25,7 @@
         <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
       <div id="sidebar">
       <ul>
-        <li><a href="Home.html">Home</a></li>
+        <li><a href="index.html">Home</a></li>
         <li><a href="About.html">About</a></li>
         <li><a href="Gallery.html">Gallery</a></li>
         <li><a href="Contact.html">Contact</a></li>
@@ -69,7 +69,7 @@
     <div class="dropdown">
       <button class="dropbtn">Go to page</button>
       <div class="dropdown-content">
-        <a href="Home.html">Home</a>
+        <a href="index.html">Home</a>
         <a href="About.html">About</a>
         <a href="Gallery.html">Gallery</a>
         <a href="Contact.html">Contact</a>
@@ -110,20 +110,20 @@ function scrollFunction() {
   }
 }
 function topFunction() {
-  document.body.scrollTop = 0; // For Safari
-  document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  document.body.scrollTop = 0; 
+  document.documentElement.scrollTop = 0;
 }
   }
- // Get the button and dropdown content
+ 
 var dropdownBtn = document.querySelector(".dropbtn");
 var dropdownContent = document.querySelector(".dropdown-content");
 
-// Add event listener to button to toggle dropdown
+
 dropdownBtn.addEventListener("click", function() {
   dropdownContent.classList.toggle("show");
 });
 
-// Close the dropdown if the user clicks outside of it
+
 window.addEventListener("click", function(event) {
   if (!event.target.matches(".dropbtn") && !event.target.matches(".dropdown-content")) {
     dropdownContent.classList.remove("show");
