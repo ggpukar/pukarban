@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>Pukar Ban </title>
+  <link rel="stylesheet" href="dead.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
+  
+</head>
+  <body>
+    <header>
+      <nav>
+        <div class="logo">
+          <img src="logop.png" alt="Logo">
+        </div>
+        <h1>"The More You Go ..The More You Learn"</h1>
+        <div id="datetime"></div>
+
+      </nav>
+    </header>
+    
+    <nav>
+      <div id="mySidenav" class="sidenav">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+      <div id="sidebar">
+      <ul>
+        <li><a href="Index.html">Home</a></li>
+        <li><a href="About.html">About</a></li>
+        <li><a href="Gallery.html">Gallery</a></li>
+        <li><a href="Contact.html"class="active">Contact</a></li>
+      </ul>
+      </div>
+      </div>
+    </nav>
+    <img src="menu-icon.png" onclick="openNav()" alt="Menu" class="logo">
+    <main>
+      <h1>Contact Us</h1>
+      <form action="#" method="POST">
+        <div>
+          <label for="name">Name:</label>
+          <input type="text" id="name" name="name" required>
+        </div>
+        <div>
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+          <label for="message">Message:</label>
+          <textarea id="message" name="message" required></textarea>
+        </div>
+        <button type="submit">Send</button>
+      </form>
+    </main>
+    <footer>
+  
+      <div class="footer">
+        
+      <font color="grey" size="2">
+        prabinban.com.np/contact<br>
+      © 2023 Pukar Ban<br>
+      Email ✉️: banPukar00@gmail.com</font><br><br>
+        </b>
+        <table align="center" width="130px">
+        <tbody><tr>
+      <td><a href="https://www.facebook.com/pukar.ban.58" target="_blank"> <img src="fb.png" height="25" width="25"></a></td>
+      <td><a href="https://www.instagram.com/__notpukar/" target="_blank"><img src="insta.png" height="30" width="30"></a></td>
+     </tr>
+      </tbody></table>
+       
+       <p style="color:white;" id="line">⸺⸺⸺⸺⸺⸺⸺⸺⸺⸺⸺⸺⸺</p>
+       
+      </div><br><br>
+       <a href="https://prabinban.com.np/contact"><img src="img2.jpg" height="45px" width="45px"></a>
+        
+      </div>
+   </footer>
+    <script>
+      function getTime() {
+    const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+    document.getElementById("datetime").innerHTML = nepalTime;
+  }
+  
+  setInterval(getTime, 1000);
+  function getTime() {
+    const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+    document.getElementById("datetime").innerHTML = nepalTime;
+  }
+  
+  setInterval(getTime, 1000);
+  
+  
+      function openNav() {
+      document.getElementById("mySidenav").style.width = "250px";
+    }
+    
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+      let mybutton = document.getElementById("myBtn");
+      window.onscroll = function() {scrollFunction()};
+  
+  function scrollFunction() {
+    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+      mybutton.style.display = "block";
+    } else {
+      mybutton.style.display = "none";
+    }
+  }
+  function topFunction() {
+    document.body.scrollTop = 0; // For Safari
+    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+  }
+    }
+   
+  var dropdownBtn = document.querySelector(".dropbtn");
+  var dropdownContent = document.querySelector(".dropdown-content");
+  
+  // Add event listener to button to toggle dropdown
+  dropdownBtn.addEventListener("click", function() {
+    dropdownContent.classList.toggle("show");
+  });
+  
+  // Close the dropdown if the user clicks outside of it
+  window.addEventListener("click", function(event) {
+    if (!event.target.matches(".dropbtn") && !event.target.matches(".dropdown-content")) {
+      dropdownContent.classList.remove("show");
+    }
+  });
+  
+    
+    </script>
+    <style>
+      body {
+    background-color: lightgray;
+    font-family: Arial, sans-serif;
+    background-image: url("bg.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+  }
+  body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+  }
+  
+  .sidenav {
+    height: 100%; 
+    width: 0;
+    position: fixed; 
+    z-index: 1; 
+    top: 0; 
+    left: 0;
+    background-color: #111; 
+    overflow-x: hidden; 
+    padding-top: 60px;
+    transition: 0.5s; 
+  }
+  .sidenav a {
+    padding: 8px 8px 8px 32px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #645a5a;
+    display: block;
+    transition: 0.3s;
+  }
+  .sidenav a:hover {
+    color: #771818;
+  }
+
+  .sidenav .closebtn {
+    position: absolute;
+    top: 0;
+    right: 25px;
+    font-size: 36px;
+    margin-left: 50px;
+  }
+  @media screen and (max-height: 450px) {
+    .sidenav {padding-top: 15px;}
+    .sidenav a {font-size: 18px;}
+  }
+  main {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+form div {
+  margin-bottom: 20px;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+input[type="email"],
+textarea {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 100%;
+}
+
+button[type="submit"] {
+  background-color: #4CAF50;
+  color: #fff;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 16px;
+}
+
+button[type="submit"]:hover {
+  background-color: #45a049;
+}
+
+    </style>
+    </body>
+    </html>
