@@ -237,9 +237,10 @@ button[type="submit"]:hover {
   background-color: #45a049;
 }
 .face {
-  position: absolute;
+  position: relative;
   width: 180px;
   height: 180px;
+  margin: 0 auto;
   border-radius: 50%;
   outline: 10px solid #333;
   background: repeating-radial-gradient(circle at 50% 50%, 
@@ -319,11 +320,17 @@ button[type="submit"]:hover {
   position: absolute;
   color: #333;
   font-size: 24px;
-  left: 83.5px;
+  left: 50%;
+  transform: translateX(-50%);
   top: -3px;
   text-shadow: 0 157px 0 #333;
   z-index: 1
 }
+
+.h-index {
+  position: absolute;
+  color: #333;
+  font-size: 24px
 
 .h-index {
   position: absolute;
