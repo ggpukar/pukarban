@@ -1,247 +1,110 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <meta charset="UTF-8">
-  <title>Pukar Ban </title>
-  <link rel="stylesheet" href="dead.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Cinzel|Fauna+One">
-   <link rel="icon" href="https://thumbs2.imgbox.com/39/75/OAqgC42I_t.png">
-</head>
-  <body>
+<html lang="en"> <head> <meta charset="UTF-8"> <meta name="viewport" content="width=device-width, initial-scale=1.0"> <title>Prabin Ban</title>
+     <style> 
+        * { margin: 
+        0; 
+        padding: 0; 
+        box-sizing: border-box;
+         font-family: sans-serif;
+          } 
+          body 
+          { 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
+            min-height: 100vh; background: #000; 
+            /* Fixed background color */ }
+             nav 
+             { position: fixed; /* Added position: fixed to keep the navbar at the top */ top: 0; /* Added top: 0 to align the navbar to the top */ width: 100%; /* Added width: 100% to make the navbar span the full width */ background: #000; padding: 10px 0; z-index: 1000; /* Added z-index to ensure the navbar appears above other elements */ } 
+             nav a 
+             { position: relative;
+              font-size: 1.1em; 
+              font-weight: 500; 
+              color: #333; 
+              text-decoration: none;
+               padding: 6px 20px; 
+               transition: 0.5s;
+                } 
+                nav a:hover 
+                { 
+                    color: #8ef;
+                     } 
+    nav a span
+     {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+ z-index: -1;
+ border-bottom: 2px solid #bef; 
+border-radius: 15px;
+transform: scale(0)              
+ translateY(50px); 
+  opacity: 0;
+   transition: 0.5s; 
+                            } 
+ nav a:hover span
+    {
+    transform: scale(1) translateY(0); opacity: 1; 
+                                    } 
     
-    <header>
-      <nav>
-        <div class="logo">
-          <img src="logop.png" alt="Logo">
-        </div>
-        <h1>"The More You Go ..The More You Learn"</h1>
-        <div id="datetime"></div>
-
-      </nav>
-    </header>
-    <div class="spinner">
-    <div class="spinnerin"></div>
-</div>
-    <nav>
-      <div id="mySidenav" class="sidenav">
-        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
-      <div id="sidebar">
-      <ul>
-        <li><a href="index.html">Home</a></li>
-        <li><a href="About.html"class="active">About</a></li>
-        <li><a href="Gallery.html">Gallery</a></li>
-        <li><a href="Contact.html">Contact</a></li>
-      </ul>
-      </div>
-      </div>
-    </nav>
-    <img src="https://thumbs2.imgbox.com/61/a5/eDdut7px_t.png" onclick="openNav()" alt="Menu" class="logo">
-  <main>
-    <h1>About Me</h1>
-    <img src="https://thumbs2.imgbox.com/cc/d8/dQXUJFQC_t.jpg" alt="Profile Picture">
-    <h2>Personal Information</h2>
-    <ul>
-      <li><strong>Name:</strong>Prabin Ban</li>
-      <li><strong>Age:</strong> 18 years old</li>
-      <li><strong>Gender:</strong> Male</li>
-      <li><strong>Address:</strong>Bhaktaur, Nepal</li>
-      <li><strong>Phone:</strong> 9823****39</li>
-      <li><strong>Email:</strong>banPukar00@gmail.com</li>
-    </ul>
-    <h2>Education</h2>
-    <ul>
-      <li><strong>High School:</strong> Shree Ganesh Sec. School</li>
-      <li><strong>College:</strong> KhwoPa College</li>
-      <li><strong>Major:</strong> Computer Science</li>
-      <li><strong>GPA:</strong> 3.45</li>
-    </ul>
-    <h2>Skills and Interests</h2>
-    <ul>
-      <li>Programming Languages: Python, JavaScript, HTML, CSS</li>
-      <li>Web Development Frameworks: React, Node.js, Express.js</li>
-      <li>Operating Systems: Windows, Linux</li>
-      <li>Interests: Reading, playing guitar, hiking</li>
-    </ul>
-  </main>
-  <footer>
-  
-    
-  <style>
-    body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  background-image: url('bg.png');
-}
-
-header {
-  
-  color: #fff;
-  padding: 20px;
-}
-
-nav {
-  display: flex;
-  justify-content: space-between;
-  color: #fff;
-}
-
-
-
-nav li {
-  margin: 0 10px;
-}
-
-nav a {
-  color: #white;
-  text-decoration: none;
-}
-
-nav a.active {
-  font-weight: bold;
-}
-
-main {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
-}
-
-h1, h2 {
-  margin-top: 0;
-}
-
-img {
-  max-width: 100%;
-  height: auto;
-  display: block;
-  margin: 20px 0;
-}
-
-ul {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-
-li {
-  margin-bottom: 10px;
-}
-
-strong {
-  display: inline-block;
-  width: 100px;
-  font-weight: bold;
-  margin-right: 10px;
-}
-body, html {
-    height: 100%;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .sidenav {
-    height: 100%; 
-    width: 0;
-    position: fixed; 
-    z-index: 1; 
-    top: 0; 
-    left: 0;
-    background-color: #111; 
-    overflow-x: hidden; 
-    padding-top: 60px;
-    transition: 0.5s; 
-  }
-  .sidenav a {
-    padding: 8px 8px 8px 32px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #645a5a;
-    display: block;
-    transition: 0.3s;
-  }
-  .sidenav a:hover {
-    color: #771818;
-  }
-
-  .sidenav .closebtn {
+#background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+}   
+#datetime {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: right;
+    margin-top: 20px;
+    color: #00ffff;
     position: absolute;
-    top: 0;
-    right: 25px;
-    font-size: 36px;
-    margin-left: 50px;
-  }
-  @media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-  } 
-.spinner {
-  width: 3em;
-  height: 3em;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  cursor: not-allowed;
-  border-radius: 50%;
-  border: 2px solid #444;
-  box-shadow: -10px -10px 10px #6359f8, 0px -10px 10px 0px #9c32e2, 10px -10px 10px #f36896, 10px 0 10px #ff0b0b, 10px 10px 10px 0px#ff5500, 0 10px 10px 0px #ff9500, -10px 10px 10px 0px #ffb700;
-  animation: rot55 0.7s linear infinite;
+    top: 3%;
+    right: 0;
 }
 
-.spinnerin {
-  border: 2px solid #444;
-  width: 1.5em;
-  height: 1.5em;
-  border-radius: 50%;
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
+   </style>
+     </head> 
+     <body> 
+        <nav> <a href="index.html">Home <span></span></a>
+             <a href="About.html">About <span></span></a>
+              <a href="Gallery.html">Gallery <span></span></a>
+               <a href="Contact.html">Contact <span></span></a>
+                <a href="Games.html">Games <span></span></a> 
+            </nav>
+         
+              </div>
+              <video autoplay muted loop id="background-video">
+                <source src="web background_.mp4" type="video/mp4">
+                <source src="/to/video.m" type="video/webm">
+                Your browser does not support the video tag.
+              </video>
+              <div id="datetime"></div>
+
+
+
+
+
+
+
+              <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  function getTime() {
+const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+document.getElementById("datetime").innerHTML = nepalTime;
 }
 
-@keyframes rot55 {
-  to {
-    transform: rotate(360deg);
-  }
+setInterval(getTime, 1000);
+function getTime() {
+const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
+document.getElementById("datetime").innerHTML = nepalTime;
 }
 
+setInterval(getTime, 1000);
 
-
-  </style>
-  <script>
-     function getTime() {
-     const nepalTime = new Date().toLocaleString("en-US", { timeZone: "Asia/Kathmandu" });
-    document.getElementById("datetime").innerHTML = nepalTime;
-  }
-  
-  setInterval(getTime, 1000);
-  
-  
-      function openNav() {
-      document.getElementById("mySidenav").style.width = "250px";
-    }
-    
-    function closeNav() {
-      document.getElementById("mySidenav").style.width = "0";
-      let mybutton = document.getElementById("myBtn");
-      window.onscroll = function() {scrollFunction()};
-  
-  function scrollFunction() {
-    if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-      mybutton.style.display = "block";
-    } else {
-      mybutton.style.display = "none";
-    }
-  }
-  function topFunction() {
-    document.body.scrollTop = 0; // For Safari
-    document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
-  }
-    }
-   
-
-  
-  </script>
-</body>
-</html>
+</script>
+         </body> 
+         </html>
