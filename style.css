@@ -96,20 +96,16 @@
     color: #000;
 
 }
-@media only screen and (min-width: 1024px) {
-    /* Styles for desktop resolution */
-    body {
-        width: 100%;
-        max-width: 1024px;
-        margin: 0 auto;
+@media only screen and (max-width: 600px) {
+    #socialMediaHandles {
+        left: 5px;
+    }
+
+@media only screen and (min-width: 601px) and (max-width: 1200px) {
+    #socialMediaHandles img {
+        width: 45px;
     }
 }
-
-@media only screen and (max-width: 767px) {
-    /* Styles for mobile resolution */
-    .column {
-        width: 100%;
-    }
 
     .hero {
         padding-top: 1rem;
