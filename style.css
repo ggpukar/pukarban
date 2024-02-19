@@ -89,87 +89,66 @@
 
         }
         @media screen and (max-width: 600px) {
-  .column {
-    width: 100%;
-  }
+ 
 }
-.hero{
-padding-top: rem;
-padding-bottom: 4rem;
-}
-.hero .left img{
-width: 300px;
-}
-.hero .right {
-color: var(--white);
-margin-top: 0%;
-}
-.hero .right h6{
-font-size: 1.6rem;
-color: var(--primary);
-margin-bottom: 0.5rem;
-}
-.hero .right h1{
-font-size: 4rem;
-font-weight: 100;
-line-height: 1.2;
-margin-bottom: 2rem;
-}
-.hero .right h1 span{
-color: var(--primary);
-}
-.hero .right p{
-line-height: 1.9;
-margin-bottom: 2rem;
-}
-.flex{
-display: flex;
-}
-.items-centre{
-align-items: center;
-}
-.justify-between{
-justify-content: space-between;
-}
-.justify-center{
-justify-content: center;
-}
-.justify-right{
-justify-content: right;
-}
-
-.right flex-1 .p {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    border-radius: 50%;
-    color: red;
-  }
-  #socialMediaHandles {
-    position: fixed;
-    bottom: 50px; /* Adjust as needed */
-    left: 10px; /* Adjust as needed */
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-#socialMediaHandles a {
-    display: flex;
-    align-items: center;
-    text-decoration: none;
-    color: #333;
-    transition: color 0.3s ease;
-}
-
-#socialMediaHandles a:hover {
-    color: red;
-    transform: scale(1.1);
+::webkit scrollbar {
+    display: none;
+    color: #000;
 
 }
+@media only screen and (min-width: 1024px) {
+    /* Styles for desktop resolution */
+    body {
+        width: 100%;
+        max-width: 1024px;
+        margin: 0 auto;
+    }
+}
 
-#socialMediaHandles img {
-    width: 50px; 
-    height: 40px;
-    margin-right: 10px;
+@media only screen and (max-width: 767px) {
+    /* Styles for mobile resolution */
+    .column {
+        width: 100%;
+    }
+
+    .hero {
+        padding-top: 1rem;
+        padding-bottom: 2rem;
+    }
+
+    .hero .left img {
+        width: 100%;
+        height: auto;
+    }
+
+    .hero .right h6 {
+        font-size: 1rem;
+    }
+
+    .hero .right h1 {
+        font-size: 2rem;
+    }
+
+    .flex, .items-centre, .justify-between, .justify-center, .justify-right {
+        display: block;
+    }
+
+    #socialMediaHandles {
+        position: relative; /* Changed from fixed to relative for mobile */
+        bottom: 0; /* Reset bottom position */
+        left: 0; /* Reset left position */
+        width: 100%; /* Full width on mobile */
+        padding: 1rem; /* Added padding for spacing */
+        box-sizing: border-box; /* Added for padding inside width */
+    }
+
+    #socialMediaHandles img {
+        width: 40px; 
+        height: 30px;
+    }
+
+    footer {
+        position: relative; /* Changed from absolute to relative */
+        width: 100%;
+    }
 }
