@@ -130,13 +130,14 @@
     }
 
     #socialMediaHandles {
-        position: relative; /* Changed from fixed to relative for mobile */
-        bottom: 0; /* Reset bottom position */
-        left: 0; /* Reset left position */
-        width: 100%; /* Full width on mobile */
-        padding: 1rem; /* Added padding for spacing */
-        box-sizing: border-box; /* Added for padding inside width */
-    }
+    position: fixed;
+    bottom: 50px; /* Adjust as needed */
+    left: 10px; /* Adjust as needed */
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 
     #socialMediaHandles img {
         width: 40px; 
