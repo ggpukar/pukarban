@@ -96,16 +96,7 @@
     color: #000;
 
 }
-@media only screen and (max-width: 600px) {
-    #socialMediaHandles {
-        left: 5px;
-    }
 
-@media only screen and (min-width: 601px) and (max-width: 1200px) {
-    #socialMediaHandles img {
-        width: 45px;
-    }
-}
 
     .hero {
         padding-top: 1rem;
@@ -145,7 +136,7 @@
     }
 
     footer {
-        position: relative; /* Changed from absolute to relative */
+        position: fixed; /* Changed from absolute to relative */
         width: 100%;
     }
 }
