@@ -8,8 +8,8 @@
 
         body {
             background-image: url("https://thumbs2.imgbox.com/09/31/qWsMBbeP_t.jpg");
-  background-repeat: repeat-x;
- 
+  background-repeat: no-repeat;
+ background-size:cover;
   background-position: right top;
   background-attachment: scroll;
  
