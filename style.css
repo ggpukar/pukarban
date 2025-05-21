@@ -1,146 +1,185 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;1,500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,500&display=swap');
+
 * {
     margin: 0;
     padding: 0;
     scroll-behavior: smooth;
     box-sizing: border-box;
-    font-family: "poppins";
+    font-family: "Poppins", sans-serif; /* Corrected font family name */
     outline: none;
-    border: none; 
+    border: none;
     color: #fff;
 }
-body{
+
+body {
     background: #0f0a0a;
-    height: 100vh;
+    /* height: 100vh; */ /* Avoid fixed height on body if content overflows */
 }
-html{
-    font-size: 62.5%;
+
+html {
+    font-size: 62.5%; /* 1rem = 10px, easier for rem calculations */
     overflow-x: hidden;
 }
-.header{
+
+.header {
     position: fixed;
     left: 0;
     top: 0;
-    padding: 2rem 10%;
+    padding: 2rem 9%; /* Adjusted padding for consistency */
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
     z-index: 100;
+    transition: background-color 0.3s ease, padding 0.3s ease; /* Smooth transition for sticky header */
 }
-.sticky{
-    border-bottom: 2px solid rgba(255,255,255,.1);
+
+.header.sticky { /* .sticky class applied by JS */
     background: #0f0a0a;
+    padding: 1.5rem 9%;
+    border-bottom: 1px solid rgba(255, 255, 255, .1); /* Subtle border */
 }
-.logo{
+
+.logo {
     font-size: 2.9rem;
     font-weight: 600;
     text-decoration: none;
-    color:aqua;
-    transform: translateY(-100px);
+    color: aqua;
     opacity: 0;
-    animation: TopSlide 1s ease forwards;
-    animation-delay: 1s;
     transform: translateX(-100%);
-    opacity: 0;
     animation: RightSlide 1s ease forwards;
+    /* Removed duplicated animation properties */
 }
-@keyframes  RightSlide{
-    0%{
+
+@keyframes RightSlide {
+    0% {
         transform: translateX(-100%);
         opacity: 0;
     }
-    100%{
+    100% {
         transform: translateX(0%);
         opacity: 1;
     }
 }
 
-#menu{
-    color:backdrop-filter; 
-    font-size: 2.5rem;
+#menu {
+    font-size: 3rem; /* Slightly larger for easier tapping */
+    cursor: pointer;
     display: none;
+    z-index: 101; /* Ensure it's above navbar content */
 }
-.navbar a{
+
+.navbar a {
     display: inline-block;
     font-size: 1.7rem;
     text-decoration: none;
-    margin: 0 2.5rem;
+    margin: 0 2rem; /* Reduced margin slightly */
     font-weight: 500;
-    letter-spacing: .02;
-    transition: .5s ease;
-    transform: translateY(-100px);
+    letter-spacing: .02rem;
+    transition: color .3s ease, transform 0.3s ease; /* Smoother hover */
     opacity: 0;
+    transform: translateY(-100px);
     animation: TopSlide 1s ease forwards;
     animation-delay: calc(.2s * var(--vlr));
+    position: relative; /* For ::after pseudo-element */
 }
-@keyframes  TopSlide{
-    0%{
+
+.navbar a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: -6px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #ff00ee;
+    transition: width 0.3s ease-in-out;
+}
+
+.navbar a:hover::after,
+.navbar a.active::after {
+    width: 70%;
+}
+
+.navbar a:hover,
+.navbar a.active {
+    color: #ff00ee;
+}
+
+
+@keyframes TopSlide {
+    0% {
         transform: translateY(-100px);
         opacity: 0;
     }
-    100%{
+    100% {
         transform: translateY(0px);
         opacity: 1;
     }
 }
-.navbar a:hover,.navbar a.active{
-    color: #ff00ee;
-}
-section{
-    padding: 10rem 9% 2rem;
+
+section {
+    padding: 10rem 9% 5rem; /* Adjusted bottom padding */
     min-height: 100vh;
+    /* overflow: hidden; /* Be careful with this, can hide desired content/shadows */
 }
-.about,.education,.contact,.skills{
-    overflow: hidden;
+.about, .education, .contact, .skills { /* Ensure overflow is managed if needed */
+    overflow-x: hidden; /* Prevent horizontal scroll from animations */
 }
-.home{
+
+
+.home {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 2rem; /* Add some gap */
 }
-.text-content{
-    max-width: 70rem;
+
+.text-content {
+    max-width: 65rem; /* Adjusted max-width */
 }
-.text-content h1{
+
+.text-content h1 {
     font-size: 5rem;
-    color: #fff;
     text-transform: capitalize;
     letter-spacing: .05rem;
     font-weight: 600;
-    transform: translateY(-100px);
     opacity: 0;
+    transform: translateX(-100px); /* Changed from translateY for consistency */
     animation: RightSlide 1s ease forwards;
-    animation-delay: 1s;
+    animation-delay: 0.5s; /* Adjusted delay */
 }
-.text-animation{
+
+.text-animation {
     position: relative;
-    width: 32.8rem;
+    width: 32.8rem; /* Consider making this more flexible if text changes */
 }
-.text-animation h2{
+
+.text-animation h2 {
     font-size: 3.2rem;
     font-weight: 700;
     color: transparent;
     -webkit-text-stroke: .7px pink;
     background: linear-gradient(white 100%, white 0%);
     background-repeat: no-repeat;
-       -webkit-background-clip: text;
+    -webkit-background-clip: text;
     background-position: -33rem 0;
-    transform: translateY(-100px);
     opacity: 0;
-    animation: textSlide 6s linear infinite,
-    TopSlide 1s ease forwards;
-    animation-delay: 2s,1.2s;
+    transform: translateY(-100px);
+    animation: textSlide 6s linear infinite, TopSlide 1s ease forwards;
+    animation-delay: 1.5s, 0.7s; /* Adjusted delays */
 }
-@keyframes textSlide{
-    0%,10%,100%{
+
+@keyframes textSlide {
+    0%, 10%, 100% {
         background-position: -33rem 0;
     }
-    65%,85%{
+    65%, 85% {
         background-position: 0 0;
     }
 }
-.text-animation::before{
+
+.text-animation::before {
     content: "";
     position: absolute;
     left: 0;
@@ -148,46 +187,49 @@ section{
     height: 100%;
     width: 0;
     border-right: 2px solid #ff00ee;
-    transform: translateY(-100px);
     opacity: 0;
-    animation: CursorSlide 6s linear infinite,
-    TopSlide 1s ease forwards;
-    animation-delay: 2s,1.2s;
+    transform: translateY(-100px);
+    animation: CursorSlide 6s linear infinite, TopSlide 1s ease forwards;
+    animation-delay: 1.5s, 0.7s; /* Adjusted delays */
 }
+
 @keyframes CursorSlide {
-    0%,10%,100%{
+    0%, 10%, 100% {
         width: 0;
     }
-    65%,78%,85%{
+    65%, 78%, 85% {
         opacity: 1;
         width: 100%;
     }
-    75%,81%
-    {
+    75%, 81% {
         opacity: 0;
     }
+}
 
-}
-.text-content p{
-    font-size: 1.4rem;
-    margin: 1rem 0;
-    transform: translateX(100px);
+.text-content p {
+    font-size: 1.6rem; /* Increased for readability */
+    line-height: 1.6;
+    margin: 1.5rem 0 2.5rem; /* Adjusted margin */
     opacity: 0;
+    transform: translateX(100px);
     animation: leftSlide 1s ease forwards;
-    animation-delay: 1.4s;
+    animation-delay: 1s; /* Adjusted delay */
 }
-@keyframes leftSlide{
-    0%{
+
+@keyframes leftSlide {
+    0% {
         transform: translateX(100px);
         opacity: 0;
     }
-    100%{
+    100% {
         transform: translateX(0px);
         opacity: 1;
     }
 }
-.btn-section{
-    width: 32.5rem;
+
+.btn-section {
+    width: 32.5rem; /* Consider max-width for responsiveness */
+    max-width: 100%;
     height: 5rem;
     display: flex;
     justify-content: space-between;
@@ -195,35 +237,39 @@ section{
     margin: 2rem 0;
     position: relative;
 }
-.btn-section::before{
+
+.btn-section::before { /* This is the reveal animation */
     content: "";
     position: absolute;
     left: 0;
     top: 0;
-    background: #0f0a0a;
+    background: #0f0a0a; /* Match body background */
     height: 100%;
     width: 100%;
     z-index: 2;
-    animation: Slide 1s ease forwards;
-    animation-delay: 1.6s;
+    animation: SlideReveal 1s ease forwards; /* Renamed for clarity */
+    animation-delay: 1.2s; /* Adjusted delay */
 }
-@keyframes Slide{
-    0%{
+
+@keyframes SlideReveal {
+    0% {
         width: 100%;
     }
-    100%{
+    100% {
         width: 0;
     }
 }
- .btn{
+
+.btn {
     height: 100%;
     width: 15rem;
     color: #fff;
-    background: rgba(255,255,255,.1);
-    border: .2rem solid rgba(255,255,255,.3);
-    backdrop-filter: blur(5rem);
+    background: rgba(255, 255, 255, .05); /* Slightly less opaque */
+    border: .2rem solid rgba(255, 255, 255, .2); /* Slightly less opaque border */
+    backdrop-filter: blur(0.8rem); /* Reduced blur */
     border-radius: .8rem;
     font-size: 1.5rem;
+    font-weight: 500;
     cursor: pointer;
     display: inline-flex;
     justify-content: center;
@@ -231,450 +277,531 @@ section{
     position: relative;
     overflow: hidden;
     z-index: 1;
+    text-decoration: none; /* Ensure links styled as buttons don't have underlines */
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
-.btn::before{
+
+.btn::before {
     content: "";
     position: absolute;
     left: 0;
     top: -100%;
     height: 300%;
     width: 100%;
-    background: linear-gradient(
-        #0f0a0a,#ff00ee,#0f0a0a,#ff00ee
-    );
+    background: linear-gradient(#0f0a0a, #ff00ee, #0f0a0a, #ff00ee);
     z-index: -1;
-    transition: .5s ease;
+    transition: top .5s ease; /* Changed transition property */
 }
-.btn:hover::before{
+
+.btn:hover::before {
     top: 0;
 }
-.social-media {
-    margin: 2rem 0;
+.btn:hover {
+    background-color: rgba(255, 0, 238, 0.1); /* Subtle hover background */
 }
-.social-media i{
-    display: inline-block;
-    font-size: 2.5rem;
-    background: rgba(255,255,255,.1);
-    border: .2rem solid rgba(255,255,255,.3);
-    padding: .8rem;
-    margin: 0 .5rem;
+
+.social-media {
+    margin: 2.5rem 0; /* Adjusted margin */
+}
+
+.social-media a { /* Target the <a> tag for proper interaction */
+    display: inline-flex; /* Use flex for centering icon */
+    justify-content: center;
+    align-items: center;
+    width: 4rem; /* Fixed size for circle */
+    height: 4rem;
+    background: rgba(255, 255, 255, .05);
+    border: .2rem solid rgba(255, 255, 255, .2);
     border-radius: 50%;
-    color: #fff;
-    cursor: pointer;
+    margin: 0 .5rem;
     position: relative;
     overflow: hidden;
-    animation: Bottom 1s ease forwards;
-    animation-delay: calc(.2s * var(--vlr));
+    opacity: 0;
     transform: translateY(100px);
-    opacity: 0;
+    animation: BottomSlide 1s ease forwards;
+    animation-delay: calc(.2s * var(--vlr)); /* Ensure --vlr is set on <a> */
+    text-decoration: none;
+}
+.social-media a i {
+    font-size: 2rem; /* Icon size */
+    color: #fff;
+    z-index: 1; /* Keep icon above pseudo-element */
+    transition: color 0.3s ease;
+}
 
-}
-@keyframes Bottom{
-    0%{
+
+@keyframes BottomSlide { /* Renamed for clarity */
+    0% {
         transform: translateY(100px);
-    opacity: 0;
+        opacity: 0;
     }
-    100%{
+    100% {
         transform: translateY(0px);
-    opacity: 1;
+        opacity: 1;
     }
 }
-.social-media i::after{
+
+.social-media a::after {
     content: "";
     position: absolute;
     left: 0;
-    top: -100%;
+    top: -100%; /* Start from top */
     height: 300%;
     width: 100%;
-    background: linear-gradient(
-        #0f0a0a,#ff00ee,#0f0a0a,#ff00ee
-    );
-    z-index: -1;
-    transition: .5s ease;
+    background: linear-gradient(#0f0a0a, #ff00ee, #0f0a0a, #ff00ee);
+    z-index: 0; /* Behind the icon */
+    transition: top .5s ease;
 }
 
-i:hover::after{
+.social-media a:hover::after {
     top: 0;
 }
-.home img{
+.social-media a:hover i {
+    color: #fff; /* Or change color if needed */
+}
+
+
+.home img {
     width: 30vw;
-    background: rgba(255,255,255,.1);
-    border: .2rem solid rgba(255,255,255,.3);
+    min-width: 250px; /* Minimum size for smaller screens */
+    max-width: 350px; /* Maximum size */
+    aspect-ratio: 1 / 1; /* Maintain square shape */
+    object-fit: cover; /* Ensure image covers the area */
+    background: rgba(255, 255, 255, .05);
+    border: .2rem solid rgba(255, 255, 255, .2);
     border-radius: 50%;
-    filter: drop-shadow(0 0 8rem #ff00ee);
-    animation: Scale 1s ease forwards;
-    scale: 0;
-    animation-delay: 2s;
+    filter: drop-shadow(0 0 5rem #ff00ee); /* Softened shadow */
+    opacity: 0; /* Start hidden for animation */
+    transform: scale(0.5); /* Start smaller for animation */
+    animation: ScaleIn 1s ease forwards;
+    animation-delay: 1.5s; /* Adjusted delay */
 }
-@keyframes Scale{
-    0%{
-        scale: 0;
+
+@keyframes ScaleIn { /* Renamed for clarity */
+    0% {
+        transform: scale(0.5);
+        opacity: 0;
     }
-    100%{
-        scale: 1;
+    100% {
+        transform: scale(1);
+        opacity: 1;
     }
 }
+
+/* ====== Generic Animation Trigger ====== */
+/* Elements will be hidden initially and animated by JS adding 'start-animation' */
+.title,
+.aboutImg,
+.text-content2 h2,
+.text-content2 p,
+.text-content2 .btn,
+.column,
+.column h2,
+.skill-title,
+.skill-box,
+.contact form input,
+.contact form textarea,
+.contact form .btn {
+    opacity: 0;
+    /* Keep transform related animations in their specific keyframes/classes if varied */
+}
+
+
+/* ====== Section Specific Animations when 'start-animation' is added ====== */
+/* These keyframes are from your original CSS, just ensuring they are triggered correctly */
+@keyframes topEntry { /* Renamed from 'top' to avoid conflict if 'top' property is used */
+    0% { transform: translateY(-100px); opacity: 0; }
+    100% { transform: translateY(0px); opacity: 1; }
+}
+@keyframes rightEntry { /* Renamed */
+    0% { transform: translateX(-100px); opacity: 0; }
+    100% { transform: translateX(0px); opacity: 1; }
+}
+@keyframes leftEntry { /* Renamed */
+    0% { transform: translateX(100px); opacity: 0; }
+    100% { transform: translateX(0px); opacity: 1; }
+}
+@keyframes bottomEntry { /* Renamed */
+    0% { transform: translateY(100px); opacity: 0; }
+    100% { transform: translateY(0px); opacity: 1; }
+}
+@keyframes scaleUpEntry { /* Renamed */
+    0% { transform: scale(0); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+section.start-animation .title {
+    animation: topEntry 1s ease forwards;
+    animation-delay: 0.2s;
+}
+section.start-animation .aboutImg {
+    animation: scaleUpEntry 1s ease forwards;
+    animation-delay: 0.4s;
+}
+section.start-animation .text-content2 h2 {
+    animation: rightEntry 1s ease forwards;
+    animation-delay: 0.6s;
+}
+section.start-animation .text-content2 p {
+    animation: leftEntry 1s ease forwards;
+    animation-delay: 0.8s;
+}
+section.start-animation .text-content2 .btn {
+    animation: bottomEntry 1s ease forwards;
+    animation-delay: 1s;
+}
+
+/* Education Section Animations */
+section.start-animation .column:nth-child(1) { /* Assuming only one .column for now */
+    animation: rightEntry 1s ease forwards;
+    animation-delay: 0.5s; /* Stagger if multiple columns */
+}
+/* If you add a second column:
+section.start-animation .column:nth-child(2) {
+    animation: leftEntry 1s ease forwards;
+    animation-delay: 0.7s;
+}
+*/
+section.start-animation .column h2 {
+    animation: topEntry 1s ease forwards;
+    animation-delay: 0.3s;
+}
+/* Individual education-content items can also be staggered if desired */
+section.start-animation .education-content {
+    opacity: 0; /* Start hidden */
+    animation: bottomEntry 0.8s ease forwards;
+}
+section.start-animation .education-content:nth-child(1) { animation-delay: 0.7s; }
+section.start-animation .education-content:nth-child(2) { animation-delay: 0.9s; }
+section.start-animation .education-content:nth-child(3) { animation-delay: 1.1s; }
+
+
+/* Skills Section Animations */
+section.start-animation .skill-title {
+    animation: topEntry 1s ease forwards;
+    animation-delay: 0.3s;
+}
+section.start-animation .skill-box1 {
+    animation: rightEntry 1s ease forwards;
+    animation-delay: 0.5s;
+}
+section.start-animation .skill-box2 {
+    animation: leftEntry 1s ease forwards;
+    animation-delay: 0.7s;
+}
+/* Bar animations */
+.bar {
+    position: absolute;
+    height: 100%;
+    background: #ff00ee;
+    width: 0; /* Start at 0 for animation */
+    border-radius: 50rem; /* Apply border-radius to the bar itself */
+    transition: width 1s ease-in-out 0.5s; /* Delay after box appears */
+}
+section.start-animation .bar-html-core { width: 50%; transition-delay: 1s; }
+section.start-animation .bar-css-core  { width: 30%; transition-delay: 1.2s; }
+section.start-animation .bar-js-core   { width: 20%; transition-delay: 1.4s; }
+
+section.start-animation .bar-react-html { width: 10%; transition-delay: 1s; }
+section.start-animation .bar-react-css  { width: 30%; transition-delay: 1.2s; }
+section.start-animation .bar-react-js   { width: 50%; transition-delay: 1.4s; }
+
+
+/* Contact Section Animations */
+section.start-animation .input-box input:nth-child(1) { /* Full Name */
+    animation: rightEntry 1s ease forwards;
+    animation-delay: 0.5s;
+}
+section.start-animation .input-box input:nth-child(2) { /* Email */
+    animation: leftEntry 1s ease forwards;
+    animation-delay: 0.5s;
+}
+section.start-animation .input-box:nth-of-type(2) input { /* Mobile Number Box */
+    animation: rightEntry 1s ease forwards; /* Or any other animation */
+    animation-delay: 0.7s;
+}
+section.start-animation textarea {
+    animation: bottomEntry 1s ease forwards;
+    animation-delay: 0.9s;
+}
+section.start-animation .contact .btn { /* Target .btn within .contact specifically */
+    animation: bottomEntry 1s ease forwards;
+    animation-delay: 1.1s;
+    filter: none; /* Ensure filter from general .btn is not an issue if any */
+}
+
+
 /* about section */
-.about{
+.about {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
     padding-bottom: 6rem;
-    gap: 2rem;
+    gap: 3rem; /* Increased gap */
 }
-.title{
-    font-size: 5rem;
+
+.title {
+    font-size: 4.5rem; /* Slightly reduced */
     margin-bottom: 3rem;
     font-weight: 600;
     text-align: center;
-    transform: translateY(-100px);
-    opacity: 0;
-}
-section.start-animation .title{
-    animation: top 1s ease forwards;
-}
-@keyframes top{
-    0%{
-        transform: translateY(-100px);
-        opacity: 0;
-    }
-    100%{
-        transform: translateY(0px);
-        opacity: 1;
-    }
-}
-.title span{
-    color: #ff00ee;
-}
-.about img{
-    height: 25rem;
-    width: 25rem;
-    background: rgba(255,255,255,.1);
-    border: .2rem solid rgba(255,255,255,.3);
-    border-radius: 50%;
-    filter: drop-shadow(0 0 8rem #ff00ee);
-    scale: 0;
-}
-section.start-animation .aboutImg{
-    animation: scaleout 1s ease forwards;
-}
-@keyframes scaleout{
-    0%{
-       scale: 0;
-    }
-    100%{
-     scale: 1;
-    }
-}
-.text-content2{
-    text-align: center;
-}
-.text-content2 h2{
-    font-size: 2.6rem;
-    transform: translatex(-100px);
-    opacity: 0;
-}
-section.start-animation .text-content2 h2{
-    animation: Right 1s ease forwards;
-}
-@keyframes Right{
-    0%{
-        transform: translatex(-100px);
-        opacity: 0;
-    }
-    100%{
-        transform: translatex(0px);
-        opacity: 1;
-    }
-}
-.text-content2 p{
-    font-size: 1.5rem;
-    margin: 2rem 0 3rem;
-    transform: translatex(100px);
-    opacity: 0;
-}
-section.start-animation .text-content2 p{
-    animation: Left 1s ease forwards;
-}
-@keyframes Left{
-    0%{
-        transform: translatex(100px);
-        opacity: 0;
-    }
-    100%{
-        transform: translatex(0px);
-        opacity: 1;
-    }
-}
-.text-content2 .btn{
-    padding: .9rem .5rem;
-    transform: translateY(100px);
-    opacity: 0;
 }
 
-section.start-animation .text-content2 .btn{
-    animation: Bottoms 1s ease forwards;
+.title span {
+    color: #ff00ee;
 }
-@keyframes Bottoms{
-    0%{
-        transform: translateY(100px);
-        opacity: 0;
-    }
-    100%{
-        transform: translatey(0px);
-        opacity: 1;
-    }
+
+.about img.aboutImg { /* Be specific with .aboutImg class */
+    height: 25rem;
+    width: 25rem;
+    object-fit: cover;
+    background: rgba(255, 255, 255, .05);
+    border: .2rem solid rgba(255, 255, 255, .2);
+    border-radius: 50%;
+    filter: drop-shadow(0 0 4rem #ff00ee); /* Softened shadow */
 }
+
+.text-content2 {
+    text-align: center;
+    max-width: 60rem; /* Constrain width for better readability */
+}
+
+.text-content2 h2 {
+    font-size: 2.6rem;
+}
+
+.text-content2 p {
+    font-size: 1.6rem; /* Increased */
+    line-height: 1.7;
+    margin: 2rem 0 3rem;
+}
+
+.text-content2 .btn {
+    padding: 1rem 2.5rem; /* Adjusted padding */
+}
+
 /* education section */
-.row{
+.education .row { /* Target row within education */
     display: flex;
+    justify-content: center; /* Center the single column if only one */
     column-gap: 4rem;
     flex-wrap: wrap;
 }
-.column{
-    flex: 1 1 30rem;
-}
-.column:nth-child(1){
-    opacity: 0;
-    transform: translateX(-100px);
-}
-section.start-animation .column:nth-child(1){
-    animation: Right 1s ease forwards;
-    animation-delay: 1.2s;
+
+.education .column { /* Target column within education */
+    flex: 1 1 40rem; /* Allow it to grow, basis of 40rem */
+    max-width: 50rem; /* Max width for a single column layout */
 }
 
-.column:nth-child(2){
-    opacity: 0;
-    transform: translateX(100px);
-}
-section.start-animation .column:nth-child(2){
-    animation: Left 1s ease forwards;
-    animation-delay: 1.2s;
-}
-.column h2{
-    font-size: 2.5rem ;
-    margin: 2rem 0 1rem 1.96rem;
-    transform: translateY(-100px);
-    opacity: 0;
-}
-section.start-animation .column h2{
-    animation: top 1s ease forwards;
-    animation-delay: 1.2s;
+.education .column h2 {
+    font-size: 2.5rem;
+    margin: 0 0 2rem 0; /* Adjusted margin, no need for 1.96rem left if box is centered */
+    text-align: left; /* Align to the start of the box */
 }
 
-.box{
+.box {
     border-left: .2rem solid #ff00ee;
+    padding-left: 2rem; /* Padding to offset content from the line */
 }
+
 .education-content {
-    padding-left: 1.9rem;
+    /* padding-left: 1.9rem; Removed, handled by .box padding */
+    margin-bottom: 2.5rem; /* Space between education items */
 }
-.education-content .content{
-    padding: 1.5rem;
-    border: .2rem solid #ff00ee;
-    background: rgba(255,255,255,.1);
-    border-radius: .5rem;
-    margin-bottom: 2rem;
+.education-content:last-child {
+    margin-bottom: 0;
+}
+
+.education-content .content {
+    padding: 2rem; /* Increased padding */
+    border: .2rem solid rgba(255,0,238,0.3); /* Softer border */
+    background: rgba(255, 255, 255, .05);
+    border-radius: .8rem; /* Smoother radius */
     position: relative;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
-.content::before{
+.education-content .content:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0 20px rgba(255,0,238,0.3);
+}
+
+.content::before {
     content: "";
     position: absolute;
-    left: -2.8rem;
-    top: -1.5rem;
+    left: -3.2rem; /* Adjusted for .box padding-left + half of width */
+    top: 2rem; /* Align with text */
     height: 1.4rem;
     width: 1.4rem;
     border-radius: 50%;
     background: #ff00ee;
 }
-.content .year{
+
+.content .year {
     font-size: 1.5rem;
     color: #ff00ee;
+    margin-bottom: 0.5rem;
 }
-.content .year i{
+
+.content .year i {
     color: #ff00ee;
     font-size: 1.5rem;
     margin-left: .5rem;
 }
-.content h3{
-    font-size: 1.7rem;
+
+.content h3 {
+    font-size: 1.9rem; /* Slightly larger */
     letter-spacing: .05rem;
-    margin: .5rem 0;
+    margin-bottom: 0.5rem;
 }
-.content p{
+
+.content p {
     font-size: 1.5rem;
+    line-height: 1.6;
 }
+
 /* skill-content */
-.wrapper{
+.skills .wrapper { /* Target wrapper within skills */
     width: 100%;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: space-between; /* Center if only one, or space between if two */
+    align-items: flex-start; /* Align items to the top */
     gap: 5rem;
     flex-wrap: wrap;
 }
-.skill-title{
+
+.skill-title {
     font-size: 2.4rem;
     font-weight: 600;
-    margin-bottom: 1.5rem;
-    opacity: 0;
-    transform: translateY(-100px);
-}
-section.start-animation .skill-title{
-    animation: top 1s ease forwards;
-    animation-delay: 1.2s;
-}
-.skill-content{
-    width: 100%;
-    flex:  1 1 30rem;
-}
-.skill-box{
-    height: 100%;
-    width: 100%;
-    padding: 8rem 4rem;
-    background: rgba(255,255,255,.1);
-    border-radius: 1rem;
-}
-.skill-box1{
-    opacity: 0;
-    transform: translateX(-100px);
-}
-section.start-animation .skill-box1{
-    animation:  Right 1s ease forwards;
-    animation-delay: 1.2s;
-}
-.skill-box2{
-    opacity: 0;
-    transform: translateX(100px);
-}
-section.start-animation .skill-box2{
-    animation:Left 1s ease forwards;
-    animation-delay: 1.4s;
-}
-.single-skill{
-    display: flex;
-    justify-content: space-between;
-    margin: 2rem 0;
-}
-.single-skill span{
-    font-size: 1.6rem;
+    margin-bottom: 2rem; /* Increased margin */
 }
 
-.bar-side{
-    background: #111;
+.skill-content {
+    width: 100%;
+    flex: 1 1 35rem; /* Allow flex grow, basis 35rem */
+    max-width: 45rem; /* Max width per skill box container */
+}
+
+.skill-box {
+    /* height: 100%; Removed fixed height, let content define it */
+    width: 100%;
+    padding: 2.5rem; /* Adjusted padding */
+    background: rgba(255, 255, 255, .05);
+    border-radius: 1rem;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+
+.single-skill {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin: 1.5rem 0; /* Adjusted margin */
+}
+
+.single-skill span.topic {
+    font-size: 1.7rem; /* Increased size */
+    font-weight: 500;
+}
+.single-skill span.percentage {
+    font-size: 1.5rem;
+    color: #ccc;
+}
+
+.bar-side {
+    background: #222; /* Darker background for better contrast */
     height: 1rem;
     border-radius: 50rem;
     position: relative;
-    overflow: hidden;
+    overflow: hidden; /* Ensures bar stays within bounds */
 }
-.bar{
-    position: absolute;
-    height: 100%;
-    background: #ff00ee;
-}
-.bar-1{
-    width: 90%;
-}
-.bar-2{
-    width: 80%;
-}
-.bar-3{
-    width: 70%;
-}
+
+
 /* contact section */
-section form{
+.contact form { /* Target form within contact */
     max-width: 70rem;
     text-align: center;
     margin: 1rem auto;
     margin-bottom: 3rem;
 }
-.input-box{
+
+.input-box {
     display: flex;
     justify-content: space-between;
     flex-wrap: wrap;
+    gap: 1.5rem; /* Gap between inputs in a row */
 }
-input:nth-child(1){
-    opacity: 0;
-    transform: translateX(-100px);
-}
-section.start-animation input:nth-child(1){
-    animation:Right 1s ease forwards;
-    animation-delay: 1.2s;
-}
-input:nth-child(2){
-    opacity: 0;
-    transform: translateX(100px);
-}
-section.start-animation input:nth-child(2){
-    animation:Left 1s ease forwards;
-    animation-delay: 1.2s;
-}
- input,textarea{
+
+.contact form input,
+.contact form textarea {
     width: 100%;
     padding: 1.5rem;
-    background:rgba(255,255,255,.1);
-    border: .2rem solid rgba(255,255,255,.3);
+    background: rgba(255, 255, 255, .05);
+    border: .1rem solid rgba(255, 255, 255, .2); /* Thinner border */
     outline: none;
-    backdrop-filter: blur(10px);
-    filter: drop-shadow(0 0 100px #ff00ee);
+    backdrop-filter: blur(0.5rem); /* Reduced blur */
+    /* filter: drop-shadow(0 0 10px #ff00ee); /* Potentially performance heavy, consider removing or reducing */
     border-radius: .8rem;
-    gap: 2.5rem;
     margin: .7rem 0;
-    transition: .3s ease;
-    opacity: 0;
-    transform: translateY(100px);
+    transition: border-color .3s ease, box-shadow .3s ease;
+    font-size: 1.6rem; /* Ensure readable font size */
 }
-section.start-animation textarea{
-    animation:Bottom 1s ease forwards;
-    animation-delay: 1.2s;
-}
-input::placeholder{
+.contact form input::placeholder,
+.contact form textarea::placeholder {
     font-size: 1.5rem;
-    letter-spacing: .02rem;
+    color: #aaa; /* Lighter placeholder */
 }
-.input-box input{
-    width: 49%;
+
+.input-box input { /* For side-by-side inputs */
+    width: 48%; /* Adjust to account for gap */
 }
-input:focus,
-input:valid{
-    border: .2rem solid #ff00ee;
+
+.contact form input:focus,
+.contact form input:valid, /* Valid might be too aggressive for empty optional fields */
+.contact form textarea:focus,
+.contact form textarea:valid {
+    border-color: #ff00ee;
+    box-shadow: 0 0 10px rgba(255,0,238,0.3);
 }
-textarea:focus,
-textarea:valid{
-    border: .2rem solid #ff00ee;
+
+.contact form textarea {
+    resize: vertical; /* Allow vertical resize only */
+    min-height: 120px;
 }
-textarea{
-    resize: none;
-}
-.contact .btn{
+
+.contact .btn {
     margin-top: 2rem;
     cursor: pointer;
-    filter: none;
-    border: .2rem solid rgba(255,255,255,.3);
+    /* filter: none; Removed this, was for specific animation context */
+    border: .2rem solid rgba(255, 255, 255, .3);
+    width: auto; /* Allow button to size to content */
+    padding: 1.2rem 3rem;
 }
-section.start-animation .btn{
-    animation:Bottom 1s ease forwards;
-    animation-delay: 1.4s;
-}
-.contact .btn:hover{
-    background: #ff00ee;
-    box-shadow: 0 0 .3rem #ff00ee,
-    0 0 .7rem #ff00ee;
-}
-/* footer */
 
-footer{
+.contact .btn:hover {
+    background: #ff00ee; /* Solid background on hover */
+    border-color: #ff00ee;
+    box-shadow: 0 0 .5rem #ff00ee, 0 0 1rem #ff00ee;
+}
+
+/* footer */
+footer {
     background: #080707;
-    padding: 2rem 9%;
+    padding: 2.5rem 9%; /* Consistent padding */
     display: flex;
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    gap: 1rem; /* Gap for wrapping */
+    border-top: 1px solid rgba(255,255,255,0.1);
 }
-footer p{
-    font-size: 1.6rem;
+
+footer p {
+    font-size: 1.5rem; /* Adjusted size */
+    color: #ccc; /* Softer color */
 }
-footer i{
+
+footer a i { /* Target icon within link */
     display: inline-flex;
     justify-content: center;
     align-items: center;
@@ -683,85 +810,27 @@ footer i{
     color: #0f0a0a;
     border-radius: 50%;
     font-size: 2.4rem;
+    transition: background-color 0.3s ease, transform 0.3s ease;
 }
-/* RESPONSIVE */
-@media(max-width:1200px){
-    html{
-        font-size: 55;
-    }
+footer a:hover i {
+    background-color: aqua; /* Example hover effect */
+    transform: translateY(-3px);
 }
-@media(max-width:991px){
-    .header{
-        padding: 2rem 9%;
-    }
-    section{
-        padding: 10rem 3% 2rem;
-    }
-    .contact{
-        min-height: auto;
-    }
-    footer{
-        padding: 2rem 3%;
-    }
-}
-@media(max-width:768px){
-    #menu{
-        display: block;
-    }
-    .navbar{
-        position: absolute;
-        left: 0;
-        top: 100%;
-        width: 100%;
-        padding: 1rem 3%;
-        background: #0f0a0a;
-        border-top: 1px solid rgba(255,255,255,.1);
-        border-bottom: .2rem solid rgba(255,255,255,.1);
-        display: none;
-    }
-    .navbar.active{
-        display: block;
-    }
-    .navbar a{
-        display: block;
-        margin: 3rem 0;
-        font-size: 2rem;
-    }
-    .home{
-        flex-direction: column-reverse;
-    }
-    .home .text-content{
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        flex-direction: column;
-    }
-    .home .text-content h1{
-        font-size: 4rem;
-    }
-    .home img{
-        width: 40vw;
-    }
-    .about{
-        flex-direction: column;
-    }
-    .about img{
-        width: 20rem;
-        height: 20rem;
-    }
-}
-@media(max-width:450px){
-    html{
-        font-size: 50%;
-    }
-    .input-box input{
-        width: 100%;
-    }
-}
+
+
 /* RESPONSIVE */
 @media (max-width: 1200px) {
+    html {
+        font-size: 58%; /* Slightly adjust base font size */
+    }
     .header {
         padding: 2rem 5%;
+    }
+    section {
+        padding: 10rem 5% 5rem;
+    }
+    footer {
+        padding: 2.5rem 5%;
     }
     .home img {
         width: 35vw;
@@ -769,6 +838,18 @@ footer i{
 }
 
 @media (max-width: 991px) {
+    html{
+        font-size: 55%;
+    }
+    .header {
+        padding: 1.5rem 3%; /* Further adjust padding */
+    }
+     .header.sticky {
+        padding: 1.2rem 3%;
+    }
+    section {
+        padding: 10rem 3% 4rem;
+    }
     #menu {
         display: block;
     }
@@ -777,60 +858,123 @@ footer i{
         top: 100%;
         left: 0;
         width: 100%;
-        height: calc(100vh - 60px);
-        background: #0f0a0a;
+        padding: 1.5rem 3%;
+        background: #0c0c0c; /* Slightly different for mobile menu maybe */
+        border-top: 1px solid rgba(255, 255, 255, .1);
+        border-bottom: .2rem solid rgba(255, 255, 255, .1);
+        transform: translateY(-110%); /* Start fully hidden */
+        transition: transform 0.4s ease-in-out;
+        display: flex; /* Use flex for alignment */
         flex-direction: column;
-        align-items: center;
-        justify-content: space-around;
-        transform: translateY(-100%);
-        transition: transform 0.5s ease;
-    }
-    .navbar a {
-        font-size: 2.5rem;
-        margin: 1.5rem 0;
+        align-items: center; /* Center links */
+        height: calc(100vh - 60px); /* Example height, adjust as needed */
+        overflow-y: auto; /* Scroll if content overflows */
     }
     .navbar.active {
         transform: translateY(0);
+        display: flex; /* Ensure display is set when active */
+    }
+    .navbar a {
+        display: block;
+        font-size: 2.2rem; /* Larger for mobile */
+        margin: 2rem 0; /* More vertical spacing */
+    }
+    .navbar a::after { /* Adjust underline for mobile nav */
+        bottom: -8px;
+    }
+
+    .home {
+        flex-direction: column-reverse; /* Stack image above text */
+        text-align: center; /* Center text content */
+        gap: 3rem;
+    }
+    .home .text-content {
+        align-items: center; /* Center items like button section */
+    }
+    .text-animation { /* Center text animation */
+        margin: 0 auto;
+    }
+    .btn-section {
+        justify-content: center; /* Center buttons */
+        gap: 1.5rem;
+    }
+    .home img {
+        width: 45vw; /* Adjust image size */
+        margin-bottom: 2rem;
+    }
+    .contact {
+        min-height: auto;
+    }
+    footer {
+        padding: 2rem 3%;
+        flex-direction: column; /* Stack footer items */
+        text-align: center;
     }
 }
 
 @media (max-width: 768px) {
-    .home {
-        flex-direction: column;
-        text-align: center;
+    html{
+        /* font-size: 50%; Re-evaluate if needed, 55% might be okay */
     }
-    .home img {
-        width: 50vw;
-    }
-    .text-content h1 {
+    .home .text-content h1 {
         font-size: 4rem;
     }
     .text-animation h2 {
-        font-size: 2.5rem;
+        font-size: 2.8rem;
     }
-}
-
-@media (max-width: 600px) {
-    .text-content h1 {
-        font-size: 3rem;
+    .about {
+        gap: 2rem;
     }
-    .text-animation h2 {
-        font-size: 2rem;
+    .about img.aboutImg {
+        width: 20rem;
+        height: 20rem;
     }
-    .btn {
-        width: 12rem;
+    .title {
+        font-size: 3.8rem;
+    }
+    .skills .wrapper, .education .row {
+        flex-direction: column; /* Stack skill/education columns */
+        align-items: center;
+    }
+    .skill-content, .education .column {
+        max-width: 90%; /* Allow them to take more width */
+    }
+    .input-box input { /* Stack contact inputs */
+        width: 100%;
     }
 }
 
 @media (max-width: 480px) {
-    .text-content p {
-        font-size: 1.2rem;
+    html {
+        font-size: 50%; /* Reduce further for very small screens */
     }
-    .navbar a {
-        font-size: 2rem;
+    .header, .header.sticky {
+        padding: 1.5rem 3%;
+    }
+    .home .text-content h1 {
+        font-size: 3.5rem;
+    }
+    .text-animation h2 {
+        font-size: 2.4rem;
+    }
+    .text-content p {
+        font-size: 1.5rem;
     }
     .btn {
-        width: 10rem;
+        width: 12rem; /* Smaller buttons */
+        font-size: 1.4rem;
+    }
+    .social-media a {
+        width: 3.5rem;
+        height: 3.5rem;
+    }
+    .social-media a i {
+        font-size: 1.8rem;
+    }
+    .home img {
+        width: 60vw;
+    }
+    .title {
+        font-size: 3.2rem;
     }
 }
-
