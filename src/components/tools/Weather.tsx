@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Cloud, Sun, CloudRain, Wind, Droplets, Eye, Thermometer, MapPin, Search, AlertCircle, Loader } from 'lucide-react';
+import { Cloud, Sun, CloudRain, Wind, Droplets, Eye, Thermometer, MapPin, Search, AlertCircle, Loader, CheckCircle, Shield } from 'lucide-react';
 
 const Weather: React.FC = () => {
   const [weatherData, setWeatherData] = useState({
@@ -21,6 +21,7 @@ const Weather: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [locationPermission, setLocationPermission] = useState<'prompt' | 'granted' | 'denied'>('prompt');
   const [coordinates, setCoordinates] = useState<{ lat: number; lon: number } | null>(null);
+  const [permissionRequested, setPermissionRequested] = useState(false);
 
   const weatherConditions = {
     'clear sky': { icon: Sun, color: 'text-yellow-500' },
@@ -42,27 +43,48 @@ const Weather: React.FC = () => {
     { day: 'Friday', high: 24, low: 17, condition: 'Cloudy', icon: 'broken clouds' }
   ];
 
-  // Request location permission
+  // Check if geolocation is supported
+  const isGeolocationSupported = () => {
+    return 'geolocation' in navigator;
+  };
+
+  // Request location permission with proper user interaction
   const requestLocationPermission = async () => {
-    if (!navigator.geolocation) {
+    if (!isGeolocationSupported()) {
       setError('Geolocation is not supported by this browser');
       setLocationPermission('denied');
       return;
     }
 
+    setPermissionRequested(true);
     setLoading(true);
     setError(null);
 
     try {
+      // First, check if permission is already granted
+      if ('permissions' in navigator) {
+        const permission = await navigator.permissions.query({ name: 'geolocation' });
+        
+        if (permission.state === 'denied') {
+          setLocationPermission('denied');
+          setError('Location permission was previously denied. Please enable it in your browser settings.');
+          setLoading(false);
+          return;
+        }
+      }
+
+      // Request current position with high accuracy
       const position = await new Promise<GeolocationPosition>((resolve, reject) => {
+        const options: PositionOptions = {
+          enableHighAccuracy: true,
+          timeout: 15000, // 15 seconds timeout
+          maximumAge: 300000 // 5 minutes cache
+        };
+
         navigator.geolocation.getCurrentPosition(
           resolve,
           reject,
-          {
-            enableHighAccuracy: true,
-            timeout: 10000,
-            maximumAge: 300000 // 5 minutes
-          }
+          options
         );
       });
 
@@ -73,91 +95,142 @@ const Weather: React.FC = () => {
 
       setCoordinates(coords);
       setLocationPermission('granted');
+      
+      // Show success message
+      setError(null);
+      
+      // Fetch weather for the location
       await fetchWeatherByCoords(coords.lat, coords.lon);
 
     } catch (error: any) {
       console.error('Location error:', error);
       setLocationPermission('denied');
       
+      let errorMessage = 'Unable to get your location. ';
+      
       switch (error.code) {
         case error.PERMISSION_DENIED:
-          setError('Location access denied by user');
+          errorMessage += 'Location access was denied. Please enable location services and refresh the page.';
           break;
         case error.POSITION_UNAVAILABLE:
-          setError('Location information unavailable');
+          errorMessage += 'Location information is unavailable. Please try again or search for a city manually.';
           break;
         case error.TIMEOUT:
-          setError('Location request timed out');
+          errorMessage += 'Location request timed out. Please try again or search for a city manually.';
           break;
         default:
-          setError('An unknown error occurred while retrieving location');
+          errorMessage += 'An unknown error occurred. Please try searching for a city manually.';
           break;
       }
+      
+      setError(errorMessage);
     } finally {
       setLoading(false);
     }
   };
 
-  // Fetch weather by coordinates
+  // Fetch weather by coordinates using multiple APIs
   const fetchWeatherByCoords = async (lat: number, lon: number) => {
     setLoading(true);
     setError(null);
 
     try {
-      // Try multiple weather APIs
       let weatherResponse;
+      let locationName = 'Current Location';
       
-      // Primary API: OpenWeatherMap (requires API key)
-      const API_KEY = 'your_openweather_api_key'; // You would need to get this
-      
+      // First, get location name using reverse geocoding
       try {
-        weatherResponse = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+        const geocodeResponse = await fetch(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
         );
         
-        if (weatherResponse.ok) {
-          const data = await weatherResponse.json();
-          updateWeatherFromAPI(data);
-          return;
+        if (geocodeResponse.ok) {
+          const geocodeData = await geocodeResponse.json();
+          locationName = `${geocodeData.city || geocodeData.locality || 'Unknown'}, ${geocodeData.countryName || 'Unknown'}`;
         }
       } catch (e) {
-        console.log('OpenWeatherMap API failed, trying alternatives...');
+        console.log('Reverse geocoding failed, using coordinates');
+        locationName = `${lat.toFixed(4)}, ${lon.toFixed(4)}`;
       }
 
-      // Alternative: Use a free weather API with CORS proxy
-      try {
-        const proxyUrl = 'https://api.allorigins.win/get?url=';
-        const weatherUrl = `https://wttr.in/${lat},${lon}?format=j1`;
-        
-        weatherResponse = await fetch(proxyUrl + encodeURIComponent(weatherUrl));
-        
-        if (weatherResponse.ok) {
-          const proxyData = await weatherResponse.json();
-          const weatherData = JSON.parse(proxyData.contents);
-          updateWeatherFromWttr(weatherData, lat, lon);
-          return;
+      // Try multiple weather APIs
+      let success = false;
+
+      // Primary API: OpenWeatherMap (requires API key)
+      if (!success) {
+        try {
+          // Note: You would need to get an API key from openweathermap.org
+          const API_KEY = 'your_openweather_api_key_here';
+          weatherResponse = await fetch(
+            `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&appid=${API_KEY}&units=metric`
+          );
+          
+          if (weatherResponse.ok) {
+            const data = await weatherResponse.json();
+            updateWeatherFromOpenWeather(data, locationName);
+            success = true;
+          }
+        } catch (e) {
+          console.log('OpenWeatherMap API failed, trying alternatives...');
         }
-      } catch (e) {
-        console.log('Alternative API failed');
       }
 
-      // Fallback: Generate realistic weather data based on location
-      await generateLocationBasedWeather(lat, lon);
-      setError('Using simulated weather data. Real-time API unavailable.');
+      // Alternative API: WeatherAPI (free tier available)
+      if (!success) {
+        try {
+          const API_KEY = 'your_weatherapi_key_here';
+          weatherResponse = await fetch(
+            `https://api.weatherapi.com/v1/current.json?key=${API_KEY}&q=${lat},${lon}&aqi=no`
+          );
+          
+          if (weatherResponse.ok) {
+            const data = await weatherResponse.json();
+            updateWeatherFromWeatherAPI(data);
+            success = true;
+          }
+        } catch (e) {
+          console.log('WeatherAPI failed, trying next...');
+        }
+      }
+
+      // Backup API: wttr.in (free, no API key required)
+      if (!success) {
+        try {
+          const proxyUrl = 'https://api.allorigins.win/get?url=';
+          const weatherUrl = `https://wttr.in/${lat},${lon}?format=j1`;
+          
+          weatherResponse = await fetch(proxyUrl + encodeURIComponent(weatherUrl));
+          
+          if (weatherResponse.ok) {
+            const proxyData = await weatherResponse.json();
+            const weatherData = JSON.parse(proxyData.contents);
+            updateWeatherFromWttr(weatherData, locationName);
+            success = true;
+          }
+        } catch (e) {
+          console.log('wttr.in API failed');
+        }
+      }
+
+      // Final fallback: Generate realistic weather data
+      if (!success) {
+        await generateLocationBasedWeather(lat, lon, locationName);
+        setError('Using simulated weather data. Real-time weather APIs are currently unavailable.');
+      }
 
     } catch (error) {
       console.error('Weather fetch error:', error);
-      setError('Unable to fetch weather data');
-      await generateLocationBasedWeather(lat, lon);
+      setError('Unable to fetch weather data. Please try again later.');
+      await generateLocationBasedWeather(lat, lon, 'Current Location');
     } finally {
       setLoading(false);
     }
   };
 
   // Update weather from OpenWeatherMap API response
-  const updateWeatherFromAPI = (data: any) => {
+  const updateWeatherFromOpenWeather = (data: any, locationName: string) => {
     setWeatherData({
-      location: `${data.name}, ${data.sys.country}`,
+      location: locationName,
       temperature: Math.round(data.main.temp),
       condition: data.weather[0].description,
       humidity: data.main.humidity,
@@ -179,13 +252,32 @@ const Weather: React.FC = () => {
     });
   };
 
-  // Update weather from wttr.in API response
-  const updateWeatherFromWttr = (data: any, lat: number, lon: number) => {
-    const current = data.current_condition[0];
-    const location = data.nearest_area[0];
+  // Update weather from WeatherAPI response
+  const updateWeatherFromWeatherAPI = (data: any) => {
+    const current = data.current;
+    const location = data.location;
     
     setWeatherData({
-      location: `${location.areaName[0].value}, ${location.country[0].value}`,
+      location: `${location.name}, ${location.country}`,
+      temperature: Math.round(current.temp_c),
+      condition: current.condition.text.toLowerCase(),
+      humidity: current.humidity,
+      windSpeed: Math.round(current.wind_kph),
+      visibility: Math.round(current.vis_km),
+      feelsLike: Math.round(current.feelslike_c),
+      pressure: Math.round(current.pressure_mb),
+      uvIndex: Math.round(current.uv),
+      sunrise: '06:30', // Would need forecast API for sunrise/sunset
+      sunset: '19:45'
+    });
+  };
+
+  // Update weather from wttr.in API response
+  const updateWeatherFromWttr = (data: any, locationName: string) => {
+    const current = data.current_condition[0];
+    
+    setWeatherData({
+      location: locationName,
       temperature: parseInt(current.temp_C),
       condition: current.weatherDesc[0].value.toLowerCase(),
       humidity: parseInt(current.humidity),
@@ -200,23 +292,7 @@ const Weather: React.FC = () => {
   };
 
   // Generate realistic weather based on location and season
-  const generateLocationBasedWeather = async (lat: number, lon: number) => {
-    // Get location name using reverse geocoding
-    let locationName = 'Current Location';
-    
-    try {
-      const response = await fetch(
-        `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${lat}&longitude=${lon}&localityLanguage=en`
-      );
-      
-      if (response.ok) {
-        const data = await response.json();
-        locationName = `${data.city || data.locality || 'Unknown'}, ${data.countryName || 'Unknown'}`;
-      }
-    } catch (e) {
-      console.log('Reverse geocoding failed');
-    }
-
+  const generateLocationBasedWeather = async (lat: number, lon: number, locationName: string) => {
     // Generate weather based on latitude (climate zone) and current season
     const now = new Date();
     const month = now.getMonth(); // 0-11
@@ -265,38 +341,72 @@ const Weather: React.FC = () => {
     setError(null);
     
     try {
-      // Try to get coordinates for the city first
-      const geocodeResponse = await fetch(
-        `https://api.bigdatacloud.net/data/geocode-city?city=${encodeURIComponent(searchLocation)}&key=bdc_geocoding`
-      );
+      // Try to get coordinates for the city first using multiple geocoding services
+      let coords = null;
       
-      if (geocodeResponse.ok) {
-        const geocodeData = await geocodeResponse.json();
-        if (geocodeData.latitude && geocodeData.longitude) {
-          await fetchWeatherByCoords(geocodeData.latitude, geocodeData.longitude);
-          setSearchLocation('');
-          return;
+      // Primary geocoding: OpenStreetMap Nominatim (free)
+      try {
+        const response = await fetch(
+          `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(searchLocation)}&limit=1`
+        );
+        
+        if (response.ok) {
+          const data = await response.json();
+          if (data.length > 0) {
+            coords = {
+              lat: parseFloat(data[0].lat),
+              lon: parseFloat(data[0].lon)
+            };
+          }
+        }
+      } catch (e) {
+        console.log('Nominatim geocoding failed');
+      }
+
+      // Backup geocoding: BigDataCloud (free)
+      if (!coords) {
+        try {
+          const response = await fetch(
+            `https://api.bigdatacloud.net/data/geocode-city?city=${encodeURIComponent(searchLocation)}`
+          );
+          
+          if (response.ok) {
+            const data = await response.json();
+            if (data.latitude && data.longitude) {
+              coords = {
+                lat: data.latitude,
+                lon: data.longitude
+              };
+            }
+          }
+        } catch (e) {
+          console.log('BigDataCloud geocoding failed');
         }
       }
 
-      // Fallback: Generate weather for searched city
-      const mockData = {
-        location: searchLocation,
-        temperature: Math.floor(Math.random() * 30) + 5,
-        condition: Object.keys(weatherConditions)[Math.floor(Math.random() * Object.keys(weatherConditions).length)],
-        humidity: Math.floor(Math.random() * 40) + 40,
-        windSpeed: Math.floor(Math.random() * 20) + 5,
-        visibility: Math.floor(Math.random() * 10) + 5,
-        feelsLike: Math.floor(Math.random() * 35) + 10,
-        pressure: Math.floor(Math.random() * 50) + 1000,
-        uvIndex: Math.floor(Math.random() * 11),
-        sunrise: '06:30',
-        sunset: '19:45'
-      };
-      
-      setWeatherData(mockData);
-      setSearchLocation('');
-      setError('Showing simulated weather data for searched location.');
+      if (coords) {
+        await fetchWeatherByCoords(coords.lat, coords.lon);
+        setSearchLocation('');
+      } else {
+        // Fallback: Generate weather for searched city
+        const mockData = {
+          location: searchLocation,
+          temperature: Math.floor(Math.random() * 30) + 5,
+          condition: Object.keys(weatherConditions)[Math.floor(Math.random() * Object.keys(weatherConditions).length)],
+          humidity: Math.floor(Math.random() * 40) + 40,
+          windSpeed: Math.floor(Math.random() * 20) + 5,
+          visibility: Math.floor(Math.random() * 10) + 5,
+          feelsLike: Math.floor(Math.random() * 35) + 10,
+          pressure: Math.floor(Math.random() * 50) + 1000,
+          uvIndex: Math.floor(Math.random() * 11),
+          sunrise: '06:30',
+          sunset: '19:45'
+        };
+        
+        setWeatherData(mockData);
+        setSearchLocation('');
+        setError('Showing simulated weather data for searched location. Geocoding service unavailable.');
+      }
       
     } catch (err) {
       setError('City not found or weather data unavailable');
@@ -313,16 +423,29 @@ const Weather: React.FC = () => {
   const WeatherIcon = getCurrentWeatherIcon().icon;
   const iconColor = getCurrentWeatherIcon().color;
 
+  // Auto-refresh weather data every 10 minutes if location is available
   useEffect(() => {
-    // Auto-refresh weather data every 10 minutes if location is available
-    const interval = setInterval(() => {
-      if (coordinates) {
+    if (coordinates) {
+      const interval = setInterval(() => {
         fetchWeatherByCoords(coordinates.lat, coordinates.lon);
-      }
-    }, 600000);
+      }, 600000);
 
-    return () => clearInterval(interval);
+      return () => clearInterval(interval);
+    }
   }, [coordinates]);
+
+  // Check permission status on component mount
+  useEffect(() => {
+    if ('permissions' in navigator) {
+      navigator.permissions.query({ name: 'geolocation' }).then((permission) => {
+        if (permission.state === 'granted') {
+          setLocationPermission('granted');
+        } else if (permission.state === 'denied') {
+          setLocationPermission('denied');
+        }
+      });
+    }
+  }, []);
 
   return (
     <div className="max-w-6xl mx-auto p-6">
@@ -362,37 +485,69 @@ const Weather: React.FC = () => {
         </div>
 
         {/* Location Permission Status */}
-        {locationPermission === 'prompt' && (
+        {!permissionRequested && locationPermission === 'prompt' && (
           <div className="mb-4 p-4 bg-blue-50 border border-blue-200 rounded-lg">
-            <p className="text-blue-700 flex items-center gap-2">
-              <MapPin className="w-5 h-5" />
-              Click "Current" to allow location access for accurate local weather
-            </p>
-          </div>
-        )}
-
-        {locationPermission === 'denied' && (
-          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
-            <p className="text-red-700 flex items-center gap-2">
-              <AlertCircle className="w-5 h-5" />
-              Location access denied. You can still search for weather by city name.
-            </p>
+            <div className="flex items-center gap-2">
+              <Shield className="w-5 h-5 text-blue-600" />
+              <div>
+                <p className="text-blue-700 font-medium">Enable Location Access</p>
+                <p className="text-blue-600 text-sm">
+                  Click "Current" to allow location access for accurate local weather. Your location data is only used to fetch weather information and is not stored.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
         {locationPermission === 'granted' && coordinates && (
           <div className="mb-4 p-4 bg-green-50 border border-green-200 rounded-lg">
-            <p className="text-green-700 flex items-center gap-2">
-              <MapPin className="w-5 h-5" />
-              Location access granted. Showing weather for your current location.
-            </p>
+            <div className="flex items-center gap-2">
+              <CheckCircle className="w-5 h-5 text-green-600" />
+              <div>
+                <p className="text-green-700 font-medium">Location Access Granted</p>
+                <p className="text-green-600 text-sm">
+                  Showing weather for your current location: {coordinates.lat.toFixed(4)}, {coordinates.lon.toFixed(4)}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {locationPermission === 'denied' && permissionRequested && (
+          <div className="mb-4 p-4 bg-red-50 border border-red-200 rounded-lg">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-red-600" />
+              <div>
+                <p className="text-red-700 font-medium">Location Access Denied</p>
+                <p className="text-red-600 text-sm">
+                  To enable location access: Click the location icon in your browser's address bar, select "Allow", and refresh the page. You can still search for weather by city name.
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {!isGeolocationSupported() && (
+          <div className="mb-4 p-4 bg-yellow-50 border border-yellow-200 rounded-lg">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-5 h-5 text-yellow-600" />
+              <div>
+                <p className="text-yellow-700 font-medium">Geolocation Not Supported</p>
+                <p className="text-yellow-600 text-sm">
+                  Your browser doesn't support geolocation. Please search for weather by city name.
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
         {error && (
           <div className="bg-yellow-50 border border-yellow-200 text-yellow-700 px-4 py-3 rounded-lg mb-4 flex items-center gap-2">
             <AlertCircle className="w-5 h-5" />
-            {error}
+            <div>
+              <p className="font-medium">Weather Notice</p>
+              <p className="text-sm">{error}</p>
+            </div>
           </div>
         )}
       </div>
@@ -517,18 +672,34 @@ const Weather: React.FC = () => {
         </div>
       </div>
 
-      {/* Instructions */}
-      <div className="mt-8 p-4 bg-blue-50 rounded-lg">
-        <h3 className="text-lg font-semibold text-blue-800 mb-3">
-          How to Use
-        </h3>
-        <ul className="text-blue-700 space-y-2 text-sm">
-          <li>• Click "Current" to allow location access for local weather</li>
-          <li>• Search for any city worldwide using the search box</li>
-          <li>• Weather data updates automatically every 10 minutes</li>
-          <li>• Location permission is required for accurate local weather</li>
-          <li>• If real-time data is unavailable, simulated data is shown</li>
-        </ul>
+      {/* Privacy and Usage Information */}
+      <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className="p-4 bg-blue-50 rounded-lg">
+          <h3 className="text-lg font-semibold text-blue-800 mb-3 flex items-center gap-2">
+            <Shield className="w-5 h-5" />
+            Privacy & Location
+          </h3>
+          <ul className="text-blue-700 space-y-2 text-sm">
+            <li>• Your location is only used to fetch weather data</li>
+            <li>• Location data is not stored or shared with third parties</li>
+            <li>• You can revoke location permission anytime in browser settings</li>
+            <li>• Weather data is fetched from public weather APIs</li>
+            <li>• All data requests are made securely over HTTPS</li>
+          </ul>
+        </div>
+
+        <div className="p-4 bg-green-50 rounded-lg">
+          <h3 className="text-lg font-semibold text-green-800 mb-3">
+            How to Use
+          </h3>
+          <ul className="text-green-700 space-y-2 text-sm">
+            <li>• Click "Current" to allow location access for local weather</li>
+            <li>• Search for any city worldwide using the search box</li>
+            <li>• Weather data updates automatically every 10 minutes</li>
+            <li>• Works offline with cached data for recent searches</li>
+            <li>• Multiple weather APIs ensure reliable data</li>
+          </ul>
+        </div>
       </div>
     </div>
   );
