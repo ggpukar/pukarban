@@ -1,8 +1,0 @@
-{
-  "name": "Prabin Ban Portfolio",
-  "description": "A high-performance 3D portfolio featuring a Namaste loading screen, interactive gallery, games, and utilities.",
-  "requestFramePermissions": [
-    "camera",
-    "microphone"
-  ]
-}
