@@ -6,7 +6,6 @@
     <meta name="theme-color" content="#0077CC">
     <title>RSP Ghanti - Jhapa 5</title>
     
-    <!-- Link to Manifest -->
     <link rel="manifest" href="manifest.json">
     <link rel="apple-touch-icon" href="ghanti.png">
 
@@ -20,7 +19,7 @@
             height: 100vh; overflow: hidden;
             color: white; text-align: center;
             user-select: none;
-            position: relative; /* Needed for footer positioning */
+            position: relative;
         }
 
         h1 { 
@@ -31,12 +30,11 @@
             padding: 0 20px;
         }
 
-        /* Full Circle Image CSS */
         .bell-circle {
             width: 250px; height: 250px;
-            background-color: transparent; /* No white background */
+            background-color: transparent;
             border-radius: 50%;
-            overflow: hidden; /* Clips image to circle */
+            overflow: hidden;
             display: flex; align-items: center; justify-content: center;
             box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
             cursor: pointer; -webkit-tap-highlight-color: transparent;
@@ -44,23 +42,24 @@
 
         .bell-circle img { 
             width: 100%; height: 100%; 
-            object-fit: cover; /* Fills the circle completely */
+            object-fit: cover; 
             pointer-events: none; 
         }
 
-        .ringing { animation: ring-animation 0.2s ease-in-out; }
+        /* Faster animation for rapid ringing */
+        .ringing { animation: ring-animation 0.1s ease-in-out; }
+        
         @keyframes ring-animation {
             0% { transform: rotate(0deg) scale(1); }
-            25% { transform: rotate(-10deg) scale(1.1); }
-            50% { transform: rotate(10deg) scale(1.1); }
-            75% { transform: rotate(-5deg) scale(1.1); }
+            25% { transform: rotate(-15deg) scale(1.15); }
+            50% { transform: rotate(15deg) scale(1.15); }
+            75% { transform: rotate(-10deg) scale(1.15); }
             100% { transform: rotate(0deg) scale(1); }
         }
 
         .instructions { margin-top: 40px; opacity: 0.8; font-size: 16px; }
         .sub-text { font-size: 12px; opacity: 0.6; margin-top: 5px; }
 
-        /* Buttons */
         .btn {
             margin-top: 20px; padding: 10px 20px;
             background-color: white; color: #0077CC;
@@ -71,23 +70,17 @@
             z-index: 10;
         }
 
-        /* Footer Styling */
         .footer {
-            position: absolute;
-            bottom: 15px;
-            width: 100%;
-            text-align: center;
-            font-size: 14px;
+            position: absolute; bottom: 15px; width: 100%;
+            text-align: center; font-size: 14px;
             color: rgba(255, 255, 255, 0.6);
-            font-family: monospace;
-            letter-spacing: 1px;
+            font-family: monospace; letter-spacing: 1px;
         }
     </style>
 </head>
 <body>
 
-    <!-- UPDATED TITLE IN NEPALI -->
-    <h1>अबकि बार बालेन सरकार<br>झापा - ५</h1>
+    <h1>अबकी बार बालेन सरकार <br>झापा - ५</h1>
 
     <div class="bell-circle" id="bellBtn">
         <img src="rsp.png" alt="Ghanti">
@@ -95,59 +88,65 @@
 
     <div class="instructions">
         Tap or Shake to Ring
-        <div class="sub-text">Harder Shake = Louder Volume</div>
+        <div class="sub-text">More Shake = Continuous Ringing</div>
     </div>
 
-    <!-- Buttons -->
     <button id="permission-btn" class="btn">Enable Shake Sensor</button>
     <button id="install-btn" class="btn">📲 Install App</button>
 
-    <!-- UPDATED FOOTER -->
-    <div class="footer">Created by Prabin  Ban</div>
+    <div class="footer">Created by prabin ban</div>
 
     <script>
-        // --- 1. SERVICE WORKER (Offline) ---
+        // --- SERVICE WORKER ---
         if ('serviceWorker' in navigator) {
             navigator.serviceWorker.register('sw.js').catch(console.error);
         }
 
-        // --- 2. INSTALL APP LOGIC ---
+        // --- INSTALL LOGIC ---
         let deferredPrompt;
         const installBtn = document.getElementById('install-btn');
-
         window.addEventListener('beforeinstallprompt', (e) => {
             e.preventDefault();
             deferredPrompt = e;
             installBtn.style.display = 'block';
         });
-
         installBtn.addEventListener('click', () => {
             installBtn.style.display = 'none';
             deferredPrompt.prompt();
-            deferredPrompt.userChoice.then((choiceResult) => { deferredPrompt = null; });
+            deferredPrompt.userChoice.then(() => { deferredPrompt = null; });
         });
 
-        // --- 3. AUDIO & SHAKE LOGIC ---
-        const bellSound = new Audio('bell_sound.mp3');
+        // --- AUDIO & SHAKE LOGIC ---
+        const baseSound = new Audio('bell_sound.mp3');
+        // Pre-load the audio
+        baseSound.load();
+
         const bellBtn = document.getElementById('bellBtn');
         const permBtn = document.getElementById('permission-btn');
         
         let lastShakeTime = 0;
-        const SHAKE_THRESHOLD = 15; 
-        const MAX_SHAKE = 60;
+        const SHAKE_THRESHOLD = 12; // Slightly more sensitive
+        const MAX_SHAKE = 50;
 
         function playRing(volume = 1.0) {
+            // 1. VISUAL: Restart animation instantly
             bellBtn.classList.remove('ringing');
-            void bellBtn.offsetWidth; 
+            void bellBtn.offsetWidth; // Force reflow
             bellBtn.classList.add('ringing');
-            bellSound.volume = volume;
-            bellSound.currentTime = 0; 
-            bellSound.play().catch(e => console.log("Interact first"));
+
+            // 2. AUDIO: Clone the node to allow overlapping sounds
+            // This is the key change: cloneNode() creates a NEW player every time
+            let soundClone = baseSound.cloneNode();
+            soundClone.volume = volume;
+            
+            soundClone.play().catch(e => console.log("Audio blocked:", e));
+            
+            // Garbage collection will handle the clones after they finish playing
         }
 
         bellBtn.addEventListener('click', () => playRing(1.0));
 
-        // iOS Permission & Shake
+        // iOS Permission
         if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
             permBtn.style.display = "block";
             permBtn.addEventListener('click', () => {
@@ -155,6 +154,7 @@
                     if (response === 'granted') {
                         window.addEventListener('devicemotion', handleMotion);
                         permBtn.style.display = "none";
+                        playRing(0.5); // Test sound
                     } else { alert("Permission denied"); }
                 });
             });
@@ -165,16 +165,21 @@
         function handleMotion(event) {
             const acc = event.accelerationIncludingGravity;
             if (!acc) return;
+            
             let acceleration = Math.sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
             let force = Math.abs(acceleration - 9.8);
 
             if (force > SHAKE_THRESHOLD) {
                 const now = Date.now();
-                if (now - lastShakeTime > 150) {
+                
+                // REDUCED TIMER: Only 80ms delay (very fast) to allow rapid ringing
+                if (now - lastShakeTime > 80) {
                     lastShakeTime = now;
+
                     let volume = (force - SHAKE_THRESHOLD) / (MAX_SHAKE - SHAKE_THRESHOLD);
                     if (volume > 1.0) volume = 1.0;
-                    if (volume < 0.2) volume = 0.2;
+                    if (volume < 0.3) volume = 0.3; // Minimum volume
+
                     playRing(volume);
                 }
             }
