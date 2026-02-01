@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#0077CC">
+    <title>RSP Ghanti - Jhapa 5</title>
+    
+    <!-- Link to Manifest -->
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="ghanti.png">
+
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background-color: #0077CC;
+            font-family: Arial, sans-serif;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden;
+            color: white; text-align: center;
+            user-select: none;
+            position: relative; /* Needed for footer positioning */
+        }
+
+        h1 { 
+            font-size: 28px; 
+            margin-bottom: 30px; 
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3); 
+            line-height: 1.4;
+            padding: 0 20px;
+        }
+
+        /* Full Circle Image CSS */
+        .bell-circle {
+            width: 250px; height: 250px;
+            background-color: transparent; /* No white background */
+            border-radius: 50%;
+            overflow: hidden; /* Clips image to circle */
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0px 10px 20px rgba(0,0,0,0.3);
+            cursor: pointer; -webkit-tap-highlight-color: transparent;
+        }
+
+        .bell-circle img { 
+            width: 100%; height: 100%; 
+            object-fit: cover; /* Fills the circle completely */
+            pointer-events: none; 
+        }
+
+        .ringing { animation: ring-animation 0.2s ease-in-out; }
+        @keyframes ring-animation {
+            0% { transform: rotate(0deg) scale(1); }
+            25% { transform: rotate(-10deg) scale(1.1); }
+            50% { transform: rotate(10deg) scale(1.1); }
+            75% { transform: rotate(-5deg) scale(1.1); }
+            100% { transform: rotate(0deg) scale(1); }
+        }
+
+        .instructions { margin-top: 40px; opacity: 0.8; font-size: 16px; }
+        .sub-text { font-size: 12px; opacity: 0.6; margin-top: 5px; }
+
+        /* Buttons */
+        .btn {
+            margin-top: 20px; padding: 10px 20px;
+            background-color: white; color: #0077CC;
+            border: none; border-radius: 25px;
+            font-weight: bold; font-size: 14px;
+            cursor: pointer; box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            display: none; 
+            z-index: 10;
+        }
+
+        /* Footer Styling */
+        .footer {
+            position: absolute;
+            bottom: 15px;
+            width: 100%;
+            text-align: center;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.6);
+            font-family: monospace;
+            letter-spacing: 1px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- UPDATED TITLE IN NEPALI -->
+    <h1>अबकि बार बालेन सरकार<br>झापा - ५</h1>
+
+    <div class="bell-circle" id="bellBtn">
+        <img src="rsp.png" alt="Ghanti">
+    </div>
+
+    <div class="instructions">
+        Tap or Shake to Ring
+        <div class="sub-text">Harder Shake = Louder Volume</div>
+    </div>
+
+    <!-- Buttons -->
+    <button id="permission-btn" class="btn">Enable Shake Sensor</button>
+    <button id="install-btn" class="btn">📲 Install App</button>
+
+    <!-- UPDATED FOOTER -->
+    <div class="footer">Created by Prabin  Ban</div>
+
+    <script>
+        // --- 1. SERVICE WORKER (Offline) ---
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('sw.js').catch(console.error);
+        }
+
+        // --- 2. INSTALL APP LOGIC ---
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            e.preventDefault();
+            deferredPrompt = e;
+            installBtn.style.display = 'block';
+        });
+
+        installBtn.addEventListener('click', () => {
+            installBtn.style.display = 'none';
+            deferredPrompt.prompt();
+            deferredPrompt.userChoice.then((choiceResult) => { deferredPrompt = null; });
+        });
+
+        // --- 3. AUDIO & SHAKE LOGIC ---
+        const bellSound = new Audio('bell_sound.mp3');
+        const bellBtn = document.getElementById('bellBtn');
+        const permBtn = document.getElementById('permission-btn');
+        
+        let lastShakeTime = 0;
+        const SHAKE_THRESHOLD = 15; 
+        const MAX_SHAKE = 60;
+
+        function playRing(volume = 1.0) {
+            bellBtn.classList.remove('ringing');
+            void bellBtn.offsetWidth; 
+            bellBtn.classList.add('ringing');
+            bellSound.volume = volume;
+            bellSound.currentTime = 0; 
+            bellSound.play().catch(e => console.log("Interact first"));
+        }
+
+        bellBtn.addEventListener('click', () => playRing(1.0));
+
+        // iOS Permission & Shake
+        if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+            permBtn.style.display = "block";
+            permBtn.addEventListener('click', () => {
+                DeviceMotionEvent.requestPermission().then(response => {
+                    if (response === 'granted') {
+                        window.addEventListener('devicemotion', handleMotion);
+                        permBtn.style.display = "none";
+                    } else { alert("Permission denied"); }
+                });
+            });
+        } else {
+            window.addEventListener('devicemotion', handleMotion);
+        }
+
+        function handleMotion(event) {
+            const acc = event.accelerationIncludingGravity;
+            if (!acc) return;
+            let acceleration = Math.sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
+            let force = Math.abs(acceleration - 9.8);
+
+            if (force > SHAKE_THRESHOLD) {
+                const now = Date.now();
+                if (now - lastShakeTime > 150) {
+                    lastShakeTime = now;
+                    let volume = (force - SHAKE_THRESHOLD) / (MAX_SHAKE - SHAKE_THRESHOLD);
+                    if (volume > 1.0) volume = 1.0;
+                    if (volume < 0.2) volume = 0.2;
+                    playRing(volume);
+                }
+            }
+        }
+    </script>
+</body>
+</html>
