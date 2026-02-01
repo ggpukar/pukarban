@@ -1,0 +1,282 @@
+<!DOCTYPE html>
+<html lang="ne">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="theme-color" content="#005fae">
+    <title>RSP Ghanti - Jhapa 5</title>
+    
+    <link rel="manifest" href="manifest.json">
+    <link rel="apple-touch-icon" href="rsp.png">
+
+    <style>
+        body {
+            margin: 0; padding: 0;
+            background: radial-gradient(circle at center, #0088ff 0%, #004a8f 100%);
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex; flex-direction: column;
+            align-items: center; justify-content: center;
+            height: 100vh; overflow: hidden;
+            color: white; text-align: center;
+            user-select: none;
+            position: relative;
+        }
+
+        /* --- UI ELEMENTS --- */
+        .nepali-badge {
+            position: absolute; top: 20px; right: 20px; text-align: right;
+            background: rgba(255, 255, 255, 0.15); padding: 10px 15px;
+            border-radius: 15px; backdrop-filter: blur(8px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 20; min-width: 100px;
+        }
+        .nepali-time { font-size: 26px; font-weight: 800; letter-spacing: 1px; text-shadow: 0 2px 5px rgba(0,0,0,0.2); }
+        .nepali-date { font-size: 13px; opacity: 0.95; margin-top: 4px; font-weight: 500; line-height: 1.4; }
+
+        .volume-control { position: absolute; top: 20px; left: 20px; z-index: 20; }
+        .boost-btn {
+            background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%; width: 50px; height: 50px;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; backdrop-filter: blur(5px); transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+        .boost-btn svg { width: 24px; height: 24px; fill: white; }
+        .boost-active { background: #ff4757; box-shadow: 0 0 20px #ff4757; border-color: #ff4757; transform: scale(1.1); }
+        .boost-label { position: absolute; top: 55px; left: 0; width: 100%; text-align: center; font-size: 10px; font-weight: bold; opacity: 0.8; }
+
+        h1 { font-size: 30px; font-weight: 800; margin-bottom: 10px; text-shadow: 0px 4px 10px rgba(0,0,0,0.4); line-height: 1.3; padding: 0 20px; letter-spacing: 1px; z-index: 2; }
+
+        .bell-container { position: relative; width: 260px; height: 260px; display: flex; align-items: center; justify-content: center; z-index: 2; margin-bottom: 15px; margin-top: 10px; }
+        .glow-ring { position: absolute; width: 100%; height: 100%; border-radius: 50%; background: rgba(255, 255, 255, 0.15); box-shadow: 0 0 30px rgba(255, 255, 255, 0.1); backdrop-filter: blur(5px); z-index: 1; }
+        .bell-circle { width: 240px; height: 240px; background-color: transparent; border-radius: 50%; overflow: visible; display: flex; align-items: center; justify-content: center; cursor: pointer; -webkit-tap-highlight-color: transparent; z-index: 2; }
+        .bell-circle img { width: 100%; height: 100%; object-fit: contain; filter: drop-shadow(0px 10px 15px rgba(0,0,0,0.5)); pointer-events: none; transform-origin: top center; }
+        .ringing img { animation: swing-bell 0.15s infinite ease-in-out alternate; }
+        @keyframes swing-bell { from { transform: rotate(-25deg); } to { transform: rotate(25deg); } }
+
+        .slogan { font-size: 26px; font-weight: 900; color: #ffffff; text-shadow: 0px 3px 6px rgba(0,0,0,0.4); margin-top: 10px; padding: 10px 20px; background: rgba(0,0,0,0.1); border-radius: 50px; border: 1px solid rgba(255,255,255,0.2); animation: pulse-slogan 2s infinite; }
+        @keyframes pulse-slogan { 0% { transform: scale(1); } 50% { transform: scale(1.05); } 100% { transform: scale(1); } }
+
+        .footer { position: absolute; bottom: 15px; width: 100%; text-align: center; font-size: 12px; color: rgba(255, 255, 255, 0.5); font-family: monospace; letter-spacing: 1.5px; }
+        .btn { margin-top: 15px; padding: 10px 20px; background: white; color: #004a8f; border-radius: 20px; border: none; font-weight: bold; display: none; z-index: 10; }
+        
+        /* Error Message Style */
+        #error-msg { position: fixed; top: 0; left: 0; width: 100%; background: #ff4757; color: white; padding: 10px; font-size: 12px; display: none; z-index: 100; }
+    </style>
+</head>
+<body>
+
+    <div id="error-msg">Audio Error: Check file name or Server</div>
+
+    <div class="volume-control">
+        <div class="boost-btn" id="boostBtn">
+            <svg viewBox="0 0 24 24"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </div>
+        <div class="boost-label" id="boostText">Normal</div>
+    </div>
+
+    <div class="nepali-badge">
+        <div class="nepali-time" id="np-time">--:--</div>
+        <div class="nepali-date" id="np-date">-----</div>
+    </div>
+
+    <h1>अबकी  बार बालेन सरकार<br>झापा - ५</h1>
+
+    <div class="bell-container" id="bellContainer">
+        <div class="glow-ring"></div>
+        <div class="bell-circle">
+            <img src="rsp.png" id="bellImage" alt="Ghanti">
+        </div>
+    </div>
+
+    <div class="slogan">चुप चाप घन्टीमा छाप</div>
+
+    <button id="permission-btn" class="btn">Enable Shake</button>
+    <button id="install-btn" class="btn">📲 Install App</button>
+
+    <div class="footer">Created by Prabin Ban</div>
+
+    <script>
+        // ==========================================
+        // 1. NEPALI DATE (Same as before)
+        // ==========================================
+        const nepaliDigits = ['०', '१', '२', '३', '४', '५', '६', '७', '८', '९'];
+        const nepaliMonths = ["बैशाख", "जेठ", "असार", "साउन", "भदौ", "असोज", "कार्तिक", "मंसिर", "पुष", "माघ", "फागुन", "चैत"];
+        const nepaliDays = ["आइतबार", "सोमबार", "मंगलबार", "बुधबार", "बिहिबार", "शुक्रबार", "शनिबार"];
+        function toNepaliDigit(num) { return num.toString().split('').map(c => nepaliDigits[c] || c).join(''); }
+        function getNepaliDate() {
+            const now = new Date();
+            let yearAD = now.getFullYear();
+            let monthAD = now.getMonth();
+            let dayAD = now.getDate();
+            let dayWeek = now.getDay();
+            
+            // Approx B.S. Date
+            let npYear = yearAD + 57;
+            let npMonth = (monthAD + 8) % 12; 
+            let npDay = dayAD + 16; 
+            if (monthAD < 3 || (monthAD === 3 && dayAD < 13)) { npYear = yearAD + 56; }
+            if (npDay > 30) { npDay -= 30; npMonth++; }
+            if (npMonth > 11) { npMonth = 0; }
+            
+            let h = now.getHours(); h = h % 12 || 12;
+            let m = now.getMinutes();
+            let timeStr = toNepaliDigit(h) + ":" + toNepaliDigit(m < 10 ? '0'+m : m);
+            document.getElementById('np-time').innerText = timeStr;
+            document.getElementById('np-date').innerHTML = `${nepaliDays[dayWeek]}<br>${toNepaliDigit(npDay)} ${nepaliMonths[npMonth]}, ${toNepaliDigit(npYear)}`;
+        }
+        setInterval(getNepaliDate, 1000); getNepaliDate();
+
+
+        // ==========================================
+        // 2. ROBUST AUDIO ENGINE (FIXED)
+        // ==========================================
+        let audioCtx;
+        let bellBuffer = null;
+        let isBoosted = false;
+        let useFallback = false; // Flag for fallback mode
+        const fallbackAudio = new Audio('bell_sound.mp3'); // Backup player
+
+        async function initAudio() {
+            if (useFallback) return; // Don't try again if we already failed
+
+            if (!audioCtx) {
+                const AudioContext = window.AudioContext || window.webkitAudioContext;
+                audioCtx = new AudioContext();
+            }
+
+            if (audioCtx.state === 'suspended') {
+                await audioCtx.resume();
+            }
+
+            if (!bellBuffer) {
+                try {
+                    const response = await fetch('bell_sound.mp3');
+                    if (!response.ok) throw new Error("File not found");
+                    const arrayBuffer = await response.arrayBuffer();
+                    bellBuffer = await audioCtx.decodeAudioData(arrayBuffer);
+                    console.log("Boost Audio Loaded Successfully");
+                } catch (e) {
+                    console.warn("Boost Audio Failed (Likely CORS or File Missing). Switching to Standard Mode.", e);
+                    useFallback = true; // Switch to simple audio
+                    document.getElementById('error-msg').style.display = 'none'; // Hide error if standard works
+                }
+            }
+        }
+
+        // Play Function with Fallback Logic
+        async function playRing(force = 1.0) {
+            triggerAnimation();
+
+            // Try to init audio
+            try { await initAudio(); } catch(e) { console.log(e); }
+
+            if (useFallback) {
+                // FALLBACK MODE: Standard HTML5 Audio
+                // (Cannot boost > 100%, but works offline)
+                let sound = fallbackAudio.cloneNode();
+                sound.volume = force;
+                sound.play().catch(e => console.log("Audio blocked", e));
+            } 
+            else if (bellBuffer) {
+                // BOOST MODE: Web Audio API
+                const source = audioCtx.createBufferSource();
+                source.buffer = bellBuffer;
+                const gainNode = audioCtx.createGain();
+                
+                let finalVolume = force;
+                if (isBoosted) finalVolume = force * 3.0; // 300% Boost
+                
+                gainNode.gain.value = finalVolume;
+                source.connect(gainNode);
+                gainNode.connect(audioCtx.destination);
+                source.start(0);
+            }
+        }
+
+        // Toggle Booster
+        const boostBtn = document.getElementById('boostBtn');
+        const boostText = document.getElementById('boostText');
+        boostBtn.addEventListener('click', () => {
+            initAudio(); // Initialize on click
+            if(useFallback) {
+                alert("Boost not available in Offline/Local Mode. Please upload to a server.");
+                return;
+            }
+            isBoosted = !isBoosted;
+            if (isBoosted) {
+                boostBtn.classList.add('boost-active');
+                boostText.innerText = "MAX 300%";
+                boostText.style.color = "#ff4757";
+            } else {
+                boostBtn.classList.remove('boost-active');
+                boostText.innerText = "Normal";
+                boostText.style.color = "white";
+            }
+        });
+
+        // Visuals
+        const bellContainer = document.getElementById('bellContainer');
+        let shakeTimeout;
+        function triggerAnimation() {
+            bellContainer.classList.add('ringing');
+            clearTimeout(shakeTimeout);
+            shakeTimeout = setTimeout(() => { bellContainer.classList.remove('ringing'); }, 200);
+        }
+
+        // Tap Handler
+        bellContainer.addEventListener('click', () => {
+            bellContainer.style.transform = "scale(0.95)";
+            setTimeout(() => bellContainer.style.transform = "scale(1)", 100);
+            playRing(1.0);
+        });
+
+        // Shake Handler
+        const permBtn = document.getElementById('permission-btn');
+        let lastShakeTime = 0;
+        const SHAKE_THRESHOLD = 10;
+        const MAX_SHAKE = 40;
+        
+        function handleMotion(event) {
+            const acc = event.accelerationIncludingGravity;
+            if (!acc) return;
+            let acceleration = Math.sqrt(acc.x*acc.x + acc.y*acc.y + acc.z*acc.z);
+            let force = Math.abs(acceleration - 9.8); 
+            if (force > SHAKE_THRESHOLD) {
+                const now = Date.now();
+                if (now - lastShakeTime > 50) {
+                    lastShakeTime = now;
+                    let vol = (force - SHAKE_THRESHOLD) / (MAX_SHAKE - SHAKE_THRESHOLD);
+                    if (vol > 1.0) vol = 1.0;
+                    if (vol < 0.3) vol = 0.3;
+                    playRing(vol);
+                }
+            }
+        }
+
+        if (typeof DeviceMotionEvent !== 'undefined' && typeof DeviceMotionEvent.requestPermission === 'function') {
+            permBtn.style.display = "inline-block";
+            permBtn.addEventListener('click', () => {
+                initAudio();
+                DeviceMotionEvent.requestPermission().then(response => {
+                    if (response === 'granted') {
+                        window.addEventListener('devicemotion', handleMotion);
+                        permBtn.style.display = "none";
+                        playRing(0.5); 
+                    } else { alert("Permission denied"); }
+                });
+            });
+        } else {
+            window.addEventListener('devicemotion', handleMotion);
+        }
+
+        // PWA
+        let deferredPrompt;
+        const installBtn = document.getElementById('install-btn');
+        if ('serviceWorker' in navigator) { navigator.serviceWorker.register('sw.js').catch(console.error); }
+        window.addEventListener('beforeinstallprompt', (e) => { e.preventDefault(); deferredPrompt = e; installBtn.style.display = 'inline-block'; });
+        installBtn.addEventListener('click', () => { installBtn.style.display = 'none'; deferredPrompt.prompt(); });
+
+    </script>
+</body>
+</html>
