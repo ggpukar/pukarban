@@ -14,6 +14,9 @@ return res.blob().then(function(blob){return {blob:blob,expires:expires}});
 }).then(function(photo){
 var img=document.createElement('img');
 img.className='pv-img';
+// Fits the photo to the screen even if an older stylesheet is loaded.
+img.style.maxWidth='100%';
+img.style.height='auto';
 img.alt='Shared photo';
 img.src=URL.createObjectURL(photo.blob);
 box.appendChild(img);
