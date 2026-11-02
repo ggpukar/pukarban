@@ -289,6 +289,11 @@ var targetX=0,x=0,y=0,visible=true;
 addEventListener('pointermove',function(e){
 if(e.pointerType==='mouse')targetX=e.clientX/innerWidth-.5;
 });
+addEventListener('touchmove',function(e){
+var box=hero.parentNode.getBoundingClientRect(),point=e.touches[0];
+if(point&&point.clientY>=box.top&&point.clientY<=box.bottom)targetX=point.clientX/innerWidth-.5;
+},{passive:true});
+addEventListener('touchend',function(){targetX=0},{passive:true});
 new IntersectionObserver(function(entries){visible=entries[0].isIntersecting}).observe(hero.parentNode);
 function frame(){
 if(visible&&!sitePerf.calm){

@@ -183,6 +183,16 @@ if(event.pointerType!=='mouse')return;
 mouseX=event.clientX/innerWidth-.5;
 mouseY=event.clientY/innerHeight-.5;
 });
+// On phones the view follows a finger dragged over the hero and drifts back when it lifts.
+function touch(event){
+var point=event.touches[0],box=hero.getBoundingClientRect();
+if(!point||point.clientY<box.top||point.clientY>box.bottom)return;
+mouseX=point.clientX/innerWidth-.5;
+mouseY=(point.clientY-box.top)/box.height-.5;
+}
+addEventListener('touchstart',touch,{passive:true});
+addEventListener('touchmove',touch,{passive:true});
+addEventListener('touchend',function(){mouseX=0;mouseY=0},{passive:true});
 function resize(){
 var ratio=sitePerf.lite?.75:Math.min(devicePixelRatio||1,innerWidth<700?1.25:1.5);
 width=hero.clientWidth;
