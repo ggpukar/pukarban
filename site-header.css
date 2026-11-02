@@ -1,58 +1,37 @@
 #np-clock{background:#14213D;color:#FFF}
-.np-bar{max-width:1280px;margin:0 auto;padding:10px 24px;display:flex;align-items:center;justify-content:space-between;gap:10px 28px}
-.np-group{display:flex;align-items:center;gap:8px 16px;min-width:0}
-#wx{gap:8px}
-.np-face{flex:none;width:52px;height:52px}
-.np-big,.wx-temp{font-family:'DM Serif Display',serif;font-size:34px;line-height:1.1;white-space:nowrap}
-.np-big{margin:0}
-.np-seconds{margin-left:6px;font-family:Inter,system-ui,sans-serif;font-size:14px;font-variant-numeric:tabular-nums}
-.np-eyebrow{margin:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF4D6D;white-space:nowrap}
-.np-bs{margin:0;font-family:Mukta,sans-serif;font-weight:500;font-size:16px;line-height:1.3;white-space:nowrap}
-.np-small{margin:0;font-size:13px;line-height:1.4;color:#E1E7F5;white-space:nowrap}
-.wx-main{display:flex;align-items:center;gap:8px;min-width:0;margin-right:6px}
-.wx-main>div{min-width:0}
-.wx-main p{overflow:hidden;text-overflow:ellipsis}
-.wx-icon{font-size:28px;line-height:1}
-.wx-now{margin:0;font-size:15px;font-weight:500;line-height:1.3;white-space:nowrap}
-.wx-days{display:flex;gap:12px;margin-right:6px;font-size:12px;line-height:1.35;text-align:center;color:#E1E7F5;white-space:nowrap}
-.wx-days:empty{display:none}
+.np-bar{max-width:1280px;min-height:80px;margin:0 auto;padding:16px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.np-brand{color:#FFF;font-family:'DM Serif Display',serif;font-size:24px;line-height:1.2;text-decoration:none;white-space:nowrap}
+.np-brand:hover{color:#FF8FA3}
+.np-brand:focus-visible,.wx-chip:focus-visible{outline:3px solid #FF4D6D;outline-offset:3px}
+.np-group{display:flex;align-items:center;gap:10px;min-width:0}
+.np-when{margin:0 6px 0 0;font-size:14px;line-height:1.3;color:#D3DCF0;white-space:nowrap;font-variant-numeric:tabular-nums}
+.np-when #np-time{color:#FFF;font-weight:600}
+.np-bs{font-family:Mukta,sans-serif;font-size:15px}
+.np-bs::before{content:"· ";color:#8A96B8}
+.wx-chip{display:flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:1.5px solid rgba(255,255,255,.22);border-radius:999px;color:#FFF;font-size:14px;font-weight:600;text-decoration:none;white-space:nowrap}
+.wx-chip:hover{border-color:#FF4D6D}
+.wx-icon{font-size:18px;line-height:1}
+.wx-now{font-weight:400;color:#D3DCF0}
+.theme-toggle svg{display:block;width:20px;height:20px;margin:auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
 #wx .theme-toggle{flex:none}
-/* The round buttons stay together at the right end of the weather row. */
-#wx .wx-days+.theme-toggle{margin-left:auto}
-.site-brand-row{background:#F4F6FC}
-.site-brand-row div{max-width:1200px;margin:0 auto;padding:16px 24px}
-.site-brand{display:inline-flex;align-items:center;min-height:48px;color:#14213D;font-family:'DM Serif Display',serif;font-size:26px;text-decoration:none}
-.site-brand:hover{color:#003893}
-.site-brand:focus-visible{outline-color:#003893}
 
-/* Laptops: one row, without the 3-day forecast when space is short. */
-@media (max-width:1399.98px){
-.wx-days{display:none!important}
+/* Laptops: the weather description goes first when space is short. */
+@media (max-width:1099.98px){
+.wx-now{display:none}
 }
-/* Tablets and phones: the clock on the first row, weather and buttons on the second. */
-@media (max-width:979.98px){
-.np-bar{flex-wrap:wrap;padding:8px 16px}
-.np-bar>.np-group{width:100%}
-.wx-days{display:flex!important}
-.wx-days:empty{display:none!important}
+/* Phones: the date and the name step aside so the buttons keep their size. */
+@media (max-width:719.98px){
+.np-bs{display:none}
 }
-@media (max-width:599.98px){
-.np-bar{gap:6px}
-.np-face{width:38px;height:38px}
-.np-group{gap:6px 10px}
-.np-big,.wx-temp{font-size:28px}
-.np-seconds{font-size:12px}
-.np-bar>.np-group:first-child .np-eyebrow{display:none}
-.np-bs{font-size:14px}
-.np-small{font-size:12px}
-.wx-icon{font-size:24px}
-.wx-now{font-size:14px}
-.wx-days{display:none!important}
-#wx .theme-toggle{width:40px;height:40px;font-size:16px}
+@media (max-width:519.98px){
+.np-bar{padding:16px 12px 16px 16px;gap:8px}
+.np-when{display:none}
+.np-brand{font-size:20px}
+.np-group{gap:6px}
+.wx-chip{padding:0 10px}
+#wx .theme-toggle{width:40px;height:40px}
 }
-/* Narrow phones: the digital time and dates need the room more than the clock face. */
-@media (max-width:419.98px){
-.np-face{display:none}
-.np-bar>.np-group:first-child>div{min-width:0}
-.np-bs,.np-small{overflow:hidden;text-overflow:ellipsis}
+@media (max-width:379.98px){
+.np-brand{display:none}
 }
+#wx{margin-left:auto}

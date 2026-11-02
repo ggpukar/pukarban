@@ -1,6 +1,6 @@
 (function(){
 var NEPAL_OFFSET=20700000,DAWN=45*60,GLOW=60*60;
-var hero=document.getElementById('flags').parentNode,weather=null;
+var hero=document.getElementById('hero'),weather=null;
 var fx=document.createElement('div');
 fx.className='wx-fx';
 fx.setAttribute('aria-hidden','true');

@@ -1,33 +1,14 @@
-.theme-toggle{width:44px;height:44px;padding:0;border:1.5px solid #FF4D6D;border-radius:50%;background:transparent;color:#FF4D6D;font-size:18px;line-height:1;cursor:pointer}
+.theme-toggle{width:44px;height:44px;padding:0;border:1.5px solid #FF4D6D;border-radius:50%;background:transparent;color:#FF4D6D;line-height:1;cursor:pointer}
 .theme-toggle:hover{background:rgba(255,77,109,.18)}
 .theme-toggle:focus-visible{outline:3px solid #FF4D6D;outline-offset:3px}
 
 html[data-theme=dark]{color-scheme:dark;background:#0A1128}
 html[data-theme=dark] body{background:#0A1128;color:#EEF1FA}
 
-/* Home page */
-html[data-theme=dark] .hm{background:#0A1128!important;color:#EEF1FA!important}
-html[data-theme=dark] .hm a:not(.hm-btn){color:#EEF1FA}
-html[data-theme=dark] .hm a:not(.hm-btn):hover{color:#8FB4FF}
-html[data-theme=dark] .hm-card a:not(.hm-btn){color:#8FB4FF}
-html[data-theme=dark] [style*="#F4F6FC"]{background:linear-gradient(180deg,#0A1128 0%,#0C1838 45%,#12306E 100%)!important}
-html[data-theme=dark] [style*="#F4F6FC"]>canvas:not(#flags),html[data-theme=dark] #range{filter:brightness(.6)}
-html[data-theme=dark] .sky{opacity:.45}
-html[data-theme=dark] [style*="color: #2A3558"]{color:#D3DAEC!important}
-html[data-theme=dark] [style*="color: #4A5578"]{color:#A8B3D1!important}
-html[data-theme=dark] [style*="border-left: 2px solid #D6DDEE"]{border-left-color:#2C3A66!important}
-html[data-theme=dark] .hm-btn[style*="background: #DC143C"]{background:#DC143C!important;color:#FFF!important}
-html[data-theme=dark] .hm-btn[style*="border: 1.5px solid #14213D"]{border-color:#EEF1FA!important;color:#EEF1FA}
-html[data-theme=dark] .hm-card{background:#111C3B!important;border-color:#2C3A66!important}
+/* Home page skills */
 html[data-theme=dark] #skills>p,html[data-theme=dark] .skill-used{color:#A8B3D1}
 html[data-theme=dark] .skill-group{background:#111C3B;border-color:#2C3A66}
 html[data-theme=dark] .skill-tags li{background:#1F2D57}
-
-/* Shared header */
-html[data-theme=dark] .site-brand-row{background:#0B1530}
-html[data-theme=dark] .site-brand{color:#EEF1FA}
-html[data-theme=dark] .site-brand:hover{color:#8FB4FF}
-html[data-theme=dark] .site-brand:focus-visible{outline-color:#FF4D6D}
 
 /* Tools */
 html[data-theme=dark] .tool-card,html[data-theme=dark] .tool-panel{background:#111C3B;border-color:#2C3A66}
