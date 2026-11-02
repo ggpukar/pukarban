@@ -1,0 +1,41 @@
+{
+  "fallback": "Sorry, I didn't catch that. Reply *menu* to see what I can help with.",
+  "non_text": "I can only read text messages for now. Reply *menu* to see what I can help with.",
+  "rules": [
+    {
+      "id": "greeting",
+      "keywords": ["hi", "hello", "hey", "namaste", "नमस्ते"],
+      "reply": "Namaste! 🙏 I'm Prabin's auto-reply bot.\n\nReply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin"
+    },
+    {
+      "id": "menu",
+      "keywords": ["menu", "help", "options"],
+      "reply": "Reply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin"
+    },
+    {
+      "id": "projects",
+      "keywords": ["1", "project", "projects", "work", "portfolio"],
+      "reply": "Selected work:\n• Login and signup page with full validation\n• This WhatsApp auto-reply bot\n\nSee them at https://prabinban.com.np/#work"
+    },
+    {
+      "id": "github",
+      "keywords": ["2", "github", "code", "repo"],
+      "reply": "Find Prabin's code here: https://github.com/ggpukar/pukarban"
+    },
+    {
+      "id": "contact",
+      "keywords": ["3", "contact", "email", "hire", "mail"],
+      "reply": "You can email Prabin at banpukar00@gmail.com"
+    },
+    {
+      "id": "about",
+      "keywords": ["4", "about", "who", "prabin"],
+      "reply": "Prabin Ban is a student developer in Bhaktapur, Nepal, who builds apps, bots and strategy work."
+    },
+    {
+      "id": "thanks",
+      "keywords": ["thanks", "thank", "dhanyabad", "धन्यवाद"],
+      "reply": "You're welcome! 🙏"
+    }
+  ]
+}

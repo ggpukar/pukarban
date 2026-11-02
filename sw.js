@@ -1,0 +1,42 @@
+// Generated list of files to keep for offline use. Rebuild it whenever the site changes.
+var VERSION='b6a1b9756f',CACHE='site-'+VERSION,FONTS='fonts';
+var CORE=["./","index.html","loading.html","offline.html","palette.css","section-bg.css","sidenav.css","site-header.css","skills.css","sky.css","theme.css","contact-form.js","mountains3d.js","palette.js","perf.js","protect.js","pwa.js","section-bg.js","sidenav.js","site-header.js","sky.js","theme.js","tools/calendar.html","tools/date-converter.html","tools/file-converter.html","tools/gpa-calculator.html","tools/image-compressor.html","tools/index.html","tools/land-units.html","tools/nepali-typing.html","tools/password-generator.html","tools/pdf-tools.html","tools/preeti-unicode.html","tools/qr-code.html","tools/resume-builder.html","tools/typing-test.html","tools/vehicle-tax.html","tools/video-converter.html","tools/weather.html","tools/word-counter.html","tools/world-clock.html","tools/tools.css","tools/bs-calendar.js","tools/calendar.js","tools/date-converter.js","tools/file-converter.js","tools/gpa.js","tools/image-compressor.js","tools/land-units.js","tools/nepali-typing.js","tools/password.js","tools/pdf-tools.js","tools/preeti.js","tools/qr.js","tools/resume-builder.js","tools/roman-nepali.js","tools/toolkit.js","tools/tools.js","tools/typing-test.js","tools/vehicle-tax.js","tools/video-converter.js","tools/weather.js","tools/word-counter.js","tools/world-clock.js","projects/login.html","projects/whatsapp-demo.html","tools/lib/qrcode.js","tools/lib/nepali-converter.js","tools/lib/unicode-to-preeti.js","assets/prabin.jpg","assets/icon-192.png","assets/icon-512.png","manifest.webmanifest"];
+self.addEventListener('install',function(event){
+event.waitUntil(caches.open(CACHE).then(function(cache){return cache.addAll(CORE)}).then(function(){return self.skipWaiting()}));
+});
+self.addEventListener('activate',function(event){
+event.waitUntil(caches.keys().then(function(names){
+return Promise.all(names.filter(function(name){return name!==CACHE&&name!==FONTS}).map(function(name){return caches.delete(name)}));
+}).then(function(){return self.clients.claim()}));
+});
+function keep(cacheName,request,response){
+if(response&&(response.ok||response.type==='opaque')){
+var copy=response.clone();
+caches.open(cacheName).then(function(cache){cache.put(request,copy)});
+}
+return response;
+}
+self.addEventListener('fetch',function(event){
+var request=event.request,url=new URL(request.url);
+if(request.method!=='GET')return;
+if(url.origin===location.origin){
+// Pages try the network first so updates show at once; files use the saved copy and refresh it in the background.
+if(request.mode==='navigate'){
+event.respondWith(fetch(request).then(function(response){return keep(CACHE,request,response)}).catch(function(){
+return caches.match(request,{ignoreSearch:true}).then(function(hit){return hit||caches.match('offline.html')});
+}));
+return;
+}
+event.respondWith(caches.match(request,{ignoreSearch:true}).then(function(hit){
+var fresh=fetch(request).then(function(response){return keep(CACHE,request,response)});
+if(hit){fresh.catch(function(){});return hit}
+return fresh.catch(function(){return Response.error()});
+}));
+return;
+}
+if(url.hostname==='fonts.googleapis.com'||url.hostname==='fonts.gstatic.com'){
+event.respondWith(caches.match(request).then(function(hit){
+return hit||fetch(request).then(function(response){return keep(FONTS,request,response)}).catch(function(){return Response.error()});
+}));
+}
+});

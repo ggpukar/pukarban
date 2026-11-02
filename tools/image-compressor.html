@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data: blob:; font-src https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; script-src 'self'; connect-src https://prabin-weather.prabinban.workers.dev">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Image compressor — Prabin Ban</title>
+<meta name="description" content="Make images smaller for forms and uploads. Your images stay on your device.">
+<link rel="canonical" href="https://prabinban.com.np/tools/image-compressor.html">
+<meta property="og:title" content="Image compressor — Prabin Ban">
+<meta property="og:description" content="Make images smaller for forms and uploads. Your images stay on your device.">
+<meta property="og:url" content="https://prabinban.com.np/tools/image-compressor.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://prabinban.com.np/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prabin Ban, BIT student from Bhaktapur, Nepal">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600&amp;family=Mukta:wght@500;700&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidenav.css">
+<link rel="stylesheet" href="../site-header.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<nav class="sidenav" id="sidenav" aria-label="Main">
+<a class="sidenav-link" href="../index.html#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</a>
+<a class="sidenav-link" href="../index.html#work"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>Work</a>
+<a class="sidenav-link" href="../index.html#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg>About</a>
+<a class="sidenav-link" href="../index.html#skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>Skills</a>
+<a class="sidenav-link" href="../index.html#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>Contact</a>
+<a class="sidenav-link" href="index.html" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Tools</a>
+</nav>
+<div class="sidenav-scrim" id="sidenav-scrim"></div>
+<button class="sidenav-toggle" id="sidenav-toggle" type="button" aria-expanded="false" aria-controls="sidenav"><svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="sidenav-label">Menu</span></button>
+<section id="np-clock" aria-label="Current time in Bhaktapur">
+<div class="np-bar">
+<div class="np-group">
+<svg class="np-face" viewBox="0 0 120 120" width="60" height="60" aria-hidden="true">
+<circle cx="60" cy="60" r="58" fill="#F7F8FC"></circle>
+<g id="np-ticks" stroke-linecap="round"></g>
+<line id="np-hour" x1="60" y1="64" x2="60" y2="34" stroke="#14213D" stroke-width="4.5" stroke-linecap="round"></line>
+<line id="np-minute" x1="60" y1="66" x2="60" y2="20" stroke="#14213D" stroke-width="3" stroke-linecap="round"></line>
+<line id="np-second" x1="60" y1="70" x2="60" y2="14" stroke="#DC143C" stroke-width="1.5" stroke-linecap="round"></line>
+<circle cx="60" cy="60" r="3.5" fill="#DC143C"></circle>
+</svg>
+<p class="np-big"><span id="np-time">--:--</span><span class="np-seconds" id="np-seconds"></span></p>
+<div>
+<p class="np-eyebrow">Bhaktapur, Nepal · UTC+5:45</p>
+<p class="np-bs" id="np-bs" lang="ne"></p>
+<p class="np-small" id="np-ad"></p>
+</div>
+</div>
+<div class="np-group" id="wx" aria-live="polite">
+<div class="wx-main">
+<span class="wx-icon" id="wx-icon" aria-hidden="true"></span>
+<span class="wx-temp" id="wx-temp"></span>
+<div>
+<p class="np-eyebrow" id="wx-place">Weather</p>
+<p class="wx-now" id="wx-now">Loading…</p>
+<p class="np-small" id="wx-range"></p>
+</div>
+</div>
+<div class="wx-days" id="wx-days"></div>
+</div>
+</div>
+</section>
+<div class="site-brand-row"><div><a class="site-brand" href="../index.html">Prabin Ban</a></div></div>
+<header class="tools-head tool-page-head">
+<div class="tools-wrap">
+<a class="tools-back" href="index.html">← All tools</a>
+<h1>Image compressor</h1>
+<p>Make images smaller for forms and uploads. Your images stay on your device.</p>
+</div>
+</header>
+<main class="tools-wrap tool-main">
+<div class="tool-panel">
+<label class="tool-label" for="img-files">Choose images</label>
+<input class="tool-input" id="img-files" type="file" accept="image/jpeg,image/png,image/webp,image/bmp,image/gif,image/avif" multiple>
+<div class="tool-row">
+<div class="tool-grow"><label class="tool-label" for="img-quality">Quality: <span id="img-quality-value">75%</span></label><input id="img-quality" class="tool-range" type="range" min="10" max="100" value="75"></div>
+<div class="tool-grow"><label class="tool-label" for="img-width">Maximum width</label><select class="tool-input" id="img-width"><option value="0">Keep original</option><option value="2000">2000 px</option><option value="1280" selected>1280 px</option><option value="800">800 px</option><option value="400">400 px</option></select></div>
+<div class="tool-grow"><label class="tool-label" for="img-format">Save as</label><select class="tool-input" id="img-format"><option value="same">Same format</option><option value="image/jpeg">JPG</option><option value="image/webp">WebP</option><option value="image/png">PNG</option></select></div>
+</div>
+<button class="tool-btn" id="img-run" type="button">Compress images</button>
+<p class="tool-note" id="img-status" role="status"></p>
+</div>
+<div id="img-results"></div>
+<p class="tool-credit">PNG ignores the quality setting, so use JPG or WebP for the biggest savings.</p>
+</main>
+<script src="toolkit.js"></script>
+<script src="image-compressor.js"></script>
+<script src="../site-header.js"></script>
+<script src="../sidenav.js"></script>
+<script src="../palette.js"></script>
+<script src="../pwa.js"></script>
+</body>
+</html>

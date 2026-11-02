@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; script-src 'self'; connect-src https://prabin-weather.prabinban.workers.dev">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Free tools — Prabin Ban</title>
+<meta name="description" content="Free everyday tools from Prabin Ban in Bhaktapur, Nepal.">
+<link rel="canonical" href="https://prabinban.com.np/tools/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../sidenav.css">
+<link rel="stylesheet" href="../site-header.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="../theme.css">
+<script src="../theme.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<nav class="sidenav" id="sidenav" aria-label="Main">
+<a class="sidenav-link" href="../index.html#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</a>
+<a class="sidenav-link" href="../index.html#work"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>Work</a>
+<a class="sidenav-link" href="../index.html#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg>About</a>
+<a class="sidenav-link" href="../index.html#skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>Skills</a>
+<a class="sidenav-link" href="../index.html#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>Contact</a>
+<a class="sidenav-link" href="index.html" aria-current="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Tools</a>
+</nav>
+<div class="sidenav-scrim" id="sidenav-scrim"></div>
+<button class="sidenav-toggle" id="sidenav-toggle" type="button" aria-expanded="false" aria-controls="sidenav"><svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="sidenav-label">Menu</span></button>
+<section id="np-clock" aria-label="Current time in Bhaktapur">
+<div class="np-bar">
+<div class="np-group">
+<svg class="np-face" viewBox="0 0 120 120" width="60" height="60" aria-hidden="true">
+<circle cx="60" cy="60" r="58" fill="#F7F8FC"></circle>
+<g id="np-ticks" stroke-linecap="round"></g>
+<line id="np-hour" x1="60" y1="64" x2="60" y2="34" stroke="#14213D" stroke-width="4.5" stroke-linecap="round"></line>
+<line id="np-minute" x1="60" y1="66" x2="60" y2="20" stroke="#14213D" stroke-width="3" stroke-linecap="round"></line>
+<line id="np-second" x1="60" y1="70" x2="60" y2="14" stroke="#DC143C" stroke-width="1.5" stroke-linecap="round"></line>
+<circle cx="60" cy="60" r="3.5" fill="#DC143C"></circle>
+</svg>
+<p class="np-big"><span id="np-time">--:--</span><span class="np-seconds" id="np-seconds"></span></p>
+<div>
+<p class="np-eyebrow">Bhaktapur, Nepal · UTC+5:45</p>
+<p class="np-bs" id="np-bs" lang="ne"></p>
+<p class="np-small" id="np-ad"></p>
+</div>
+</div>
+<div class="np-group" id="wx" aria-live="polite">
+<div class="wx-main">
+<span class="wx-icon" id="wx-icon" aria-hidden="true"></span>
+<span class="wx-temp" id="wx-temp"></span>
+<div>
+<p class="np-eyebrow" id="wx-place">Weather</p>
+<p class="wx-now" id="wx-now">Loading…</p>
+<p class="np-small" id="wx-range"></p>
+</div>
+</div>
+<div class="wx-days" id="wx-days"></div>
+</div>
+</div>
+</section>
+<div class="site-brand-row"><div><a class="site-brand" href="../index.html">Prabin Ban</a></div></div>
+<header class="tools-head">
+<div class="tools-wrap">
+<a class="tools-back" href="../index.html">← Back to home</a>
+<h1>Free tools</h1>
+<p>Everyday tools for students, offices and anyone in Nepal.</p>
+<label for="tool-search">Search tools</label>
+<input id="tool-search" type="search" placeholder="Try &quot;ropani&quot; or &quot;PDF&quot;" autocomplete="off">
+</div>
+</header>
+<main class="tools-wrap">
+<div id="tool-recent" hidden><p class="tool-recent-title">Recently used</p><div class="tool-choices"></div></div>
+<p id="tool-count" role="status"></p>
+<div class="tool-grid" id="tool-grid">
+<a class="tool-card tool-live" href="file-converter.html" data-keywords="pdf docx doc word excel xlsx xls sheet csv ppt pptx powerpoint txt text image jpg png webp all file convert"><h2>File converter</h2><p>Convert PDF, Word, Excel, PowerPoint, text and images.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="video-converter.html" data-keywords="video audio mp4 webm mov avi mkv gif mp3 wav convert"><h2>Video and audio converter</h2><p>Convert MP4, WebM, MOV, AVI, MKV, MP3 and more.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="date-converter.html" data-keywords="bikram sambat nepali calendar miti gate english date convert ad bs"><h2>BS ↔ AD date converter</h2><p>Convert dates between the Nepali and English calendars.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="calendar.html" data-keywords="bikram sambat patro patra nepali calendar month"><h2>Nepali calendar</h2><p>Browse Bikram Sambat months with English dates.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="world-clock.html" data-keywords="time zone city country clock nepal difference"><h2>World clock</h2><p>See the time in any city and how far it is from Nepal.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="weather.html" data-keywords="forecast temperature rain city place search"><h2>Weather search</h2><p>Find the current weather and forecast for any place.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="image-compressor.html" data-keywords="photo picture jpg jpeg png webp reduce size resize compress upload"><h2>Image compressor</h2><p>Make images smaller for forms and uploads.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="qr-code.html" data-keywords="qr code scan link shop menu location generator"><h2>QR code generator</h2><p>Create a QR code for a link, menu or location.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="land-units.html" data-keywords="ropani aana paisa daam bigha kattha dhur square feet metre jagga land area"><h2>Land unit converter</h2><p>Convert ropani, aana, bigha, kattha and square feet.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="preeti-unicode.html" data-keywords="nepali font typing unicode preeti text convert"><h2>Preeti ↔ Unicode converter</h2><p>Change Nepali text between Preeti and Unicode.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="pdf-tools.html" data-keywords="pdf combine join merge split separate pages document file"><h2>PDF merge and split</h2><p>Join PDF files together or separate their pages.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="gpa-calculator.html" data-keywords="gpa cgpa grade marks percentage student result"><h2>GPA and percentage calculator</h2><p>Work out your GPA or percentage from your results.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="password-generator.html" data-keywords="password strong random secure generator"><h2>Password generator</h2><p>Create strong, random passwords.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="word-counter.html" data-keywords="word character letter count counter text essay"><h2>Word and character counter</h2><p>Count words and characters, including in Nepali.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="resume-builder.html" data-keywords="resume cv biodata job application pdf builder maker"><h2>Resume builder</h2><p>Create a resume and save it as a PDF.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="nepali-typing.html" data-keywords="nepali typing romanized unicode roman english keyboard type"><h2>Nepali typing</h2><p>Type Nepali using English letters.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="typing-test.html" data-keywords="typing speed test practice wpm words per minute accuracy keyboard"><h2>Typing practice</h2><p>Test your typing speed in English or Nepali.</p><span class="tool-open">Open tool →</span></a>
+<a class="tool-card tool-live" href="vehicle-tax.html" data-keywords="vehicle tax bluebook renewal bike car motorcycle scooter ev electric insurance fine province nepal"><h2>Nepal vehicle tax calculator</h2><p>Estimate your bluebook renewal cost in any province.</p><span class="tool-open">Open tool →</span></a>
+</div>
+<p id="tool-empty" hidden>No tools match your search. Try a simpler word.</p>
+</main>
+<script src="tools.js"></script>
+<script src="../site-header.js"></script>
+<script src="../sidenav.js"></script>
+<script src="../palette.js"></script>
+<script src="../pwa.js"></script>
+</body>
+</html>

@@ -1,0 +1,579 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Login and signup demo — Prabin Ban</title>
+<meta name="description" content="A login and signup page with advanced validation, built with HTML, CSS and JavaScript.">
+<link rel="canonical" href="https://prabinban.com.np/projects/login.html">
+<meta property="og:title" content="Login and signup demo — Prabin Ban">
+<meta property="og:description" content="A login and signup page with advanced validation, built with HTML, CSS and JavaScript.">
+<meta property="og:url" content="https://prabinban.com.np/projects/login.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://prabinban.com.np/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prabin Ban, BIT student from Bhaktapur, Nepal">
+<meta property="og:site_name" content="Prabin Ban">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style id="page-css">
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;min-height:100vh;padding:24px 16px 64px;background:linear-gradient(180deg,#F4F6FC 0%,#CFD9F2 38%,#A3BCF0 100%) fixed;color:#14213D;font:16px/1.5 Inter,system-ui,sans-serif}
+a{color:#14213D}a:hover{color:#003893}
+h1,h2{margin:0;font-family:'DM Serif Display',serif;font-weight:400}
+:focus-visible{outline:3px solid #003893;outline-offset:2px}
+.wrap{max-width:460px;margin:0 auto}
+.wrap.wide{max-width:900px}
+.top{display:flex;flex-wrap:wrap;gap:8px 16px;justify-content:space-between;align-items:center;margin-bottom:20px}
+.views{display:flex;gap:4px}
+.pill{min-height:40px;padding:0 16px;border:1.5px solid #14213D;border-radius:999px;background:transparent;color:#14213D;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+.pill[aria-pressed=true]{background:#14213D;color:#FFF}
+.card{padding:32px;border:1px solid #D6DDEE;border-radius:20px;background:#FFF;box-shadow:0 16px 40px rgba(20,33,61,.12)}
+.notice{margin:0 0 20px;padding:10px 12px;border-radius:10px;background:#FFF6D6;font-size:13px}
+.tabs{display:grid;grid-template-columns:1fr 1fr;gap:4px;margin:0 0 24px;padding:4px;border-radius:999px;background:#E3F2EE}
+.tab{min-height:44px;border:0;border-radius:999px;background:transparent;color:#4A5578;font:600 15px Inter,system-ui,sans-serif;cursor:pointer}
+.tab[aria-selected=true]{background:#14213D;color:#FFF}
+.field{margin-bottom:16px}
+label{display:block;margin-bottom:4px;font-size:14px;font-weight:600}
+.optional{color:#4A5578;font-weight:400}
+.box{position:relative}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=password]{width:100%;min-height:46px;padding:10px 12px;border:1.5px solid #8FB8B2;border-radius:10px;background:#FFF;color:#14213D;font:16px Inter,system-ui,sans-serif}
+input.has-toggle{padding-right:68px}
+input[aria-invalid=true]{border-color:#C62828}
+input.ok{border-color:#2E7D32}
+.toggle{position:absolute;top:1px;right:1px;min-width:60px;height:44px;border:0;border-radius:9px;background:transparent;color:#003893;font:600 13px Inter,system-ui,sans-serif;cursor:pointer}
+.error{min-height:0;margin:4px 0 0;color:#B3261E;font-size:13px}
+.hint{margin:4px 0 0;color:#0B6464;font-size:13px}
+.suggest{padding:0;border:0;background:none;color:#003893;font:600 13px Inter,system-ui,sans-serif;text-decoration:underline;cursor:pointer}
+.meter{display:grid;grid-template-columns:repeat(4,1fr);gap:4px;margin-top:8px}
+.meter span{height:6px;border-radius:3px;background:#D6DDEE;transition:background 160ms ease}
+.strength{margin:4px 0 0;color:#4A5578;font-size:13px}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:2px 12px;margin:8px 0 0;padding:0;list-style:none;color:#4A5578;font-size:13px}
+.checks li::before{content:"○ "}
+.checks li.met{color:#1E6B24}
+.checks li.met::before{content:"✓ "}
+.row{display:flex;flex-wrap:wrap;gap:8px;justify-content:space-between;align-items:center;margin-bottom:16px;font-size:14px}
+.check{display:flex;gap:8px;align-items:flex-start;margin:0;font-weight:400}
+.check input{width:18px;height:18px;margin:3px 0 0;flex:none}
+.link{padding:0;border:0;background:none;color:#003893;font:600 14px Inter,system-ui,sans-serif;text-decoration:underline;cursor:pointer}
+.submit{width:100%;min-height:48px;border:0;border-radius:999px;background:#14213D;color:#FFF;font:600 16px Inter,system-ui,sans-serif;cursor:pointer}
+.submit:disabled{opacity:.6;cursor:not-allowed}
+.status{margin:12px 0 0;font-size:14px}
+.status.bad{color:#B3261E}
+.status.good{color:#1E6B24}
+.actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:20px}
+.code-head{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:12px}
+pre{margin:0;max-height:70vh;overflow:auto;padding:16px;border-radius:12px;background:#14213D;color:#F7F8FC;font:13px/1.55 Consolas,Menlo,monospace;tab-size:2}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<div class="wrap" id="wrap">
+<div class="top">
+<a href="../index.html#work">← Back to work</a>
+<div class="views">
+<button class="pill" id="show-demo" type="button" aria-pressed="true">Live demo</button>
+<button class="pill" id="show-code" type="button" aria-pressed="false">Code</button>
+</div>
+</div>
+
+<main id="demo" class="card">
+<div id="auth">
+<h1 id="title" style="font-size:38px;line-height:1.1;margin-bottom:12px">Welcome back</h1>
+<p class="notice">Demo only: there is no server. Accounts stay in this browser, with passwords stored as salted hashes. Please use a made-up password.</p>
+<div class="tabs" role="tablist" aria-label="Choose a form">
+<button class="tab" id="tab-login" type="button" role="tab" aria-selected="true" aria-controls="login">Log in</button>
+<button class="tab" id="tab-signup" type="button" role="tab" aria-selected="false" aria-controls="signup">Sign up</button>
+</div>
+
+<form id="login" novalidate role="tabpanel" aria-labelledby="tab-login">
+<div class="field">
+<label for="login-email">Email</label>
+<input id="login-email" name="email" type="email" autocomplete="username" spellcheck="false" aria-describedby="login-email-error">
+<p class="error" id="login-email-error"></p>
+</div>
+<div class="field">
+<label for="login-password">Password</label>
+<div class="box">
+<input class="has-toggle" id="login-password" name="password" type="password" autocomplete="current-password" aria-describedby="login-password-error login-password-caps">
+<button class="toggle" type="button" data-toggle="login-password" aria-label="Show password" aria-pressed="false">Show</button>
+</div>
+<p class="hint" id="login-password-caps" hidden>Caps Lock is on.</p>
+<p class="error" id="login-password-error"></p>
+</div>
+<div class="row">
+<label class="check"><input id="remember" name="remember" type="checkbox"> Remember my email</label>
+<button class="link" id="forgot" type="button">Forgot password?</button>
+</div>
+<button class="submit" type="submit">Log in</button>
+<p class="status" id="login-status" role="status"></p>
+</form>
+
+<form id="signup" novalidate role="tabpanel" aria-labelledby="tab-signup" hidden>
+<div class="field">
+<label for="signup-name">Full name</label>
+<input id="signup-name" name="name" type="text" autocomplete="name" aria-describedby="signup-name-error">
+<p class="error" id="signup-name-error"></p>
+</div>
+<div class="field">
+<label for="signup-email">Email</label>
+<input id="signup-email" name="email" type="email" autocomplete="email" spellcheck="false" aria-describedby="signup-email-error signup-email-hint">
+<p class="hint" id="signup-email-hint" hidden></p>
+<p class="error" id="signup-email-error"></p>
+</div>
+<div class="field">
+<label for="signup-phone">Nepal mobile <span class="optional">(optional)</span></label>
+<input id="signup-phone" name="phone" type="tel" autocomplete="tel" placeholder="98XXXXXXXX" aria-describedby="signup-phone-error">
+<p class="error" id="signup-phone-error"></p>
+</div>
+<div class="field">
+<label for="signup-birth">Date of birth</label>
+<input id="signup-birth" name="birth" type="date" autocomplete="bday" aria-describedby="signup-birth-error">
+<p class="error" id="signup-birth-error"></p>
+</div>
+<div class="field">
+<label for="signup-password">Password</label>
+<div class="box">
+<input class="has-toggle" id="signup-password" name="password" type="password" autocomplete="new-password" aria-describedby="signup-password-error signup-password-caps signup-strength">
+<button class="toggle" type="button" data-toggle="signup-password" aria-label="Show password" aria-pressed="false">Show</button>
+</div>
+<p class="hint" id="signup-password-caps" hidden>Caps Lock is on.</p>
+<div class="meter" id="meter" aria-hidden="true"><span></span><span></span><span></span><span></span></div>
+<p class="strength" id="signup-strength">Strength: none</p>
+<ul class="checks" id="checks">
+<li data-rule="length">10+ characters</li>
+<li data-rule="lower">A lowercase letter</li>
+<li data-rule="upper">An uppercase letter</li>
+<li data-rule="digit">A number</li>
+<li data-rule="symbol">A symbol</li>
+<li data-rule="personal">Not common or personal</li>
+</ul>
+<p class="error" id="signup-password-error"></p>
+</div>
+<div class="field">
+<label for="signup-confirm">Confirm password</label>
+<div class="box">
+<input class="has-toggle" id="signup-confirm" name="confirm" type="password" autocomplete="new-password" aria-describedby="signup-confirm-error">
+<button class="toggle" type="button" data-toggle="signup-confirm" aria-label="Show password" aria-pressed="false">Show</button>
+</div>
+<p class="error" id="signup-confirm-error"></p>
+</div>
+<div class="field">
+<label class="check"><input id="signup-terms" name="terms" type="checkbox" aria-describedby="signup-terms-error"> I understand this is a demo and accept its terms</label>
+<p class="error" id="signup-terms-error"></p>
+</div>
+<button class="submit" type="submit">Create account</button>
+<p class="status" id="signup-status" role="status"></p>
+</form>
+</div>
+
+<div id="welcome" hidden>
+<h1 style="font-size:38px;line-height:1.1">Namaste, <span id="welcome-name"></span>!</h1>
+<p style="margin:12px 0 0">You're logged in as <strong id="welcome-email"></strong>. This session ends when you close the tab or log out.</p>
+<div class="actions">
+<button class="pill" id="logout" type="button">Log out</button>
+<button class="pill" id="delete-account" type="button">Delete demo account</button>
+</div>
+</div>
+</main>
+
+<section id="code" hidden aria-label="Source code">
+<div class="card">
+<h2 style="font-size:32px;margin-bottom:12px">Source code</h2>
+<div class="code-head">
+<button class="pill" data-source="html" type="button" aria-pressed="true">HTML</button>
+<button class="pill" data-source="css" type="button" aria-pressed="false">CSS</button>
+<button class="pill" data-source="js" type="button" aria-pressed="false">JavaScript</button>
+</div>
+<pre tabindex="0"><code id="source"></code></pre>
+</div>
+</section>
+</div>
+
+<script id="page-js">
+(function(){
+'use strict';
+var USERS_KEY='loginDemoUsers',LOCKS_KEY='loginDemoLocks',REMEMBER_KEY='loginDemoEmail',SESSION_KEY='loginDemoSession';
+var MAX_ATTEMPTS=5,LOCK_SECONDS=30,HASH_ROUNDS=150000,MIN_AGE=13;
+var COMMON=['password','password1','password123','passw0rd','qwerty','qwerty123','letmein','welcome','admin','iloveyou','abc123','123456','12345678','123456789','1234567890','nepal123','bhaktapur'];
+var TYPOS={'gmal.com':'gmail.com','gmial.com':'gmail.com','gmail.co':'gmail.com','gmail.con':'gmail.com','hotmial.com':'hotmail.com','yaho.com':'yahoo.com','yahoo.con':'yahoo.com','outlok.com':'outlook.com'};
+var memory={};
+var sources={html:document.getElementById('demo').outerHTML,css:document.getElementById('page-css').textContent.trim(),js:document.getElementById('page-js').textContent.trim()};
+
+function el(id){return document.getElementById(id)}
+function read(store,key){
+try{return store.getItem(key)}catch(e){return key in memory?memory[key]:null}
+}
+function write(store,key,value){
+try{store.setItem(key,value)}catch(e){memory[key]=value}
+}
+function remove(store,key){
+try{store.removeItem(key)}catch(e){delete memory[key]}
+}
+function readJson(key){
+try{return JSON.parse(read(localStorage,key))||{}}catch(e){return {}}
+}
+function writeJson(key,value){write(localStorage,key,JSON.stringify(value))}
+function cleanEmail(value){return value.trim().toLowerCase()}
+
+function passwordChecks(password,form){
+var lower=password.toLowerCase(),name=form.name.value.trim().toLowerCase(),local=cleanEmail(form.email.value).split('@')[0];
+var parts=name.split(/\s+/).concat(local).filter(function(part){return part.length>=3});
+return {
+length:password.length>=10,
+lower:/\p{Ll}/u.test(password),
+upper:/\p{Lu}/u.test(password),
+digit:/\d/.test(password),
+symbol:/[^\p{L}\p{N}\s]/u.test(password),
+personal:password.length>0&&COMMON.indexOf(lower)<0&&!/(.)\1{3,}/.test(password)&&!parts.some(function(part){return lower.indexOf(part)>=0})
+};
+}
+
+var rules={
+name:function(value){
+var name=value.trim();
+if(!name)return 'Enter your full name.';
+if(name.length<2||name.length>60)return 'Use 2 to 60 characters.';
+if(!/^\p{L}[\p{L}\p{M} .'-]*$/u.test(name))return 'Use letters, spaces, hyphens and apostrophes only.';
+return '';
+},
+email:function(value){
+var email=value.trim();
+if(!email)return 'Enter your email address.';
+if(email.length>254||!/^[^\s@]+@[^\s@.]+(\.[^\s@.]+)*\.[^\s@.]{2,}$/.test(email))return 'Enter a valid email, like name@example.com.';
+return '';
+},
+phone:function(value){
+var phone=value.replace(/[\s-]/g,'');
+if(phone&&!/^(\+?977)?9[678]\d{8}$/.test(phone))return 'Enter a 10-digit Nepal mobile number starting 96, 97 or 98.';
+return '';
+},
+birth:function(value){
+if(!value)return 'Enter your date of birth.';
+var born=new Date(value+'T00:00:00'),today=new Date();
+if(isNaN(born))return 'Enter a valid date.';
+if(born>today)return 'Date of birth cannot be in the future.';
+if(today.getFullYear()-born.getFullYear()>120)return 'Check the year you entered.';
+var cutoff=new Date(today.getFullYear()-MIN_AGE,today.getMonth(),today.getDate());
+if(born>cutoff)return 'You must be at least '+MIN_AGE+' to sign up.';
+return '';
+},
+password:function(value,form){
+if(!value)return 'Create a password.';
+var checks=passwordChecks(value,form);
+if(!checks.length||!checks.lower||!checks.upper||!checks.digit||!checks.symbol)return 'Your password does not meet all the requirements below.';
+if(!checks.personal)return 'Avoid common words, repeated characters, and your name or email.';
+return '';
+},
+confirm:function(value,form){
+if(!value)return 'Confirm your password.';
+return value===form.password.value?'':'Passwords do not match.';
+},
+terms:function(value,form){return form.terms.checked?'':'Please accept to continue.'}
+};
+
+function showError(input,message){
+var box=el(input.id+'-error');
+box.textContent=message;
+input.setAttribute('aria-invalid',message?'true':'false');
+input.classList.toggle('ok',!message&&input.type!=='checkbox'&&input.value!=='');
+}
+function check(input,form){
+var message=rules[input.name](input.type==='checkbox'?input.checked:input.value,form);
+showError(input,message);
+return !message;
+}
+function firstInvalid(inputs,form){
+var first=null;
+inputs.forEach(function(input){
+if(!check(input,form)&&!first)first=input;
+});
+return first;
+}
+function setStatus(id,message,kind){
+var box=el(id);
+box.textContent=message;
+box.className='status'+(kind?' '+kind:'');
+}
+
+function renderStrength(){
+var form=el('signup'),value=form.password.value,checks=passwordChecks(value,form);
+var met=Object.keys(checks).filter(function(key){return checks[key]}).length;
+var extra=value.length>=14?1:0,score=!value?0:met<4?1:met<6?2:3+extra;
+var colors=['#D6DDEE','#C62828','#FF4D6D','#003893','#2E7D32'];
+[].forEach.call(el('meter').children,function(bar,i){bar.style.background=i<score?colors[score]:colors[0]});
+el('signup-strength').textContent='Strength: '+['none','weak','fair','good','strong'][score];
+[].forEach.call(el('checks').children,function(item){item.classList.toggle('met',checks[item.getAttribute('data-rule')])});
+}
+function renderEmailHint(){
+var hint=el('signup-email-hint'),email=cleanEmail(el('signup-email').value),at=email.lastIndexOf('@'),fix=at>0&&TYPOS[email.slice(at+1)];
+hint.textContent='';
+hint.hidden=!fix;
+if(!fix)return;
+var button=document.createElement('button'),better=email.slice(0,at+1)+fix;
+button.type='button';
+button.className='suggest';
+button.textContent=better;
+button.addEventListener('click',function(){
+el('signup-email').value=better;
+check(el('signup-email'),el('signup'));
+renderEmailHint();
+renderStrength();
+});
+hint.appendChild(document.createTextNode('Did you mean '));
+hint.appendChild(button);
+hint.appendChild(document.createTextNode('?'));
+}
+
+function hex(bytes){
+return Array.prototype.map.call(new Uint8Array(bytes),function(b){return ('0'+b.toString(16)).slice(-2)}).join('');
+}
+function hashPassword(password,saltHex){
+var salt=new Uint8Array(saltHex.match(/../g).map(function(pair){return parseInt(pair,16)}));
+return crypto.subtle.importKey('raw',new TextEncoder().encode(password),'PBKDF2',false,['deriveBits']).then(function(key){
+return crypto.subtle.deriveBits({name:'PBKDF2',hash:'SHA-256',salt:salt,iterations:HASH_ROUNDS},key,256);
+}).then(hex);
+}
+function sameText(a,b){
+if(a.length!==b.length)return false;
+var diff=0;
+for(var i=0;i<a.length;i++)diff|=a.charCodeAt(i)^b.charCodeAt(i);
+return diff===0;
+}
+function lockLeft(email){
+var lock=readJson(LOCKS_KEY)[email];
+return lock&&lock.until?Math.max(0,Math.ceil((lock.until-Date.now())/1000)):0;
+}
+function recordFailure(email){
+var locks=readJson(LOCKS_KEY),lock=locks[email]||{count:0};
+lock.count+=1;
+if(lock.count>=MAX_ATTEMPTS){
+lock.until=Date.now()+LOCK_SECONDS*1000;
+lock.count=0;
+}
+locks[email]=lock;
+writeJson(LOCKS_KEY,locks);
+return lock;
+}
+function clearFailures(email){
+var locks=readJson(LOCKS_KEY);
+delete locks[email];
+writeJson(LOCKS_KEY,locks);
+}
+
+function setBusy(form,busy,label){
+var button=form.querySelector('.submit');
+button.disabled=busy;
+button.textContent=label;
+}
+function showForm(name){
+var isLogin=name==='login';
+el('login').hidden=!isLogin;
+el('signup').hidden=isLogin;
+el('tab-login').setAttribute('aria-selected',isLogin);
+el('tab-signup').setAttribute('aria-selected',!isLogin);
+el('title').textContent=isLogin?'Welcome back':'Create your account';
+}
+function showWelcome(email){
+var user=readJson(USERS_KEY)[email];
+if(!user){
+remove(sessionStorage,SESSION_KEY);
+return;
+}
+write(sessionStorage,SESSION_KEY,email);
+el('welcome-name').textContent=user.name.split(' ')[0];
+el('welcome-email').textContent=email;
+el('auth').hidden=true;
+el('welcome').hidden=false;
+el('logout').focus();
+}
+function signOut(){
+remove(sessionStorage,SESSION_KEY);
+el('welcome').hidden=true;
+el('auth').hidden=false;
+el('login').reset();
+el('signup').reset();
+restoreEmail();
+renderStrength();
+showForm('login');
+}
+function restoreEmail(){
+var saved=read(localStorage,REMEMBER_KEY);
+if(saved){
+el('login-email').value=saved;
+el('remember').checked=true;
+}
+}
+function cryptoMissing(id){
+if(window.crypto&&crypto.subtle)return false;
+setStatus(id,'This browser only allows secure hashing on an HTTPS page.','bad');
+return true;
+}
+
+el('login').addEventListener('submit',function(event){
+event.preventDefault();
+var form=this,fields=[form.email,form.password];
+setStatus('login-status','');
+var emailError=rules.email(form.email.value);
+var passwordError=form.password.value?'':'Enter your password.';
+showError(form.email,emailError);
+showError(form.password,passwordError);
+form.password.classList.remove('ok');
+if(emailError||passwordError){
+(emailError?form.email:form.password).focus();
+return;
+}
+if(cryptoMissing('login-status'))return;
+var email=cleanEmail(form.email.value),left=lockLeft(email);
+if(left){
+setStatus('login-status','Too many attempts. Try again in '+left+' seconds.','bad');
+return;
+}
+var user=readJson(USERS_KEY)[email];
+setBusy(form,true,'Checking…');
+hashPassword(form.password.value,user?user.salt:'00000000000000000000000000000000').then(function(hash){
+setBusy(form,false,'Log in');
+if(user&&sameText(hash,user.hash)){
+clearFailures(email);
+if(form.remember.checked)write(localStorage,REMEMBER_KEY,email);else remove(localStorage,REMEMBER_KEY);
+fields.forEach(function(input){input.classList.remove('ok')});
+showWelcome(email);
+return;
+}
+var lock=recordFailure(email);
+form.password.value='';
+form.password.focus();
+setStatus('login-status',lock.until?'Too many attempts. Try again in '+LOCK_SECONDS+' seconds.':'Email or password is incorrect.','bad');
+}).catch(function(){
+setBusy(form,false,'Log in');
+setStatus('login-status','Something went wrong. Please try again.','bad');
+});
+});
+
+el('signup').addEventListener('submit',function(event){
+event.preventDefault();
+var form=this,inputs=[form.name,form.email,form.phone,form.birth,form.password,form.confirm,form.terms];
+setStatus('signup-status','');
+var first=firstInvalid(inputs,form);
+if(first){
+first.focus();
+setStatus('signup-status','Please fix the highlighted fields.','bad');
+return;
+}
+if(cryptoMissing('signup-status'))return;
+var email=cleanEmail(form.email.value),users=readJson(USERS_KEY);
+if(users[email]){
+showError(form.email,'This email already has a demo account. Log in instead.');
+form.email.focus();
+return;
+}
+var salt=hex(crypto.getRandomValues(new Uint8Array(16)));
+setBusy(form,true,'Creating…');
+hashPassword(form.password.value,salt).then(function(hash){
+users=readJson(USERS_KEY);
+users[email]={name:form.name.value.trim().replace(/\s+/g,' '),salt:salt,hash:hash};
+writeJson(USERS_KEY,users);
+setBusy(form,false,'Create account');
+form.reset();
+renderStrength();
+inputs.forEach(function(input){
+input.classList.remove('ok');
+input.removeAttribute('aria-invalid');
+});
+showWelcome(email);
+}).catch(function(){
+setBusy(form,false,'Create account');
+setStatus('signup-status','Something went wrong. Please try again.','bad');
+});
+});
+
+['name','email','phone','birth','password','confirm','terms'].forEach(function(name){
+var form=el('signup'),input=form[name],touched=false;
+input.addEventListener('blur',function(){
+if(input.type==='checkbox'||input.value!==''||touched){
+touched=true;
+check(input,form);
+}
+});
+input.addEventListener(input.type==='checkbox'?'change':'input',function(){
+if(touched||input.getAttribute('aria-invalid')==='true')check(input,form);
+if(name==='password'||name==='name'||name==='email')renderStrength();
+if(name==='email')renderEmailHint();
+if(name==='password'&&form.confirm.value)check(form.confirm,form);
+});
+});
+['login-email','login-password'].forEach(function(id){
+el(id).addEventListener('input',function(){
+if(this.getAttribute('aria-invalid')==='true')showError(this,'');
+setStatus('login-status','');
+});
+});
+['login-password','signup-password'].forEach(function(id){
+function caps(event){
+if(event.getModifierState)el(id+'-caps').hidden=!event.getModifierState('CapsLock');
+}
+el(id).addEventListener('keydown',caps);
+el(id).addEventListener('keyup',caps);
+el(id).addEventListener('blur',function(){el(id+'-caps').hidden=true});
+});
+[].forEach.call(document.querySelectorAll('[data-toggle]'),function(button){
+button.addEventListener('click',function(){
+var input=el(button.getAttribute('data-toggle')),show=input.type==='password';
+input.type=show?'text':'password';
+button.textContent=show?'Hide':'Show';
+button.setAttribute('aria-pressed',show);
+button.setAttribute('aria-label',(show?'Hide':'Show')+' password');
+});
+});
+el('tab-login').addEventListener('click',function(){showForm('login')});
+el('tab-signup').addEventListener('click',function(){showForm('signup')});
+el('forgot').addEventListener('click',function(){
+setStatus('login-status','Resetting a password needs an email server, which this demo does not have. You can sign up again with a different email.');
+});
+el('logout').addEventListener('click',signOut);
+el('delete-account').addEventListener('click',function(){
+var email=read(sessionStorage,SESSION_KEY),users=readJson(USERS_KEY);
+delete users[email];
+writeJson(USERS_KEY,users);
+clearFailures(email);
+if(read(localStorage,REMEMBER_KEY)===email)remove(localStorage,REMEMBER_KEY);
+signOut();
+setStatus('login-status','Your demo account was deleted.','good');
+});
+
+function showView(code){
+el('demo').hidden=code;
+el('code').hidden=!code;
+el('wrap').classList.toggle('wide',code);
+el('show-demo').setAttribute('aria-pressed',!code);
+el('show-code').setAttribute('aria-pressed',code);
+}
+function showSource(name){
+el('source').textContent=sources[name];
+[].forEach.call(document.querySelectorAll('[data-source]'),function(button){
+button.setAttribute('aria-pressed',button.getAttribute('data-source')===name);
+});
+}
+el('show-demo').addEventListener('click',function(){showView(false)});
+el('show-code').addEventListener('click',function(){showView(true)});
+[].forEach.call(document.querySelectorAll('[data-source]'),function(button){
+button.addEventListener('click',function(){showSource(button.getAttribute('data-source'))});
+});
+
+showSource('html');
+restoreEmail();
+var active=read(sessionStorage,SESSION_KEY);
+if(active)showWelcome(active);
+if(location.hash==='#code')showView(true);
+})();
+</script>
+<script src="../pwa.js"></script>
+</body>
+</html>

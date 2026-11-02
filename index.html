@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline' https://www.youtube.com; connect-src https://prabin-weather.prabinban.workers.dev https://api.web3forms.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Prabin Ban — Student Developer, Bhaktapur</title>
+<script>
+try{if(!sessionStorage.getItem('namasteSeen')&&!/bot|crawl|spider|slurp/i.test(navigator.userAgent))location.replace('loading.html')}catch(e){}
+</script>
+<meta name="description" content="Prabin Ban, a BIT student from Bhaktapur, Nepal, building web apps and automation tools.">
+<meta property="og:title" content="Prabin Ban — Student Developer">
+<meta property="og:description" content="Ancient city. Modern code. BIT student from Bhaktapur, Nepal, building web apps and automation tools.">
+<meta property="og:url" content="https://prabinban.com.np/">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://prabinban.com.np/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prabin Ban, BIT student from Bhaktapur, Nepal">
+<meta property="og:site_name" content="Prabin Ban">
+<meta name="twitter:card" content="summary_large_image">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Prabin Ban","url":"https://prabinban.com.np/","image":"https://prabinban.com.np/assets/prabin.jpg","email":"mailto:banpukar00@gmail.com","description":"BIT student from Bhaktapur, Nepal, building web apps and automation tools.","address":{"@type":"PostalAddress","addressLocality":"Bhaktapur","addressCountry":"NP"},"affiliation":{"@type":"CollegeOrUniversity","name":"Aryan School of Engineering"},"sameAs":["https://github.com/ggpukar"],"knowsAbout":["JavaScript","Python","Flask","WebGL"]}</script>
+<link rel="canonical" href="https://prabinban.com.np/">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600&amp;family=Mukta:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:#F7F8FC}
+a{color:#14213D}a:hover{color:#003893}
+.hm a:focus-visible{outline:3px solid #003893;outline-offset:3px}
+.hm-btn{display:inline-flex;align-items:center;min-height:48px;padding:0 26px;border-radius:999px;text-decoration:none;font-weight:600;transition:transform 160ms ease,box-shadow 240ms ease}
+.hm-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,33,61,.18)}
+.hm-card{transition:transform 240ms ease,box-shadow 240ms ease}
+.hm-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(20,33,61,.12)}
+#sound:focus-visible{outline:3px solid #FF4D6D;outline-offset:3px}
+.sky{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.sky i{position:absolute;display:block;border-radius:50%;will-change:transform}
+.sky i:nth-child(1){left:-15%;top:-25%;width:70%;height:90%;background:radial-gradient(closest-side,rgba(255,77,109,.5),rgba(255,77,109,0));animation:drift1 19s ease-in-out infinite alternate}
+.sky i:nth-child(2){right:-20%;top:-10%;width:75%;height:95%;background:radial-gradient(closest-side,rgba(0,56,147,.34),rgba(0,56,147,0));animation:drift2 23s ease-in-out infinite alternate}
+.sky i:nth-child(3){left:20%;top:25%;width:65%;height:70%;background:radial-gradient(closest-side,rgba(64,110,220,.2),rgba(64,110,220,0));animation:drift3 27s ease-in-out infinite alternate}
+.sky i:nth-child(4){left:-10%;bottom:12%;width:120%;height:26%;background:radial-gradient(closest-side,rgba(255,255,255,.65),rgba(255,255,255,0));animation:drift4 31s ease-in-out infinite alternate}
+@keyframes drift1{to{transform:translate(38%,22%) scale(1.25)}}
+@keyframes drift2{to{transform:translate(-42%,18%) scale(.85)}}
+@keyframes drift3{to{transform:translate(-30%,-28%) scale(1.3)}}
+@keyframes drift4{to{transform:translate(12%,-14%) scale(1.1,1.2)}}
+.cf-input{display:block;width:100%;min-height:48px;padding:12px 14px;border:1.5px solid #7A88B0;border-radius:12px;background:#173F85;color:#FFF;font:16px Inter,system-ui,sans-serif}
+.cf-input::placeholder{color:#AEBBDA}
+.cf-input[aria-invalid=true]{border-color:#FF9C94}
+#contact a:not(.hm-btn){color:inherit}
+#contact :focus-visible{outline:3px solid #FF4D6D;outline-offset:2px}
+.cf-error{margin:4px 0 0;color:#FFB4AD;font-size:13px}
+.cf-trap{position:absolute;left:-9999px}
+#cf-status a{text-decoration:underline}
+#cf-send:disabled{opacity:.7;cursor:wait}
+</style>
+<link rel="stylesheet" href="sidenav.css">
+<link rel="stylesheet" href="section-bg.css">
+<link rel="stylesheet" href="sky.css">
+<link rel="stylesheet" href="skills.css">
+<link rel="stylesheet" href="theme.css">
+<script src="theme.js"></script>
+<script src="protect.js"></script>
+<script src="perf.js"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<nav class="sidenav" id="sidenav" aria-label="Main">
+<a class="sidenav-link" href="#top"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>Home</a>
+<a class="sidenav-link" href="#work"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V4h8v3"/></svg>Work</a>
+<a class="sidenav-link" href="#about"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-5 4-7 8-7s7 2 8 7"/></svg>About</a>
+<a class="sidenav-link" href="#skills"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8 6l-6 6 6 6M16 6l6 6-6 6"/></svg>Skills</a>
+<a class="sidenav-link" href="#contact"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 7 9-7"/></svg>Contact</a><a class="sidenav-link" href="tools/index.html"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>Tools</a>
+</nav>
+<div class="sidenav-scrim" id="sidenav-scrim"></div>
+<button class="sidenav-toggle" id="sidenav-toggle" type="button" aria-expanded="false" aria-controls="sidenav"><svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="sidenav-label">Menu</span></button>
+<div class="hm" id="top" style="background: #F7F8FC; color: #14213D; font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.6">
+
+<section id="np-clock" aria-label="Current time in Bhaktapur" style="background: #14213D; color: #FFFFFF">
+<div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px; display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: center; justify-content: space-between">
+<div style="display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: center">
+<svg viewBox="0 0 120 120" width="60" height="60" aria-hidden="true" style="flex: none">
+<circle cx="60" cy="60" r="58" fill="#F7F8FC"></circle>
+<g id="np-ticks" stroke-linecap="round"></g>
+<line id="np-hour" x1="60" y1="64" x2="60" y2="34" stroke="#14213D" stroke-width="4.5" stroke-linecap="round"></line>
+<line id="np-minute" x1="60" y1="66" x2="60" y2="20" stroke="#14213D" stroke-width="3" stroke-linecap="round"></line>
+<line id="np-second" x1="60" y1="70" x2="60" y2="14" stroke="#DC143C" stroke-width="1.5" stroke-linecap="round"></line>
+<circle cx="60" cy="60" r="3.5" fill="#DC143C"></circle>
+</svg>
+<p style="margin: 0; font-family: 'DM Serif Display', serif; font-size: 40px; line-height: 1.1; white-space: nowrap"><span id="np-time">--:--</span><span id="np-seconds" style="margin-left: 8px; font-family: Inter, system-ui, sans-serif; font-size: 15px; font-variant-numeric: tabular-nums"></span></p>
+<div>
+<p style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #FF4D6D">Bhaktapur, Nepal · UTC+5:45</p>
+<p id="np-bs" lang="ne" style="margin: 0; font-family: Mukta, sans-serif; font-weight: 500; font-size: 17px; line-height: 1.3"></p>
+<p id="np-ad" style="margin: 0; font-size: 13px; line-height: 1.4; color: #E1E7F5"></p>
+</div>
+</div>
+<div id="wx" aria-live="polite" style="display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: center">
+<div style="display: flex; align-items: center; gap: 10px">
+<span id="wx-icon" aria-hidden="true" style="font-size: 32px; line-height: 1"></span>
+<span id="wx-temp" style="font-family: 'DM Serif Display', serif; font-size: 40px; line-height: 1.1"></span>
+<div>
+<p id="wx-place" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #FF4D6D">Weather</p>
+<p id="wx-now" style="margin: 0; font-size: 15px; font-weight: 500; line-height: 1.3">Loading…</p>
+<p id="wx-range" style="margin: 0; font-size: 13px; line-height: 1.4; color: #E1E7F5"></p>
+</div>
+</div>
+<div id="wx-days" style="display: flex; gap: 14px; font-size: 12px; line-height: 1.35; text-align: center; color: #E1E7F5"></div>
+<button id="sound" type="button" aria-label="Flag sound" aria-pressed="false" title="Turn flag sound on" style="width: 44px; height: 44px; padding: 0; border: 1.5px solid #FF4D6D; border-radius: 50%; background: transparent; color: #FF4D6D; font-size: 18px; line-height: 1; cursor: pointer">🔇</button>
+</div>
+</div>
+</section>
+
+<section style="position: relative; overflow: hidden; background: linear-gradient(180deg, #F4F6FC 0%, #CFD9F2 38%, #A3BCF0 100%); min-height: 820px">
+<div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<canvas id="flags" aria-hidden="true" style="position: absolute; left: 0; top: 0; width: 100%; height: 220px; pointer-events: none"></canvas>
+
+<header style="position: relative; max-width: 1200px; margin: 0 auto; padding: 16px 24px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: space-between; align-items: center">
+<h1 style="margin: 0; font: inherit"><a href="#top" style="text-decoration: none; font-family: 'DM Serif Display', serif; font-size: 26px; min-height: 48px; display: flex; align-items: center">Prabin Ban</a></h1>
+</header>
+
+<div style="position: relative; max-width: 1200px; margin: 0 auto; padding: 120px 24px 410px; text-align: center">
+<p style="margin: 28px auto 0; max-width: 560px; font-size: 19px; color: #2A3558">I&#39;m Prabin, a BIT student from Bhaktapur building webpages and apps</p>
+<div style="margin-top: 40px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: center">
+<a class="hm-btn" href="#work" style="background: #DC143C; color: #FFFFFF">Explore my projects</a>
+<a class="hm-btn" href="https://github.com/ggpukar/pukarban" target="_blank" rel="noopener" style="border: 1.5px solid #14213D">View GitHub</a>
+</div>
+</div>
+
+<svg id="range" viewBox="0 0 1440 360" preserveAspectRatio="xMidYMax slice" style="position: absolute; left: -3%; bottom: 0; width: 106%; height: 360px" aria-hidden="true">
+<path d="M0 250 L120 190 L210 230 L330 120 L420 200 L520 150 L640 60 L700 110 L760 40 L830 130 L930 90 L1040 170 L1150 100 L1260 180 L1360 140 L1440 190 L1440 360 L0 360Z" data-depth="1" fill="#93A6D6"></path>
+<path d="M640 60 L670 90 L690 80 L700 110 L720 70 L760 40 L790 80 L770 85 L745 70 L720 95 L700 120 L680 95 L660 100Z" data-depth="1" fill="#FFFFFF" opacity=".9"></path>
+<path d="M0 290 L160 230 L280 270 L420 200 L560 260 L700 210 L860 270 L1000 220 L1140 270 L1300 230 L1440 260 L1440 360 L0 360Z" data-depth=".55" fill="#4A6AB0"></path>
+<path d="M0 330 L200 290 L380 320 L560 290 L760 330 L980 295 L1200 325 L1440 300 L1440 360 L0 360Z" data-depth=".2" fill="#0F2A6B"></path>
+</svg>
+</section>
+
+<div class="work-bg">
+<section id="work" style="max-width: 1200px; margin: 0 auto; padding: 96px 24px">
+<h2 style="margin: 0 0 8px; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 52px">Selected work</h2>
+<p style="margin: 0 0 40px; color: #4A5578">Projects and everyday tools I have built and tested.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 24px">
+<article class="hm-card" style="background: #FFFFFF; border-radius: 20px; padding: 24px; border: 1px solid #D6DDEE; display: flex; flex-direction: column; gap: 12px"><img class="hm-shot" src="assets/work/vehicle-tax.webp" alt="Vehicle tax calculator showing a bluebook renewal estimate" width="800" height="500" loading="lazy"><div style="height: 6px; width: 48px; border-radius: 3px; background: #DC143C"></div><h3 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 28px">Vehicle tax calculator</h3><p style="margin: 0; color: #4A5578">Enter bluebook dates and get the tax, late fine, renewal charge and insurance for a Bagmati renewal, year by year.</p><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #4A5578">JavaScript · Nepali calendar maths · Works offline</p><div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px"><a href="tools/vehicle-tax.html" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">Open tool →</a></div></article>
+<article class="hm-card" style="background: #FFFFFF; border-radius: 20px; padding: 24px; border: 1px solid #D6DDEE; display: flex; flex-direction: column; gap: 12px"><img class="hm-shot" src="assets/work/typing-test.webp" alt="Typing practice with an on-screen keyboard that lights up each key" width="800" height="500" loading="lazy"><div style="height: 6px; width: 48px; border-radius: 3px; background: #003893"></div><h3 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 28px">Typing practice</h3><p style="margin: 0; color: #4A5578">A typing speed test with an animated keyboard, English and romanized Nepali paragraphs, and saved best scores.</p><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #4A5578">JavaScript · Keyboard events · Nepali text</p><div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px"><a href="tools/typing-test.html" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">Open tool →</a></div></article>
+<article class="hm-card" style="background: #FFFFFF; border-radius: 20px; padding: 24px; border: 1px solid #D6DDEE; display: flex; flex-direction: column; gap: 12px"><img class="hm-shot" src="assets/work/resume-builder.webp" alt="Resume builder with a live preview of the finished resume" width="800" height="500" loading="lazy"><div style="height: 6px; width: 48px; border-radius: 3px; background: #2E7D32"></div><h3 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 28px">Resume builder</h3><p style="margin: 0; color: #4A5578">Fill in a form and watch the resume build itself, then save it as a PDF. Nothing leaves your browser.</p><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #4A5578">JavaScript · PDF creation · Local saving</p><div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px"><a href="tools/resume-builder.html" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">Open tool →</a></div></article>
+<article class="hm-card" style="background: #FFFFFF; border-radius: 20px; padding: 24px; border: 1px solid #D6DDEE; display: flex; flex-direction: column; gap: 12px"><img class="hm-shot" src="assets/work/login.webp" alt="Login form with password strength meter" width="800" height="500" loading="lazy"><div style="height: 6px; width: 48px; border-radius: 3px; background: #003893"></div><h3 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 28px">Login and signup</h3><p style="margin: 0; color: #4A5578">HTML, CSS and JavaScript forms with live validation, a password strength meter, lockouts and hashed passwords.</p><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #4A5578">HTML · CSS · JavaScript · Web Crypto</p><div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px"><a href="projects/login.html" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">Live demo →</a><a href="projects/login.html#code" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">View code →</a></div></article>
+<article class="hm-card" style="background: #FFFFFF; border-radius: 20px; padding: 24px; border: 1px solid #D6DDEE; display: flex; flex-direction: column; gap: 12px"><img class="hm-shot" src="assets/work/whatsapp.webp" alt="WhatsApp auto-reply bot demo chat" width="800" height="500" loading="lazy"><div style="height: 6px; width: 48px; border-radius: 3px; background: #DC143C"></div><h3 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 28px">WhatsApp auto-reply</h3><p style="margin: 0; color: #4A5578">Python and Flask bot on Meta&#39;s WhatsApp Cloud API that answers messages automatically.</p><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .04em; color: #4A5578">Python · Flask · WhatsApp Cloud API · pytest</p><div style="margin-top: auto; display: flex; flex-wrap: wrap; gap: 0 20px"><a href="projects/whatsapp-demo.html" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">Live demo →</a><a href="projects/whatsapp-demo.html#code" style="font-weight: 600; min-height: 44px; display: flex; align-items: center">View code →</a></div></article>
+</div>
+</section>
+</div>
+
+<section id="about" style="max-width: 1200px; margin: 0 auto; padding: 0 24px 96px; display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 48px; align-items: center">
+<img src="assets/prabin.jpg" alt="Portrait of Prabin Ban" loading="lazy" style="display: block; width: 100%; aspect-ratio: 4 / 5; max-width: 380px; border-radius: 200px 200px 20px 20px; background: #D6DDEE; object-fit: cover">
+<div>
+<h2 style="margin: 0 0 16px; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 48px">About</h2>
+<p style="margin: 0 0 16px; font-size: 19px">I&#39;m a student in Bhaktapur who builds things people around me can use.</p>
+<p style="margin: 0; color: #4A5578">I&#39;m studying for a Bachelor of Information Technology at Aryan School of Engineering, and I learn best by building real web apps and automation tools.</p>
+<h3 style="margin: 32px 0 16px; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 30px">Education</h3>
+<ol style="margin: 0; padding: 0 0 0 20px; list-style: none; border-left: 2px solid #D6DDEE">
+<li style="position: relative; padding-bottom: 24px"><span aria-hidden="true" style="position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #003893"></span><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4A5578">Present</p><p style="margin: 0; font-weight: 600">BIT Student</p><p style="margin: 0; color: #4A5578">Currently enrolled in Bachelor of Information Technology at Aryan School of Engineering.</p></li>
+<li style="position: relative; padding-bottom: 24px"><span aria-hidden="true" style="position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #DC143C"></span><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4A5578">2079 BS</p><p style="margin: 0; font-weight: 600">+2 Science</p><p style="margin: 0; color: #4A5578">Completed higher secondary education at Khwopa Secondary School with a 3.40 GPA.</p></li>
+<li style="position: relative; padding-bottom: 24px"><span aria-hidden="true" style="position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #2E7D32"></span><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4A5578">2077 BS</p><p style="margin: 0; font-weight: 600">SEE Examination</p><p style="margin: 0; color: #4A5578">Completed Secondary Education Examination with a 3.45 GPA.</p></li>
+<li style="position: relative"><span aria-hidden="true" style="position: absolute; left: -27px; top: 6px; width: 12px; height: 12px; border-radius: 50%; background: #FF4D6D"></span><p style="margin: 0; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #4A5578">2062 BS</p><p style="margin: 0; font-weight: 600">The Beginning</p><p style="margin: 0; color: #4A5578">Born in the historic city of Bhaktapur, Nepal.</p></li>
+</ol>
+</div>
+</section>
+
+<section id="skills">
+<h2>Skills</h2>
+<p>The tools behind the projects on this site.</p>
+<div class="skill-grid">
+<div class="skill-group"><h3>Front end</h3><ul class="skill-tags"><li>HTML</li><li>CSS</li><li>JavaScript</li><li>Responsive design</li></ul><p class="skill-used">Used in: this site, login and signup</p></div>
+<div class="skill-group"><h3>Back end</h3><ul class="skill-tags"><li>Python</li><li>Flask</li><li>Webhooks</li></ul><p class="skill-used">Used in: WhatsApp auto-reply</p></div>
+<div class="skill-group"><h3>Testing and tools</h3><ul class="skill-tags"><li>pytest</li><li>GitHub</li></ul><p class="skill-used">Used in: WhatsApp auto-reply</p></div>
+</div>
+</section>
+
+<footer id="contact" style="background: #14213D; color: #F7F8FC">
+<div style="height: 8px; display: flex" aria-hidden="true"><span style="flex: 1; background: #1F5FA8"></span><span style="flex: 1; background: #F4F4F0"></span><span style="flex: 1; background: #C62828"></span><span style="flex: 1; background: #2E7D32"></span><span style="flex: 1; background: #F2C230"></span></div>
+<div style="max-width: 1200px; margin: 0 auto; padding: 96px 24px 48px">
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 1fr)); gap: 48px">
+<div>
+<p style="margin: 0 0 8px; font-size: 13px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #FF4D6D">Contact</p>
+<h2 style="margin: 0; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: clamp(38px, 5vw, 64px); line-height: 1.05">Let&#39;s Create Something Great.</h2>
+<p style="margin: 20px 0 28px; color: #D3DCF0"></p>
+<p style="margin: 0 0 10px"><a href="mailto:banpukar00@gmail.com">banpukar00@gmail.com</a></p>
+<p style="margin: 0">Bhaktapur, Nepal</p>
+</div>
+<form id="contact-form" novalidate style="padding: 32px; border-radius: 20px; background: #12357A">
+<h3 style="margin: 0 0 20px; font-family: 'DM Serif Display', serif; font-weight: 400; font-size: 30px">Send Message</h3>
+<div style="margin-bottom: 16px"><label for="cf-name" style="display: block; margin-bottom: 4px; font-size: 14px; font-weight: 600">Name</label><input class="cf-input" id="cf-name" name="name" autocomplete="name" placeholder="John Doe" aria-describedby="cf-name-error"><p class="cf-error" id="cf-name-error"></p></div>
+<div style="margin-bottom: 16px"><label for="cf-email" style="display: block; margin-bottom: 4px; font-size: 14px; font-weight: 600">Email</label><input class="cf-input" id="cf-email" name="email" type="email" autocomplete="email" placeholder="hello@example.com" aria-describedby="cf-email-error"><p class="cf-error" id="cf-email-error"></p></div>
+<div style="margin-bottom: 20px"><label for="cf-message" style="display: block; margin-bottom: 4px; font-size: 14px; font-weight: 600">Message</label><textarea class="cf-input" id="cf-message" name="message" rows="5" placeholder="Tell me about your project..." aria-describedby="cf-message-error" style="resize: vertical"></textarea><p class="cf-error" id="cf-message-error"></p></div>
+<div class="cf-trap" aria-hidden="true"><label for="cf-website">Website</label><input id="cf-website" name="website" tabindex="-1" autocomplete="off"></div>
+<button class="hm-btn" id="cf-send" type="submit" style="width: 100%; justify-content: center; border: 0; background: #DC143C; color: #FFFFFF; font-family: inherit; font-size: 16px; cursor: pointer">Send Email</button>
+<p id="cf-status" role="status" style="margin: 8px 0 0; font-size: 13px; text-align: center; color: #D3DCF0">Opens Gmail in a new tab</p>
+</form>
+</div>
+<p style="margin: 64px 0 0; font-size: 13px; text-align: center; color: #AEBBDA">© 2026 Prabin Ban · Bhaktapur</p>
+</div>
+</footer>
+</div>
+<script>
+(function(){
+var canvas=document.getElementById('flags'),ctx=canvas.getContext('2d');
+var COLORS=[[31,95,168],[244,244,240],[198,40,40],[46,125,50],[242,194,48]];
+var COLS=16,ROWS=6,FLAG_H=54,SHADES=30;
+var W=0,count=0,spacing=0,flagW=0,visible=true,last=0;
+var grid=new Float32Array((COLS+1)*(ROWS+1)*2);
+var palette=COLORS.map(function(c){
+var list=[];
+for(var i=-SHADES;i<=SHADES;i++){
+var m=i/SHADES,to=m>0?255:0,k=Math.abs(m)*(m>0?.24:.3);
+list.push('rgb('+c.map(function(v){return Math.round(v+(to-v)*k)}).join(',')+')');
+}
+return list;
+});
+function stringY(x,t){return 92+(x-W/2)*-.035+2.5*Math.sin(x*.007+t*.8)}
+function drawFlag(i,t){
+var x0=(i+.5)*spacing-flagW/2,gust=.75+.25*Math.sin(t*.31+i*.4),shades=palette[i%COLORS.length];
+var drift=6*gust+5*gust*Math.sin(t*.9+i*.6),r,c,n=0;
+for(r=0;r<=ROWS;r++){
+for(c=0;c<=COLS;c++){
+var u=c/COLS,v=r/ROWS,top=x0+u*flagW;
+var phase=u*5.2+v*1.6-t*3.4+i*.9;
+grid[n++]=top+v*(drift+3*gust*Math.sin(phase*.7+1));
+grid[n++]=stringY(top,t)+v*FLAG_H+5*gust*v*Math.sin(phase);
+}
+}
+for(c=0;c<COLS;c++){
+var fold=Math.cos((c+.5)/COLS*5.2+.8-t*3.4+i*.9)*.8*gust;
+ctx.fillStyle=ctx.strokeStyle=shades[Math.round((fold+1)*SHADES)];
+ctx.beginPath();
+for(r=0;r<=ROWS;r++){
+n=(r*(COLS+1)+c)*2;
+r?ctx.lineTo(grid[n],grid[n+1]):ctx.moveTo(grid[n],grid[n+1]);
+}
+for(r=ROWS;r>=0;r--){
+n=(r*(COLS+1)+c+1)*2;
+ctx.lineTo(grid[n],grid[n+1]);
+}
+ctx.closePath();
+ctx.fill();
+ctx.stroke();
+}
+}
+function draw(t){
+ctx.clearRect(0,0,W,220);
+ctx.lineWidth=1;
+for(var i=0;i<count;i++)drawFlag(i,t);
+ctx.strokeStyle=document.documentElement.dataset.theme==='dark'||canvas.parentNode.dataset.sky==='night'?'#A8B3D1':'#4A5578';
+ctx.lineWidth=2;
+ctx.beginPath();
+for(var x=0;x<=W;x+=20){var y=stringY(x,t);x?ctx.lineTo(x,y):ctx.moveTo(x,y)}
+ctx.stroke();
+}
+function resize(){
+W=canvas.clientWidth;
+var ratio=sitePerf.lite?1:Math.min(devicePixelRatio||1,2);
+canvas.width=W*ratio;
+canvas.height=220*ratio;
+ctx.setTransform(ratio,0,0,ratio,0,0);
+count=Math.max(5,Math.round(W/51));
+spacing=W/count;
+flagW=Math.min(44,spacing*.88);
+}
+function frame(now){
+if(visible&&(!sitePerf.lite||now-last>=33)){
+last=now;
+draw(now/1000*(sitePerf.calm?.35:1));
+}
+requestAnimationFrame(frame);
+}
+addEventListener('resize',resize);
+sitePerf.onLite(resize);
+resize();
+new IntersectionObserver(function(entries){visible=entries[0].isIntersecting}).observe(canvas);
+requestAnimationFrame(frame);
+})();
+</script>
+<script src="sky.js"></script>
+<script src="site-header.js"></script>
+<script>
+(function(){
+var hero=document.getElementById('flags'),layers=[].slice.call(document.querySelectorAll('#range [data-depth]'));
+var targetX=0,x=0,y=0,visible=true;
+addEventListener('pointermove',function(e){
+if(e.pointerType==='mouse')targetX=e.clientX/innerWidth-.5;
+});
+new IntersectionObserver(function(entries){visible=entries[0].isIntersecting}).observe(hero.parentNode);
+function frame(){
+if(visible&&!sitePerf.calm){
+x+=(targetX-x)*.05;
+y+=(scrollY-y)*.12;
+layers.forEach(function(layer){
+var depth=+layer.getAttribute('data-depth');
+layer.style.transform='translate('+(-x*36*depth).toFixed(2)+'px,'+(y*.28*depth).toFixed(2)+'px)';
+});
+}
+requestAnimationFrame(frame);
+}
+frame();
+})();
+</script>
+<div id="flag-audio" aria-hidden="true" style="position: fixed; left: 0; bottom: 0; width: 1px; height: 1px; opacity: 0; pointer-events: none"><div id="flag-player"></div></div>
+<script>
+(function(){
+var VIDEO='6dJq5W1UXhE',VOLUME=25,btn=document.getElementById('sound');
+var player,ready=false,on=false,inHero=true,muted=false;
+try{muted=localStorage.getItem('flagSoundMuted')==='1'}catch(e){}
+function apply(){
+btn.textContent=on?'🔊':'🔇';
+btn.title='Turn flag sound '+(on?'off':'on');
+btn.setAttribute('aria-pressed',on);
+if(!ready)return;
+if(on&&inHero&&!document.hidden){
+player.setVolume(VOLUME);
+player.unMute();
+player.playVideo();
+}else{
+player.pauseVideo();
+}
+}
+function setOn(value){
+on=value;
+apply();
+}
+function firstGesture(e){
+removeEventListener('click',firstGesture);
+removeEventListener('keydown',firstGesture);
+if(!muted&&!(e.target.closest&&e.target.closest('#sound')))setOn(true);
+}
+window.onYouTubeIframeAPIReady=function(){
+player=new YT.Player('flag-player',{
+host:'https://www.youtube-nocookie.com',
+videoId:VIDEO,
+width:1,
+height:1,
+playerVars:{controls:0,disablekb:1,fs:0,playsinline:1,rel:0,origin:location.origin},
+events:{
+onReady:function(){
+ready=true;
+apply();
+},
+onStateChange:function(e){
+if(e.data===YT.PlayerState.ENDED&&on){
+player.seekTo(0);
+player.playVideo();
+}
+},
+onError:function(){
+ready=false;
+on=false;
+apply();
+btn.disabled=true;
+btn.title='Flag sound unavailable';
+}
+}
+});
+};
+btn.addEventListener('click',function(){
+muted=on;
+try{localStorage.setItem('flagSoundMuted',muted?'1':'0')}catch(e){}
+setOn(!on);
+});
+addEventListener('click',firstGesture);
+addEventListener('keydown',firstGesture);
+document.addEventListener('visibilitychange',apply);
+new IntersectionObserver(function(entries){inHero=entries[0].isIntersecting;apply()}).observe(document.getElementById('flags'));
+var api=document.createElement('script');
+api.src='https://www.youtube.com/iframe_api';
+document.head.appendChild(api);
+})();
+</script>
+<script src="contact-form.js"></script>
+<script src="mountains3d.js"></script>
+<script src="section-bg.js"></script>
+<script src="sidenav.js"></script>
+<script src="palette.js"></script>
+<script src="pwa.js"></script>
+</body>
+</html>

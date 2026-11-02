@@ -1,0 +1,20 @@
+.work-bg,#contact{position:relative;overflow:hidden}
+.work-bg{background:linear-gradient(180deg,#0F2A6B 0%,#14213D 45%,#0B1A40 100%)}
+#contact{background:linear-gradient(180deg,#14213D 0%,#0B1A40 62%,#081333 100%)!important}
+.work-bg>section,#contact>div{position:relative;z-index:1}
+.work-bg>section{padding-bottom:170px!important}
+#work>h2{color:#FFF}
+#work>p{color:#D3DCF0!important}
+.section-canvas{position:absolute;left:0;top:0;width:100%;height:100%;pointer-events:none}
+.work-bg::before,#contact::before,.work-bg::after,#contact::after{content:"";position:absolute;border-radius:50%;pointer-events:none;will-change:transform}
+.work-bg::before,#contact::before{left:-15%;top:-20%;width:65%;height:70%;background:radial-gradient(closest-side,rgba(64,110,220,.28),rgba(64,110,220,0));animation:aurora1 24s ease-in-out infinite alternate}
+.work-bg::after,#contact::after{right:-15%;top:5%;width:60%;height:65%;background:radial-gradient(closest-side,rgba(255,77,109,.12),rgba(255,77,109,0));animation:aurora2 30s ease-in-out infinite alternate}
+@keyframes aurora1{to{transform:translate(35%,18%) scale(1.2)}}
+@keyframes aurora2{to{transform:translate(-30%,20%) scale(1.15)}}
+@media (prefers-reduced-motion:reduce){
+html{scroll-behavior:auto!important}
+.sky i,.work-bg::before,#contact::before,.work-bg::after,#contact::after{animation-duration:90s!important}
+.hm-card:hover,.hm-btn:hover{transform:none!important}
+}
+.hm-shot{display:block;width:100%;height:auto;aspect-ratio:8/5;border:1px solid #D6DDEE;border-radius:12px;object-fit:cover;object-position:top}
+html[data-theme=dark] .hm-shot{border-color:#2C3A66}

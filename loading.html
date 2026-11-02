@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Namaste — Prabin Ban</title>
+<meta name="robots" content="noindex">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Mukta:wght@500;700&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+html,body{height:100%}
+body{margin:0;background:#CFD9F2;color:#14213D;overflow:hidden}
+.screen{position:relative;height:100%;min-height:480px;overflow:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:70px 24px min(130px,20vh);text-align:center;background:linear-gradient(180deg,#F4F6FC 0%,#CFD9F2 38%,#A3BCF0 100%);animation:leave 300ms ease-in 2050ms forwards}
+.string{position:absolute;left:-2%;right:-2%;top:44px;height:2px;background:#4A5578;transform:rotate(-2deg)}
+.flags{position:absolute;left:0;right:0;top:36px;display:flex;justify-content:space-between;padding:0 1%;transform:rotate(-2deg)}
+.flag{width:min(44px,8.5vw);height:54px;margin-top:8px;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(0,0,0,.08);transform-origin:50% 0;animation:sway 3.6s ease-in-out infinite alternate}
+.flag:nth-child(2n){animation-delay:-1.2s}.flag:nth-child(3n){animation-delay:-2.1s}
+.mudra{position:relative;width:clamp(170px,32vh,270px);height:clamp(170px,32vh,270px);overflow:visible}
+.hand{fill:#14213D}
+.crease{fill:none;stroke:#CFD9F2;stroke-width:1.2;stroke-linecap:round;opacity:.55}
+.halo{transform-box:fill-box;transform-origin:center;animation:halo 400ms ease-out 1450ms both}
+.count{margin:6px 0 0;font-family:'DM Serif Display',serif;font-size:clamp(30px,6vh,44px);line-height:1.1;font-variant-numeric:tabular-nums}
+.word{margin:0;font-family:Mukta,sans-serif;font-weight:700;font-size:clamp(46px,min(13vw,11vh),96px);line-height:1.2;color:#0B3D8A}
+.word span{display:inline-block;animation:rise 350ms cubic-bezier(.2,.8,.2,1) both}
+.word span:nth-child(1){animation-delay:1450ms}
+.word span:nth-child(2){animation-delay:1550ms}
+.word span:nth-child(3){animation-delay:1650ms}
+.range{position:absolute;left:0;right:0;bottom:0;width:100%;height:min(170px,22vh)}
+.bar{position:absolute;left:0;right:0;bottom:0;height:8px;display:flex;transform-origin:0 50%;animation:fill 1500ms linear both}
+.bar span{flex:1}
+.skip{position:fixed;right:16px;bottom:20px;z-index:5;min-height:44px;padding:0 18px;border:1.5px solid #14213D;border-radius:999px;background:#F7F8FC;color:#14213D;font:600 14px Inter,system-ui,sans-serif;text-decoration:none;display:flex;align-items:center}
+@media (prefers-reduced-motion:reduce){.flag{animation-duration:9s}}
+@keyframes sway{from{transform:rotate(-4deg) skewY(-2deg)}to{transform:rotate(4deg) skewY(2deg)}}
+@keyframes halo{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:none}}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:none}}
+@keyframes fill{from{transform:scaleX(0)}to{transform:none}}
+@keyframes leave{to{opacity:0}}
+</style>
+<script src="protect.js"></script>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<main class="screen" role="status" aria-label="Namaste. Loading Prabin Ban's portfolio.">
+<div aria-hidden="true" class="string"></div>
+<div aria-hidden="true" class="flags">
+<div class="flag" style="background:#1F5FA8"></div>
+<div class="flag" style="background:#F4F4F0"></div>
+<div class="flag" style="background:#C62828"></div>
+<div class="flag" style="background:#2E7D32"></div>
+<div class="flag" style="background:#F2C230"></div>
+<div class="flag" style="background:#1F5FA8"></div>
+<div class="flag" style="background:#F4F4F0"></div>
+<div class="flag" style="background:#C62828"></div>
+<div class="flag" style="background:#2E7D32"></div>
+<div class="flag" style="background:#F2C230"></div>
+</div>
+
+<svg class="mudra" viewBox="0 0 240 240" aria-hidden="true">
+<circle class="halo" cx="120" cy="120" r="88" fill="#FF4D6D" opacity=".5"></circle>
+<g id="ripples" fill="none" stroke="#003893"></g>
+<path id="track" fill="none" stroke="#14213D" stroke-width="2" opacity=".14"></path>
+<g id="wave" fill="none" stroke-width="5" stroke-linecap="round"></g>
+<g transform="translate(60 52)">
+<g id="handR">
+<path class="hand" d="M61 4 C66 4 71 12 73 24 L78 62 L85 54 C88 50 93 53 91 58 L83 84 C81 92 77 97 72 102 L90 132 L66 132 L61 106Z"></path>
+<path class="crease" d="M66 20 L69 62 M61 104 L72 102"></path>
+</g>
+<g id="handL">
+<g transform="translate(120 0) scale(-1 1)">
+<path class="hand" d="M61 4 C66 4 71 12 73 24 L78 62 L85 54 C88 50 93 53 91 58 L83 84 C81 92 77 97 72 102 L90 132 L66 132 L61 106Z"></path>
+<path class="crease" d="M66 20 L69 62 M61 104 L72 102"></path>
+</g>
+</g>
+</g>
+</svg>
+
+<p class="count" id="count" aria-hidden="true">10</p>
+<p class="word" aria-hidden="true" lang="ne"><span>न</span><span>म</span><span>स्ते</span></p>
+
+<svg class="range" viewBox="0 0 1440 360" preserveAspectRatio="none" aria-hidden="true">
+<path d="M0 250 L120 190 L210 230 L330 120 L420 200 L520 150 L640 60 L700 110 L760 40 L830 130 L930 90 L1040 170 L1150 100 L1260 180 L1360 140 L1440 190 L1440 360 L0 360Z" fill="#93A6D6"></path>
+<path d="M0 290 L160 230 L280 270 L420 200 L560 260 L700 210 L860 270 L1000 220 L1140 270 L1300 230 L1440 260 L1440 360 L0 360Z" fill="#4A6AB0"></path>
+<path d="M0 330 L200 290 L380 320 L560 290 L760 330 L980 295 L1200 325 L1440 300 L1440 360 L0 360Z" fill="#0F2A6B"></path>
+</svg>
+<div class="bar" aria-hidden="true"><span style="background:#1F5FA8"></span><span style="background:#F4F4F0"></span><span style="background:#C62828"></span><span style="background:#2E7D32"></span><span style="background:#F2C230"></span></div>
+</main>
+<a class="skip" href="index.html" id="skip">Skip</a>
+<noscript><p style="position:fixed;bottom:24px;left:0;right:0;text-align:center"><a href="index.html">Enter site</a></p></noscript>
+<script>
+(function(){
+var COUNT_MS=1500,LEAVE_MS=2350,STEPS=10,RADIUS=104,SVG='http://www.w3.org/2000/svg';
+var COLORS=['#1F5FA8','#C62828','#2E7D32','#F2C230','#14213D'];
+try{sessionStorage.setItem('namasteSeen','1')}catch(e){}
+setTimeout(function(){location.replace('index.html')},LEAVE_MS);
+var countEl=document.getElementById('count'),track=document.getElementById('track');
+var handR=document.getElementById('handR'),handL=document.getElementById('handL');
+var segments=[],ripples=[],i;
+for(i=0;i<STEPS;i++){
+var seg=document.createElementNS(SVG,'path');
+seg.setAttribute('stroke',COLORS[i%COLORS.length]);
+document.getElementById('wave').appendChild(seg);
+segments.push(seg);
+}
+for(i=0;i<3;i++){
+var ring=document.createElementNS(SVG,'circle');
+ring.setAttribute('cx',120);
+ring.setAttribute('cy',120);
+document.getElementById('ripples').appendChild(ring);
+ripples.push(ring);
+}
+function arc(from,to,amp,t){
+var d='',n=Math.max(2,Math.ceil((to-from)*180));
+for(var k=0;k<=n;k++){
+var a=(from+(to-from)*k/n)*Math.PI*2-Math.PI/2;
+var r=RADIUS+amp*Math.sin(a*7+t*4);
+d+=(k?'L':'M')+(120+r*Math.cos(a)).toFixed(1)+' '+(120+r*Math.sin(a)).toFixed(1);
+}
+return d;
+}
+function ease(p){return p<.5?4*p*p*p:1-Math.pow(-2*p+2,3)/2}
+var start=performance.now();
+function tick(now){
+var ms=now-start,t=ms/1000,p=Math.min(ms/COUNT_MS,1),e=ease(p);
+var amp=5*(1-Math.max(0,(ms-COUNT_MS)/500));
+if(amp<0)amp=0;
+countEl.textContent=Math.floor(p*STEPS);
+track.setAttribute('d',arc(0,1,amp,t)+'Z');
+segments.forEach(function(seg,n){
+var from=n/STEPS,to=Math.min(p,(n+1)/STEPS);
+seg.setAttribute('d',to>from?arc(from,to,amp,t):'');
+});
+var gap=(1-e)*42,tilt=(1-e)*20;
+handR.setAttribute('transform','translate('+gap+' 0) rotate('+tilt+' 60 132)');
+handL.setAttribute('transform','translate('+-gap+' 0) rotate('+-tilt+' 60 132)');
+ripples.forEach(function(ring,n){
+var q=(t/1.5+n/3)%1;
+ring.setAttribute('r',70+q*(RADIUS+14-70));
+ring.setAttribute('stroke-width',2.5*(1-q));
+ring.setAttribute('opacity',.5*(1-q));
+});
+if(ms<LEAVE_MS)requestAnimationFrame(tick);
+}
+tick(start);
+requestAnimationFrame(tick);
+})();
+</script>
+<script src="pwa.js"></script>
+</body>
+</html>

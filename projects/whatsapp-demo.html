@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; script-src 'self' 'unsafe-inline'">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WhatsApp auto-reply bot — Prabin Ban</title>
+<meta name="description" content="A WhatsApp auto-reply bot built with Python and Flask, with its code and a browser demo.">
+<link rel="canonical" href="https://prabinban.com.np/projects/whatsapp-demo.html">
+<meta property="og:title" content="WhatsApp auto-reply bot — Prabin Ban">
+<meta property="og:description" content="A WhatsApp auto-reply bot built with Python and Flask, with its code and a browser demo.">
+<meta property="og:url" content="https://prabinban.com.np/projects/whatsapp-demo.html">
+<meta property="og:type" content="website">
+<meta property="og:image" content="https://prabinban.com.np/assets/og-image.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Prabin Ban, BIT student from Bhaktapur, Nepal">
+<meta property="og:site_name" content="Prabin Ban">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M5 90 L40 30 L55 55 L70 20 L95 90Z' fill='%2314213D'/%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+body{margin:0;padding:24px 16px 64px;background:#F7F8FC;color:#14213D;font:16px/1.6 Inter,system-ui,sans-serif}
+a{color:#14213D}a:hover{color:#003893}
+:focus-visible{outline:3px solid #003893;outline-offset:2px}
+.wrap{max-width:1000px;margin:0 auto}
+h1,h2{margin:0;font-family:'DM Serif Display',serif;font-weight:400;line-height:1.1}
+h1{margin-top:16px;font-size:clamp(38px,6vw,56px)}
+h2{font-size:32px}
+.lead{max-width:640px;margin:12px 0 0;color:#4A5578}
+.layout{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,340px),1fr));gap:32px;margin-top:32px;align-items:start}
+.note{margin:0 0 12px;padding:10px 12px;border-radius:10px;background:#FFF6D6;font-size:13px;line-height:1.5}
+.phone{display:flex;flex-direction:column;height:560px;overflow:hidden;border:1px solid #D6DDEE;border-radius:20px;background:#E3F2EE;box-shadow:0 16px 40px rgba(20,33,61,.12)}
+.bar{padding:12px 16px;background:#075E54;color:#FFF}
+.bar strong{display:block;line-height:1.3}
+.bar span{font-size:13px}
+.chat{flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:6px;padding:14px}
+.msg{max-width:85%;padding:7px 10px;border-radius:10px;font-size:14px;line-height:1.45;white-space:pre-wrap;overflow-wrap:anywhere;box-shadow:0 1px 1px rgba(0,0,0,.12)}
+.msg.in{align-self:flex-start;background:#FFF}
+.msg.out{align-self:flex-end;background:#DCF8C6}
+.msg time{display:block;margin-top:2px;color:#5A6A70;font-size:11px;text-align:right}
+.typing{align-self:flex-start;padding:7px 10px;border-radius:10px;background:#FFF;color:#4A5578;font-size:13px}
+.quick{display:flex;flex-wrap:wrap;gap:6px;padding:8px 10px 0}
+.chip{min-height:36px;padding:0 12px;border:1px solid #075E54;border-radius:999px;background:#FFF;color:#075E54;font:600 13px Inter,system-ui,sans-serif;cursor:pointer}
+form{display:flex;gap:8px;padding:10px}
+input{flex:1;min-width:0;min-height:44px;padding:0 14px;border:1px solid #8FB8B2;border-radius:999px;font:16px Inter,system-ui,sans-serif}
+.send{min-height:44px;padding:0 16px;border:0;border-radius:999px;background:#075E54;color:#FFF;font:600 14px Inter,system-ui,sans-serif;cursor:pointer}
+ol,ul{padding-left:20px}
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin:14px 0}
+.tab{min-height:40px;padding:0 14px;border:1.5px solid #14213D;border-radius:999px;background:transparent;color:#14213D;font:600 13px Inter,system-ui,sans-serif;cursor:pointer}
+.tab[aria-pressed=true]{background:#14213D;color:#FFF}
+pre{margin:0;max-height:560px;overflow:auto;padding:16px;border-radius:12px;background:#14213D;color:#F7F8FC;font:13px/1.55 Consolas,Menlo,monospace}
+section{margin-top:56px}
+</style>
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#14213D">
+</head>
+<body>
+<div class="wrap">
+<a href="../index.html#work">← Back to work</a>
+<h1>WhatsApp auto-reply bot</h1>
+<p class="lead">A Python and Flask webhook on Meta's WhatsApp Cloud API that answers messages automatically. It checks Meta's signature on every call, ignores repeated webhooks, and reads its replies from a JSON file.</p>
+
+<div class="layout">
+<div>
+<h2 style="margin-bottom:12px">Live demo</h2>
+<p class="note">Browser simulation: nothing is sent to WhatsApp. It uses the same <code>rules.json</code> as the real bot, so the replies match.</p>
+<div class="phone">
+<div class="bar"><strong>Prabin's bot</strong><span id="bar-status">online</span></div>
+<div class="chat" id="chat" role="log" aria-live="polite" aria-label="Conversation"></div>
+<div class="quick" id="quick">
+<button class="chip" type="button">Hi</button>
+<button class="chip" type="button">1</button>
+<button class="chip" type="button">2</button>
+<button class="chip" type="button">3</button>
+<button class="chip" type="button">4</button>
+<button class="chip" type="button">नमस्ते</button>
+</div>
+<form id="form">
+<input id="text" aria-label="Type a message" placeholder="Type a message" maxlength="500" autocomplete="off">
+<button class="send" type="submit">Send</button>
+</form>
+</div>
+</div>
+<div>
+<h2>How it works</h2>
+<ol>
+<li>Someone messages your WhatsApp Business number.</li>
+<li>Meta sends the message to the bot's <code>/webhook</code>, signed with your app secret.</li>
+<li>The bot checks the signature and skips anything it has already answered.</li>
+<li>It finds the first rule with a matching keyword, in English or Nepali.</li>
+<li>It sends the reply back through the Cloud API.</li>
+</ol>
+<h2 style="margin-top:28px">Stack</h2>
+<ul>
+<li>Python, Flask and requests</li>
+<li>Meta WhatsApp Cloud API</li>
+<li>pytest suite with 20 tests</li>
+</ul>
+</div>
+</div>
+
+<section id="code" aria-label="Source code">
+<h2>Code</h2>
+<div class="tabs">
+<button class="tab" type="button" data-file="file-app" aria-pressed="true">app.py</button>
+<button class="tab" type="button" data-file="file-rules" aria-pressed="false">rules.json</button>
+</div>
+<pre id="file-app" tabindex="0"><code>&quot;&quot;&quot;WhatsApp auto-reply bot built with Flask and Meta&#x27;s WhatsApp Cloud API.&quot;&quot;&quot;
+import hashlib
+import hmac
+import json
+import logging
+import os
+from collections import OrderedDict
+from pathlib import Path
+
+import requests
+from flask import Flask, abort, request
+
+PUNCTUATION = &quot;.,!?;:&#x27;\&quot;()[]{}-_/\\|।…&quot;
+SEEN_LIMIT = 1000
+RULES_PATH = Path(__file__).with_name(&quot;rules.json&quot;)
+
+log = logging.getLogger(&quot;whatsapp-bot&quot;)
+
+
+def normalise(text):
+    &quot;&quot;&quot;Lowercase the text and turn punctuation into spaces.&quot;&quot;&quot;
+    cleaned = text.lower().translate({ord(c): &quot; &quot; for c in PUNCTUATION})
+    return f&quot; {&#x27; &#x27;.join(cleaned.split())} &quot;
+
+
+def choose_reply(text, config):
+    &quot;&quot;&quot;Return the reply of the first rule with a keyword in the message.&quot;&quot;&quot;
+    message = normalise(text)
+    for rule in config[&quot;rules&quot;]:
+        if any(f&quot; {keyword} &quot; in message for keyword in rule[&quot;keywords&quot;]):
+            return rule[&quot;reply&quot;]
+    return config[&quot;fallback&quot;]
+
+
+def signature_is_valid(secret, body, header):
+    &quot;&quot;&quot;Check that a webhook call was really signed by Meta.&quot;&quot;&quot;
+    if not header or not header.startswith(&quot;sha256=&quot;):
+        return False
+    expected = hmac.new(secret.encode(), body, hashlib.sha256).hexdigest()
+    return hmac.compare_digest(header[len(&quot;sha256=&quot;):], expected)
+
+
+def incoming_messages(payload):
+    &quot;&quot;&quot;Yield every message in a webhook payload.&quot;&quot;&quot;
+    for entry in payload.get(&quot;entry&quot;, []):
+        for change in entry.get(&quot;changes&quot;, []):
+            yield from change.get(&quot;value&quot;, {}).get(&quot;messages&quot;, [])
+
+
+def create_app(settings=None, send=None):
+    settings = settings or {
+        &quot;verify_token&quot;: os.environ[&quot;VERIFY_TOKEN&quot;],
+        &quot;app_secret&quot;: os.environ[&quot;APP_SECRET&quot;],
+        &quot;access_token&quot;: os.environ[&quot;ACCESS_TOKEN&quot;],
+        &quot;phone_number_id&quot;: os.environ[&quot;PHONE_NUMBER_ID&quot;],
+        &quot;graph_version&quot;: os.environ.get(&quot;GRAPH_VERSION&quot;, &quot;v23.0&quot;),
+    }
+    config = json.loads(RULES_PATH.read_text(encoding=&quot;utf-8&quot;))
+    seen = OrderedDict()
+    app = Flask(__name__)
+
+    def send_text(to, body):
+        response = requests.post(
+            f&quot;https://graph.facebook.com/{settings[&#x27;graph_version&#x27;]}&quot;
+            f&quot;/{settings[&#x27;phone_number_id&#x27;]}/messages&quot;,
+            headers={&quot;Authorization&quot;: f&quot;Bearer {settings[&#x27;access_token&#x27;]}&quot;},
+            json={
+                &quot;messaging_product&quot;: &quot;whatsapp&quot;,
+                &quot;to&quot;: to,
+                &quot;type&quot;: &quot;text&quot;,
+                &quot;text&quot;: {&quot;body&quot;: body},
+            },
+            timeout=5,
+        )
+        response.raise_for_status()
+
+    deliver = send or send_text
+
+    def first_time(message_id):
+        &quot;&quot;&quot;Meta can repeat a webhook, so answer each message only once.&quot;&quot;&quot;
+        if message_id in seen:
+            return False
+        seen[message_id] = True
+        if len(seen) &gt; SEEN_LIMIT:
+            seen.popitem(last=False)
+        return True
+
+    @app.get(&quot;/&quot;)
+    def health():
+        return {&quot;status&quot;: &quot;ok&quot;}
+
+    @app.get(&quot;/webhook&quot;)
+    def verify():
+        token_ok = hmac.compare_digest(
+            request.args.get(&quot;hub.verify_token&quot;, &quot;&quot;), settings[&quot;verify_token&quot;]
+        )
+        if request.args.get(&quot;hub.mode&quot;) == &quot;subscribe&quot; and token_ok:
+            return request.args.get(&quot;hub.challenge&quot;, &quot;&quot;), 200
+        abort(403)
+
+    @app.post(&quot;/webhook&quot;)
+    def receive():
+        body = request.get_data()
+        header = request.headers.get(&quot;X-Hub-Signature-256&quot;)
+        if not signature_is_valid(settings[&quot;app_secret&quot;], body, header):
+            abort(403)
+        for message in incoming_messages(json.loads(body)):
+            if not first_time(message.get(&quot;id&quot;)):
+                continue
+            if message.get(&quot;type&quot;) == &quot;text&quot;:
+                reply = choose_reply(message[&quot;text&quot;][&quot;body&quot;], config)
+            else:
+                reply = config[&quot;non_text&quot;]
+            try:
+                deliver(message[&quot;from&quot;], reply)
+            except requests.RequestException as error:
+                # Status codes only: request details contain the access token.
+                status = getattr(error.response, &quot;status_code&quot;, &quot;no response&quot;)
+                log.error(&quot;Could not send reply: %s&quot;, status)
+        return &quot;&quot;, 200
+
+    return app
+
+
+if __name__ == &quot;__main__&quot;:
+    create_app().run(port=int(os.environ.get(&quot;PORT&quot;, 5000)))
+</code></pre>
+<pre id="file-rules" tabindex="0" hidden><code>{
+  &quot;fallback&quot;: &quot;Sorry, I didn&#x27;t catch that. Reply *menu* to see what I can help with.&quot;,
+  &quot;non_text&quot;: &quot;I can only read text messages for now. Reply *menu* to see what I can help with.&quot;,
+  &quot;rules&quot;: [
+    {
+      &quot;id&quot;: &quot;greeting&quot;,
+      &quot;keywords&quot;: [&quot;hi&quot;, &quot;hello&quot;, &quot;hey&quot;, &quot;namaste&quot;, &quot;नमस्ते&quot;],
+      &quot;reply&quot;: &quot;Namaste! 🙏 I&#x27;m Prabin&#x27;s auto-reply bot.\n\nReply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin&quot;
+    },
+    {
+      &quot;id&quot;: &quot;menu&quot;,
+      &quot;keywords&quot;: [&quot;menu&quot;, &quot;help&quot;, &quot;options&quot;],
+      &quot;reply&quot;: &quot;Reply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin&quot;
+    },
+    {
+      &quot;id&quot;: &quot;projects&quot;,
+      &quot;keywords&quot;: [&quot;1&quot;, &quot;project&quot;, &quot;projects&quot;, &quot;work&quot;, &quot;portfolio&quot;],
+      &quot;reply&quot;: &quot;Selected work:\n• Login and signup page with full validation\n• This WhatsApp auto-reply bot\n\nSee them at https://prabinban.com.np/#work&quot;
+    },
+    {
+      &quot;id&quot;: &quot;github&quot;,
+      &quot;keywords&quot;: [&quot;2&quot;, &quot;github&quot;, &quot;code&quot;, &quot;repo&quot;],
+      &quot;reply&quot;: &quot;Find Prabin&#x27;s code here: https://github.com/ggpukar/pukarban&quot;
+    },
+    {
+      &quot;id&quot;: &quot;contact&quot;,
+      &quot;keywords&quot;: [&quot;3&quot;, &quot;contact&quot;, &quot;email&quot;, &quot;hire&quot;, &quot;mail&quot;],
+      &quot;reply&quot;: &quot;You can email Prabin at banpukar00@gmail.com&quot;
+    },
+    {
+      &quot;id&quot;: &quot;about&quot;,
+      &quot;keywords&quot;: [&quot;4&quot;, &quot;about&quot;, &quot;who&quot;, &quot;prabin&quot;],
+      &quot;reply&quot;: &quot;Prabin Ban is a student developer in Bhaktapur, Nepal, who builds apps, bots and strategy work.&quot;
+    },
+    {
+      &quot;id&quot;: &quot;thanks&quot;,
+      &quot;keywords&quot;: [&quot;thanks&quot;, &quot;thank&quot;, &quot;dhanyabad&quot;, &quot;धन्यवाद&quot;],
+      &quot;reply&quot;: &quot;You&#x27;re welcome! 🙏&quot;
+    }
+  ]
+}
+</code></pre>
+<p style="margin-top:14px;font-size:15px">Download: <a href="whatsapp-bot/app.py">app.py</a> · <a href="whatsapp-bot/rules.json">rules.json</a> · <a href="whatsapp-bot/test_app.py">test_app.py</a> · <a href="whatsapp-bot/requirements.txt">requirements.txt</a> · <a href="whatsapp-bot/.env.example">.env.example</a> · <a href="whatsapp-bot/README.md">README.md</a></p>
+</section>
+</div>
+
+<script type="application/json" id="rules">{"fallback": "Sorry, I didn't catch that. Reply *menu* to see what I can help with.", "non_text": "I can only read text messages for now. Reply *menu* to see what I can help with.", "rules": [{"id": "greeting", "keywords": ["hi", "hello", "hey", "namaste", "नमस्ते"], "reply": "Namaste! 🙏 I'm Prabin's auto-reply bot.\n\nReply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin"}, {"id": "menu", "keywords": ["menu", "help", "options"], "reply": "Reply with a number:\n1. Projects\n2. GitHub\n3. Contact\n4. About Prabin"}, {"id": "projects", "keywords": ["1", "project", "projects", "work", "portfolio"], "reply": "Selected work:\n• Login and signup page with full validation\n• This WhatsApp auto-reply bot\n\nSee them at https://prabinban.com.np/#work"}, {"id": "github", "keywords": ["2", "github", "code", "repo"], "reply": "Find Prabin's code here: https://github.com/ggpukar/pukarban"}, {"id": "contact", "keywords": ["3", "contact", "email", "hire", "mail"], "reply": "You can email Prabin at banpukar00@gmail.com"}, {"id": "about", "keywords": ["4", "about", "who", "prabin"], "reply": "Prabin Ban is a student developer in Bhaktapur, Nepal, who builds apps, bots and strategy work."}, {"id": "thanks", "keywords": ["thanks", "thank", "dhanyabad", "धन्यवाद"], "reply": "You're welcome! 🙏"}]}</script>
+<script>
+(function(){
+var PUNCTUATION=/[.,!?;:'"()\[\]{}\-_\/\\|।…]/g;
+var CONFIG=JSON.parse(document.getElementById('rules').textContent);
+var chat=document.getElementById('chat'),input=document.getElementById('text'),status=document.getElementById('bar-status');
+var pending=0;
+function normalise(text){
+return ' '+text.toLowerCase().replace(PUNCTUATION,' ').split(/\s+/).filter(Boolean).join(' ')+' ';
+}
+function chooseReply(text){
+var message=normalise(text);
+for(var i=0;i<CONFIG.rules.length;i++){
+if(CONFIG.rules[i].keywords.some(function(keyword){return message.indexOf(' '+keyword+' ')>=0}))return CONFIG.rules[i].reply;
+}
+return CONFIG.fallback;
+}
+function add(kind,text){
+var bubble=document.createElement('div'),time=document.createElement('time');
+bubble.className='msg '+kind;
+bubble.textContent=text;
+time.textContent=new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'})+(kind==='out'?' ✓✓':'');
+bubble.appendChild(time);
+chat.appendChild(bubble);
+chat.scrollTop=chat.scrollHeight;
+}
+function send(text){
+text=text.trim();
+if(!text)return;
+add('out',text);
+pending++;
+status.textContent='typing…';
+var typing=document.createElement('div');
+typing.className='typing';
+typing.textContent='typing…';
+chat.appendChild(typing);
+chat.scrollTop=chat.scrollHeight;
+setTimeout(function(){
+typing.remove();
+add('in',chooseReply(text));
+pending--;
+if(!pending)status.textContent='online';
+},700);
+}
+document.getElementById('form').addEventListener('submit',function(event){
+event.preventDefault();
+send(input.value);
+input.value='';
+input.focus();
+});
+[].forEach.call(document.querySelectorAll('.chip'),function(chip){
+chip.addEventListener('click',function(){send(chip.textContent)});
+});
+[].forEach.call(document.querySelectorAll('[data-file]'),function(tab){
+tab.addEventListener('click',function(){
+[].forEach.call(document.querySelectorAll('[data-file]'),function(other){
+var active=other===tab;
+other.setAttribute('aria-pressed',active);
+document.getElementById(other.getAttribute('data-file')).hidden=!active;
+});
+});
+});
+add('in','Say hi, or tap a button below to try the bot.');
+})();
+</script>
+<script src="../pwa.js"></script>
+</body>
+</html>

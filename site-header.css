@@ -1,0 +1,19 @@
+#np-clock{background:#14213D;color:#FFF}
+.np-bar{max-width:1200px;margin:0 auto;padding:10px 24px;display:flex;flex-wrap:wrap;gap:10px 32px;align-items:center;justify-content:space-between}
+.np-group{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center;justify-content:center}
+.np-face{flex:none}
+.np-big,.wx-temp{font-family:'DM Serif Display',serif;font-size:40px;line-height:1.1}
+.np-big{margin:0;white-space:nowrap}
+.np-seconds{margin-left:8px;font-family:Inter,system-ui,sans-serif;font-size:15px;font-variant-numeric:tabular-nums}
+.np-eyebrow{margin:0;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:#FF4D6D}
+.np-bs{margin:0;font-family:Mukta,sans-serif;font-weight:500;font-size:17px;line-height:1.3}
+.np-small{margin:0;font-size:13px;line-height:1.4;color:#E1E7F5}
+.wx-main{display:flex;align-items:center;gap:10px}
+.wx-icon{font-size:32px;line-height:1}
+.wx-now{margin:0;font-size:15px;font-weight:500;line-height:1.3}
+.wx-days{display:flex;gap:14px;font-size:12px;line-height:1.35;text-align:center;color:#E1E7F5}
+.site-brand-row{background:#F4F6FC}
+.site-brand-row div{max-width:1200px;margin:0 auto;padding:16px 24px}
+.site-brand{display:inline-flex;align-items:center;min-height:48px;color:#14213D;font-family:'DM Serif Display',serif;font-size:26px;text-decoration:none}
+.site-brand:hover{color:#003893}
+.site-brand:focus-visible{outline-color:#003893}

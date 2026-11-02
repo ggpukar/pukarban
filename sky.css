@@ -1,0 +1,31 @@
+/* The hero sky follows the real time of day (light theme) and the current weather (both themes). */
+html:not([data-theme=dark]) [data-sky=dawn]{background:linear-gradient(180deg,#F9E6EA 0%,#F6D3CC 35%,#C9D3F2 70%,#A3BCF0 100%)!important}
+html:not([data-theme=dark]) [data-sky=dusk]{background:linear-gradient(180deg,#8A97D0 0%,#F1C3CE 32%,#F7D9C2 62%,#A9B9EC 100%)!important}
+html:not([data-theme=dark]) [data-sky=night]{background:linear-gradient(180deg,#0B1A40 0%,#14295E 45%,#2C4A94 100%)!important}
+html:not([data-theme=dark]) [data-sky=night] p,html:not([data-theme=dark]) [data-sky=night] h1 a{color:#EEF1FA!important}
+html:not([data-theme=dark]) [data-sky=night] .hm-btn[style*="border: 1.5px solid"]{border-color:#EEF1FA!important;color:#EEF1FA}
+html:not([data-theme=dark]) [data-sky=night] .sky i:nth-child(4){opacity:.15}
+[data-sky=night] .sky,html[data-theme=dark] .sky{background-image:radial-gradient(1.5px 1.5px at 8% 12%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 22% 30%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 35% 8%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 48% 24%,#FFF 50%,transparent 60%),radial-gradient(2px 2px at 61% 14%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 72% 34%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 84% 10%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 93% 26%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 15% 44%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 56% 40%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 79% 46%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 41% 52%,#FFF 50%,transparent 60%);animation:twinkle 5s ease-in-out infinite alternate}
+@keyframes twinkle{from{opacity:.7}to{opacity:1}}
+.wx-fx{position:absolute;inset:0;overflow:hidden;pointer-events:none}
+.wx-fx::before,.wx-fx::after{content:"";position:absolute;pointer-events:none}
+[data-weather=clouds] .wx-fx::before,[data-weather=rain] .wx-fx::before,[data-weather=storm] .wx-fx::before{left:-30%;top:4%;width:80%;height:38%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.75),rgba(255,255,255,0));animation:cloud 60s linear infinite}
+[data-weather=clouds] .wx-fx::after{right:-25%;top:18%;width:70%;height:30%;border-radius:50%;background:radial-gradient(closest-side,rgba(255,255,255,.6),rgba(255,255,255,0));animation:cloud 80s linear infinite reverse}
+html[data-theme=dark] [data-weather] .wx-fx::before,html[data-theme=dark] [data-weather=clouds] .wx-fx::after,html:not([data-theme=dark]) [data-sky=night] .wx-fx::before{opacity:.25}
+[data-weather=rain] .wx-fx::after,[data-weather=storm] .wx-fx::after{inset:-20% 0 0;background:repeating-linear-gradient(105deg,transparent 0 18px,rgba(20,33,61,.18) 18px 19px,transparent 19px 38px);background-size:120px 120px;animation:rain .6s linear infinite}
+html[data-theme=dark] [data-weather=rain] .wx-fx::after,html[data-theme=dark] [data-weather=storm] .wx-fx::after,[data-sky=night][data-weather=rain] .wx-fx::after,[data-sky=night][data-weather=storm] .wx-fx::after{background-image:repeating-linear-gradient(105deg,transparent 0 18px,rgba(238,241,250,.22) 18px 19px,transparent 19px 38px)}
+[data-weather=storm] .wx-fx{animation:flash 9s steps(1) infinite}
+[data-weather=snow] .wx-fx::after{inset:-20% 0 0;background-image:radial-gradient(2px 2px at 20px 30px,#FFF 50%,transparent 60%),radial-gradient(2.5px 2.5px at 80px 90px,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 130px 50px,#FFF 50%,transparent 60%);background-size:160px 160px;animation:snow 9s linear infinite}
+[data-weather=mist] .wx-fx::after{left:0;right:0;top:35%;height:45%;background:linear-gradient(180deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));animation:mist 20s ease-in-out infinite alternate}
+html[data-theme=dark] [data-weather=mist] .wx-fx::after{opacity:.25}
+@keyframes cloud{from{transform:translateX(0)}to{transform:translateX(70%)}}
+@keyframes rain{to{background-position:-40px 120px}}
+@keyframes snow{to{background-position:30px 160px}}
+@keyframes mist{to{transform:translateX(6%)}}
+@keyframes flash{0%,100%{background:transparent}91%{background:rgba(255,255,255,.35)}92%{background:transparent}94%{background:rgba(255,255,255,.2)}}
+@media (prefers-reduced-motion:reduce){
+.wx-fx::before,.wx-fx::after{animation-duration:200s!important}
+[data-weather=rain] .wx-fx::after,[data-weather=storm] .wx-fx::after{animation-duration:3s!important}
+[data-weather=snow] .wx-fx::after{animation-duration:40s!important}
+[data-weather=storm] .wx-fx{animation:none}
+}

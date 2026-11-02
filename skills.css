@@ -1,0 +1,9 @@
+#skills{max-width:1200px;margin:0 auto;padding:0 24px 96px;scroll-margin-top:80px}
+#skills h2{margin:0 0 8px;font-family:'DM Serif Display',serif;font-weight:400;font-size:48px}
+#skills>p{margin:0 0 32px;color:#4A5578}
+.skill-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr));gap:20px}
+.skill-group{padding:24px;border:1px solid #D6DDEE;border-radius:20px;background:#FFF}
+.skill-group h3{margin:0 0 14px;font-size:17px;font-weight:600}
+.skill-tags{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.skill-tags li{padding:4px 12px;border-radius:999px;background:#E6ECF8;font-size:14px;font-weight:500}
+.skill-used{margin:14px 0 0;font-size:13px;color:#4A5578}

@@ -1,0 +1,82 @@
+.theme-toggle{width:44px;height:44px;padding:0;border:1.5px solid #FF4D6D;border-radius:50%;background:transparent;color:#FF4D6D;font-size:18px;line-height:1;cursor:pointer}
+.theme-toggle:hover{background:rgba(255,77,109,.18)}
+.theme-toggle:focus-visible{outline:3px solid #FF4D6D;outline-offset:3px}
+
+html[data-theme=dark]{color-scheme:dark;background:#0A1128}
+html[data-theme=dark] body{background:#0A1128;color:#EEF1FA}
+
+/* Home page */
+html[data-theme=dark] .hm{background:#0A1128!important;color:#EEF1FA!important}
+html[data-theme=dark] .hm a:not(.hm-btn){color:#EEF1FA}
+html[data-theme=dark] .hm a:not(.hm-btn):hover{color:#8FB4FF}
+html[data-theme=dark] .hm-card a:not(.hm-btn){color:#8FB4FF}
+html[data-theme=dark] [style*="#F4F6FC"]{background:linear-gradient(180deg,#0A1128 0%,#0C1838 45%,#12306E 100%)!important}
+html[data-theme=dark] [style*="#F4F6FC"]>canvas:not(#flags),html[data-theme=dark] #range{filter:brightness(.6)}
+html[data-theme=dark] .sky{opacity:.45}
+html[data-theme=dark] [style*="color: #2A3558"]{color:#D3DAEC!important}
+html[data-theme=dark] [style*="color: #4A5578"]{color:#A8B3D1!important}
+html[data-theme=dark] [style*="border-left: 2px solid #D6DDEE"]{border-left-color:#2C3A66!important}
+html[data-theme=dark] .hm-btn[style*="background: #DC143C"]{background:#DC143C!important;color:#FFF!important}
+html[data-theme=dark] .hm-btn[style*="border: 1.5px solid #14213D"]{border-color:#EEF1FA!important;color:#EEF1FA}
+html[data-theme=dark] .hm-card{background:#111C3B!important;border-color:#2C3A66!important}
+html[data-theme=dark] #skills>p,html[data-theme=dark] .skill-used{color:#A8B3D1}
+html[data-theme=dark] .skill-group{background:#111C3B;border-color:#2C3A66}
+html[data-theme=dark] .skill-tags li{background:#1F2D57}
+
+/* Shared header */
+html[data-theme=dark] .site-brand-row{background:#0B1530}
+html[data-theme=dark] .site-brand{color:#EEF1FA}
+html[data-theme=dark] .site-brand:hover{color:#8FB4FF}
+html[data-theme=dark] .site-brand:focus-visible{outline-color:#FF4D6D}
+
+/* Tools */
+html[data-theme=dark] .tool-card,html[data-theme=dark] .tool-panel{background:#111C3B;border-color:#2C3A66}
+html[data-theme=dark] .tool-card p,html[data-theme=dark] #tool-count,html[data-theme=dark] #tool-empty,html[data-theme=dark] .tool-note,html[data-theme=dark] .tool-credit,html[data-theme=dark] .stat-label,html[data-theme=dark] .clock-gap,html[data-theme=dark] .cal-ad,html[data-theme=dark] .cal-table th span,html[data-theme=dark] .clock-remove,html[data-theme=dark] .ne-table th{color:#A8B3D1}
+html[data-theme=dark] .tool-open,html[data-theme=dark] .tool-main a:not(.tool-btn){color:#8FB4FF}
+html[data-theme=dark] .tool-input,html[data-theme=dark] #tool-search{background:#172447;border-color:#5C6E9E;color:#EEF1FA}
+html[data-theme=dark] .ne-out{background:#172447}
+html[data-theme=dark] .tool-fav{color:#A8B3D1}
+html[data-theme=dark] .tool-fav:hover{background:#1F2D57}
+html[data-theme=dark] .tool-fav[aria-pressed=true]{color:#FF8FA3}
+html[data-theme=dark] #tool-recent .tool-choice{color:#EEF1FA}
+html[data-theme=dark] #tool-search::placeholder,html[data-theme=dark] .tool-input::placeholder{color:#A8B3D1}
+html[data-theme=dark] .tool-btn{background:#DC143C;color:#FFF!important}
+html[data-theme=dark] .tool-btn:hover{background:#B01030}
+html[data-theme=dark] .tool-btn-quiet{border-color:#EEF1FA;background:transparent;color:#EEF1FA!important}
+html[data-theme=dark] .tool-btn-quiet:hover{background:#1F2D57}
+html[data-theme=dark] .tool-answer,html[data-theme=dark] .land-chosen{background:#1F2D57}
+html[data-theme=dark] .tool-choice{border-color:#5C6E9E;background:#172447;color:#EEF1FA}
+html[data-theme=dark] .tool-choice:hover{background:#1F2D57}
+html[data-theme=dark] .tool-range,html[data-theme=dark] .tool-check input,html[data-theme=dark] progress{accent-color:#8FB4FF}
+html[data-theme=dark] .cal-day{background:#172447}
+html[data-theme=dark] .cal-saturday .cal-bs{color:#FF9DB0}
+html[data-theme=dark] .cal-today{background:#FF4D6D}
+html[data-theme=dark] .cal-today .cal-bs,html[data-theme=dark] .cal-today .cal-ad{color:#14213D}
+html[data-theme=dark] .land-table tr+tr,html[data-theme=dark] .pdf-item,html[data-theme=dark] .rs-entry,html[data-theme=dark] .ne-table td{border-color:#2C3A66}
+html[data-theme=dark] .pdf-action{color:#EEF1FA}
+html[data-theme=dark] #qr-canvas{border-color:#2C3A66}
+
+/* Typing practice */
+html[data-theme=dark] .tt-words{color:#A8B3D1}
+html[data-theme=dark] .tt-nepali{color:#EEF1FA}
+html[data-theme=dark] .tt-current{background:#4A1020;color:#FFF}
+html[data-theme=dark] .tt-right,html[data-theme=dark] .tt-done{color:#8FB4FF}
+html[data-theme=dark] .tt-wrong,html[data-theme=dark] .tt-missed{color:#FF9C94}
+html[data-theme=dark] .tt-input.tt-bad{border-color:#FF9C94;background:#3A1513}
+html[data-theme=dark] .tt-keyboard{background:#050B1C}
+html[data-theme=dark] .tt-key{background:#1F2D57;color:#EEF1FA;box-shadow:0 clamp(2px,.4vw,4px) 0 #08122B}
+html[data-theme=dark] .tt-key small{color:#A8B3D1}
+html[data-theme=dark] .tt-key-next{background:#FF4D6D;color:#14213D}
+html[data-theme=dark] .tt-key-next small{color:#14213D}
+html[data-theme=dark] .tt-key-on{background:#8FB4FF;color:#14213D;box-shadow:0 0 0 #08122B}
+html[data-theme=dark] .tt-key-on small{color:#14213D}
+html[data-theme=dark] .tt-key-bad{background:#FF9C94;color:#3A1513;box-shadow:0 0 0 #08122B}
+html[data-theme=dark] .tt-key-bad small{color:#3A1513}
+
+/* The resume stays on white paper, as it will print */
+html[data-theme=dark] .rs-preview{background:#FFF}
+html[data-theme=dark] .rs-sheet{color:#14213D}
+@media print{
+html[data-theme=dark]{color-scheme:light;background:#FFF}
+html[data-theme=dark] body{background:#FFF;color:#14213D}
+}
