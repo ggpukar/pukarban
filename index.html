@@ -35,7 +35,6 @@ a{color:#14213D}a:hover{color:#003893}
 .hm-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(20,33,61,.18)}
 .hm-card{transition:transform 240ms ease,box-shadow 240ms ease}
 .hm-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(20,33,61,.12)}
-#sound:focus-visible{outline:3px solid #FF4D6D;outline-offset:3px}
 .sky{position:absolute;inset:0;overflow:hidden;pointer-events:none}
 .sky i{position:absolute;display:block;border-radius:50%;will-change:transform}
 .sky i:nth-child(1){left:-15%;top:-25%;width:70%;height:90%;background:radial-gradient(closest-side,rgba(255,77,109,.5),rgba(255,77,109,0));animation:drift1 19s ease-in-out infinite alternate}
@@ -57,6 +56,7 @@ a{color:#14213D}a:hover{color:#003893}
 #cf-send:disabled{opacity:.7;cursor:wait}
 </style>
 <link rel="stylesheet" href="sidenav.css">
+<link rel="stylesheet" href="site-header.css">
 <link rel="stylesheet" href="section-bg.css">
 <link rel="stylesheet" href="sky.css">
 <link rel="stylesheet" href="skills.css">
@@ -79,10 +79,10 @@ a{color:#14213D}a:hover{color:#003893}
 <button class="sidenav-toggle" id="sidenav-toggle" type="button" aria-expanded="false" aria-controls="sidenav"><svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="sidenav-label">Menu</span></button>
 <div class="hm" id="top" style="background: #F7F8FC; color: #14213D; font-family: Inter, system-ui, sans-serif; font-size: 17px; line-height: 1.6">
 
-<section id="np-clock" aria-label="Current time in Bhaktapur" style="background: #14213D; color: #FFFFFF">
-<div style="max-width: 1200px; margin: 0 auto; padding: 10px 24px; display: flex; flex-wrap: wrap; gap: 10px 32px; align-items: center; justify-content: space-between">
-<div style="display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: center">
-<svg viewBox="0 0 120 120" width="60" height="60" aria-hidden="true" style="flex: none">
+<section id="np-clock" aria-label="Current time in Bhaktapur">
+<div class="np-bar">
+<div class="np-group">
+<svg class="np-face" viewBox="0 0 120 120" width="60" height="60" aria-hidden="true">
 <circle cx="60" cy="60" r="58" fill="#F7F8FC"></circle>
 <g id="np-ticks" stroke-linecap="round"></g>
 <line id="np-hour" x1="60" y1="64" x2="60" y2="34" stroke="#14213D" stroke-width="4.5" stroke-linecap="round"></line>
@@ -90,25 +90,25 @@ a{color:#14213D}a:hover{color:#003893}
 <line id="np-second" x1="60" y1="70" x2="60" y2="14" stroke="#DC143C" stroke-width="1.5" stroke-linecap="round"></line>
 <circle cx="60" cy="60" r="3.5" fill="#DC143C"></circle>
 </svg>
-<p style="margin: 0; font-family: 'DM Serif Display', serif; font-size: 40px; line-height: 1.1; white-space: nowrap"><span id="np-time">--:--</span><span id="np-seconds" style="margin-left: 8px; font-family: Inter, system-ui, sans-serif; font-size: 15px; font-variant-numeric: tabular-nums"></span></p>
+<p class="np-big"><span id="np-time">--:--</span><span class="np-seconds" id="np-seconds"></span></p>
 <div>
-<p style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #FF4D6D">Bhaktapur, Nepal · UTC+5:45</p>
-<p id="np-bs" lang="ne" style="margin: 0; font-family: Mukta, sans-serif; font-weight: 500; font-size: 17px; line-height: 1.3"></p>
-<p id="np-ad" style="margin: 0; font-size: 13px; line-height: 1.4; color: #E1E7F5"></p>
+<p class="np-eyebrow">Bhaktapur, Nepal · UTC+5:45</p>
+<p class="np-bs" id="np-bs" lang="ne"></p>
+<p class="np-small" id="np-ad"></p>
 </div>
 </div>
-<div id="wx" aria-live="polite" style="display: flex; flex-wrap: wrap; gap: 8px 20px; align-items: center; justify-content: center">
-<div style="display: flex; align-items: center; gap: 10px">
-<span id="wx-icon" aria-hidden="true" style="font-size: 32px; line-height: 1"></span>
-<span id="wx-temp" style="font-family: 'DM Serif Display', serif; font-size: 40px; line-height: 1.1"></span>
+<div class="np-group" id="wx" aria-live="polite">
+<div class="wx-main">
+<span class="wx-icon" id="wx-icon" aria-hidden="true"></span>
+<span class="wx-temp" id="wx-temp"></span>
 <div>
-<p id="wx-place" style="margin: 0; font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; color: #FF4D6D">Weather</p>
-<p id="wx-now" style="margin: 0; font-size: 15px; font-weight: 500; line-height: 1.3">Loading…</p>
-<p id="wx-range" style="margin: 0; font-size: 13px; line-height: 1.4; color: #E1E7F5"></p>
+<p class="np-eyebrow" id="wx-place">Weather</p>
+<p class="wx-now" id="wx-now">Loading…</p>
+<p class="np-small" id="wx-range"></p>
 </div>
 </div>
-<div id="wx-days" style="display: flex; gap: 14px; font-size: 12px; line-height: 1.35; text-align: center; color: #E1E7F5"></div>
-<button id="sound" type="button" aria-label="Flag sound" aria-pressed="false" title="Turn flag sound on" style="width: 44px; height: 44px; padding: 0; border: 1.5px solid #FF4D6D; border-radius: 50%; background: transparent; color: #FF4D6D; font-size: 18px; line-height: 1; cursor: pointer">🔇</button>
+<div class="wx-days" id="wx-days"></div>
+<button class="theme-toggle" id="sound" type="button" aria-label="Flag sound" aria-pressed="false" title="Turn flag sound on">🔇</button>
 </div>
 </div>
 </section>

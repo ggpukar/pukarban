@@ -15,9 +15,9 @@
 
 @media (min-width:900px){
 .sidenav-toggle{padding:0 18px 0 14px}
-#np-clock>div:first-child{padding-left:130px!important}
+#np-clock .np-bar>.np-group:first-child{padding-left:106px}
 }
 @media (max-width:899.98px){
-#np-clock>div:first-child{padding-left:72px!important}
+#np-clock .np-bar>.np-group:first-child{padding-left:56px}
 .sidenav-label{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
 }
