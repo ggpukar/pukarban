@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="utf-8">
-<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; script-src 'self'; connect-src https://prabin-weather.prabinban.workers.dev https://api.web3forms.com">
+<meta http-equiv="Content-Security-Policy" content="default-src 'none'; manifest-src 'self'; base-uri 'none'; form-action 'none'; object-src 'none'; img-src 'self' data:; font-src https://fonts.gstatic.com; style-src 'self' https://fonts.googleapis.com; script-src 'self' https://www.youtube.com; connect-src https://prabin-weather.prabinban.workers.dev https://api.web3forms.com; frame-src https://www.youtube-nocookie.com https://www.youtube.com">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Prabin Ban — Student Developer, Bhaktapur</title>
 <script src="intro.js"></script>
@@ -48,20 +48,47 @@
 <button class="sidenav-toggle" id="sidenav-toggle" type="button" aria-expanded="false" aria-controls="sidenav"><svg class="icon-open" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg><svg class="icon-close" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg><span class="sidenav-label">Menu</span></button>
 <div class="hm" id="top">
 
-<section id="np-clock" aria-label="Site header">
+<section id="np-clock" aria-label="Current time in Bhaktapur">
 <div class="np-bar">
-<a class="np-brand" href="./">Prabin Ban</a>
-<div class="np-group" id="wx">
-<p class="np-when" title="Time in Bhaktapur, Nepal"><span id="np-time">--:--</span> <span class="np-bs" id="np-bs" lang="ne"></span></p>
-<a class="wx-chip" id="wx-chip" href="tools/weather"><span class="wx-icon" id="wx-icon" aria-hidden="true"></span><span id="wx-temp"></span><span class="wx-now" id="wx-now">Weather</span></a>
+<div class="np-group">
+<svg class="np-face" viewBox="0 0 120 120" width="60" height="60" aria-hidden="true">
+<circle cx="60" cy="60" r="58" fill="#F7F8FC"></circle>
+<g id="np-ticks" stroke-linecap="round"></g>
+<line id="np-hour" x1="60" y1="64" x2="60" y2="34" stroke="#14213D" stroke-width="4.5" stroke-linecap="round"></line>
+<line id="np-minute" x1="60" y1="66" x2="60" y2="20" stroke="#14213D" stroke-width="3" stroke-linecap="round"></line>
+<line id="np-second" x1="60" y1="70" x2="60" y2="14" stroke="#DC143C" stroke-width="1.5" stroke-linecap="round"></line>
+<circle cx="60" cy="60" r="3.5" fill="#DC143C"></circle>
+</svg>
+<p class="np-big"><span id="np-time">--:--</span><span class="np-seconds" id="np-seconds"></span></p>
+<div>
+<p class="np-eyebrow">Bhaktapur, Nepal · UTC+5:45</p>
+<p class="np-bs" id="np-bs" lang="ne"></p>
+<p class="np-small" id="np-ad"></p>
+</div>
+</div>
+<div class="np-group" id="wx" aria-live="polite">
+<div class="wx-main">
+<span class="wx-icon" id="wx-icon" aria-hidden="true"></span>
+<span class="wx-temp" id="wx-temp"></span>
+<div>
+<p class="np-eyebrow" id="wx-place">Weather</p>
+<p class="wx-now" id="wx-now">Loading…</p>
+<p class="np-small" id="wx-range"></p>
+</div>
+</div>
+<div class="wx-days" id="wx-days"></div>
+<button class="theme-toggle" id="sound" type="button" aria-label="Flag sound" aria-pressed="false" title="Turn flag sound on">🔇</button>
 </div>
 </div>
 </section>
 
 <section class="hero" id="hero">
 <div class="sky" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+<canvas id="flags" aria-hidden="true"></canvas>
+<header class="hero-head">
+<h1 class="hero-brand"><a class="serif" href="#top">Prabin Ban</a></h1>
+</header>
 <div class="hero-intro">
-<h1 class="hero-title serif">Prabin Ban</h1>
 <p class="hero-lede">I&#39;m Prabin, a BIT student from Bhaktapur building webpages and apps</p>
 <div class="hero-actions">
 <a class="hm-btn btn-primary" href="#work">Explore my projects</a>
@@ -142,7 +169,10 @@
 </div>
 <script src="sky.js"></script>
 <script src="site-header.js"></script>
+<script src="flags.js"></script>
 <script src="home.js"></script>
+<div class="flag-audio" id="flag-audio" aria-hidden="true"><div id="flag-player"></div></div>
+<script src="flag-sound.js"></script>
 <script src="contact-form.js"></script>
 <script src="mountains3d.js?v=4"></script>
 <script src="section-bg.js"></script>

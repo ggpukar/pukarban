@@ -235,7 +235,7 @@ progress{display:block;width:100%;margin-top:12px;accent-color:#003893}
 @media print{
 @page{margin:15mm}
 body{background:#FFF}
-.sidenav,.sidenav-toggle,.sidenav-scrim,#np-clock,.tools-head,.rs-form,.rs-actions{display:none!important}
+.sidenav,.sidenav-toggle,.sidenav-scrim,#np-clock,.site-brand-row,.tools-head,.rs-form,.rs-actions{display:none!important}
 .tools-wrap,.tool-main{padding:0;max-width:none}
 .rs-layout{display:block}
 .rs-preview{margin:0;border:0;border-radius:0}

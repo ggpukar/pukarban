@@ -24,9 +24,12 @@ a{color:#14213D}a:hover{color:#003893}
 @keyframes drift2{to{transform:translate(-42%,18%) scale(.85)}}
 @keyframes drift3{to{transform:translate(-30%,-28%) scale(1.3)}}
 @keyframes drift4{to{transform:translate(12%,-14%) scale(1.1,1.2)}}
-.hero-intro{position:relative;max-width:1200px;margin:0 auto;padding:130px 24px 410px;text-align:center}
-.hero-title{margin:0;font-size:clamp(48px,9vw,96px);line-height:1}
-.hero-lede{max-width:560px;margin:24px auto 0;font-size:19px;color:#2A3558}
+#flags{position:absolute;left:0;top:0;width:100%;height:220px;pointer-events:none}
+.hero-head{position:relative;max-width:1200px;margin:0 auto;padding:16px 24px;display:flex;flex-wrap:wrap;gap:12px;justify-content:space-between;align-items:center}
+.hero-brand{margin:0;font:inherit}
+.hero-brand a{display:flex;align-items:center;min-height:48px;font-size:26px;text-decoration:none}
+.hero-intro{position:relative;max-width:1200px;margin:0 auto;padding:120px 24px 410px;text-align:center}
+.hero-lede{max-width:560px;margin:28px auto 0;font-size:19px;color:#2A3558}
 .hero-actions{margin-top:40px;display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 #range{position:absolute;left:-3%;bottom:0;width:106%;height:360px}
 
@@ -87,6 +90,7 @@ textarea.cf-input{resize:vertical}
 #cf-send:disabled{opacity:.7;cursor:wait}
 #cf-status{margin:8px 0 0;font-size:13px;text-align:center;color:#D3DCF0}
 #cf-status a{text-decoration:underline}
+.flag-audio{position:fixed;left:0;bottom:0;width:1px;height:1px;opacity:0;pointer-events:none}
 .copyright{margin:64px 0 0;font-size:13px;text-align:center;color:#AEBBDA}
 
 /* Dark theme */
@@ -95,7 +99,7 @@ html[data-theme=dark] .hm a:not(.hm-btn){color:#EEF1FA}
 html[data-theme=dark] .hm a:not(.hm-btn):hover{color:#8FB4FF}
 html[data-theme=dark] .hm-card a:not(.hm-btn){color:#8FB4FF}
 html[data-theme=dark] .hero{background:linear-gradient(180deg,#0A1128 0%,#0C1838 45%,#12306E 100%)}
-html[data-theme=dark] .hero>canvas,html[data-theme=dark] #range{filter:brightness(.6)}
+html[data-theme=dark] .hero>canvas:not(#flags),html[data-theme=dark] #range{filter:brightness(.6)}
 html[data-theme=dark] .sky{opacity:.45}
 html[data-theme=dark] .hero-lede{color:#D3DAEC}
 html[data-theme=dark] .muted{color:#A8B3D1}

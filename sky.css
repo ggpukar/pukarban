@@ -2,7 +2,7 @@
 html:not([data-theme=dark]) [data-sky=dawn]{background:linear-gradient(180deg,#F9E6EA 0%,#F6D3CC 35%,#C9D3F2 70%,#A3BCF0 100%)!important}
 html:not([data-theme=dark]) [data-sky=dusk]{background:linear-gradient(180deg,#8A97D0 0%,#F1C3CE 32%,#F7D9C2 62%,#A9B9EC 100%)!important}
 html:not([data-theme=dark]) [data-sky=night]{background:linear-gradient(180deg,#0B1A40 0%,#14295E 45%,#2C4A94 100%)!important}
-html:not([data-theme=dark]) [data-sky=night] .hero-title,html:not([data-theme=dark]) [data-sky=night] .hero-lede{color:#EEF1FA}
+html:not([data-theme=dark]) [data-sky=night] .hero-brand a,html:not([data-theme=dark]) [data-sky=night] .hero-lede{color:#EEF1FA}
 html:not([data-theme=dark]) [data-sky=night] .btn-outline{border-color:#EEF1FA;color:#EEF1FA}
 html:not([data-theme=dark]) [data-sky=night] .sky i:nth-child(4){opacity:.15}
 [data-sky=night] .sky,html[data-theme=dark] .sky{background-image:radial-gradient(1.5px 1.5px at 8% 12%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 22% 30%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 35% 8%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 48% 24%,#FFF 50%,transparent 60%),radial-gradient(2px 2px at 61% 14%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 72% 34%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 84% 10%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 93% 26%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 15% 44%,#FFF 50%,transparent 60%),radial-gradient(1.5px 1.5px at 56% 40%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 79% 46%,#FFF 50%,transparent 60%),radial-gradient(1px 1px at 41% 52%,#FFF 50%,transparent 60%);animation:twinkle 5s ease-in-out infinite alternate}
