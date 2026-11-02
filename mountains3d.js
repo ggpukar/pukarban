@@ -79,8 +79,8 @@ return far*(.15+r*2.5+summit+side)+.2*noise(x*.7,z*.7)*(1-far);
 
 var terrainBuffer=gl.createBuffer(),indexBuffer=gl.createBuffer(),mistBuffer=gl.createBuffer(),indexCount=0,aspect=1,width=0,canvasHeight=360;
 function buildTerrain(){
-var phone=innerWidth<700||sitePerf.lite,cols=phone?110:210,rows=phone?72:110;
-var halfWidth=Math.max(7,Math.tan(FOV/2)*aspect*16),data=new Float32Array((cols+1)*(rows+1)*6),heights=new Float32Array((cols+1)*(rows+1));
+var phone=innerWidth<700||sitePerf.lite,cols=phone?150:230,rows=phone?72:110;
+var halfWidth=Math.max(7,Math.tan(FOV/2)*aspect*16)+5,data=new Float32Array((cols+1)*(rows+1)*6),heights=new Float32Array((cols+1)*(rows+1));
 var dx=halfWidth*2/cols,dz=(NEAR_Z-FAR_Z)/rows,row,col,at;
 for(row=0;row<=rows;row++){
 for(col=0;col<=cols;col++){
@@ -183,16 +183,28 @@ if(event.pointerType!=='mouse')return;
 mouseX=event.clientX/innerWidth-.5;
 mouseY=event.clientY/innerHeight-.5;
 });
-// On phones the view follows a finger dragged over the hero and drifts back when it lifts.
-function touch(event){
+// On phones a finger dragged over the hero swings the view, and tilting the phone does the same.
+var dragFrom=null,tiltFrom=null;
+function clamp(v){return Math.max(-1,Math.min(1,v))}
+addEventListener('touchstart',function(event){
 var point=event.touches[0],box=hero.getBoundingClientRect();
-if(!point||point.clientY<box.top||point.clientY>box.bottom)return;
-mouseX=point.clientX/innerWidth-.5;
-mouseY=(point.clientY-box.top)/box.height-.5;
-}
-addEventListener('touchstart',touch,{passive:true});
-addEventListener('touchmove',touch,{passive:true});
-addEventListener('touchend',function(){mouseX=0;mouseY=0},{passive:true});
+dragFrom=point&&point.clientY>=box.top&&point.clientY<=box.bottom?{x:point.clientX,y:point.clientY,mouseX:mouseX}:null;
+},{passive:true});
+addEventListener('touchmove',function(event){
+var point=event.touches[0];
+if(!dragFrom||!point)return;
+mouseX=clamp(dragFrom.mouseX-(point.clientX-dragFrom.x)/innerWidth*2.4);
+},{passive:true});
+addEventListener('touchend',function(){
+if(dragFrom)setTimeout(function(){if(!dragFrom)mouseX=mouseY=0},1500);
+dragFrom=null;
+},{passive:true});
+addEventListener('deviceorientation',function(event){
+if(dragFrom||event.gamma===null)return;
+if(!tiltFrom)tiltFrom={gamma:event.gamma,beta:event.beta};
+mouseX=clamp((event.gamma-tiltFrom.gamma)/25);
+mouseY=clamp((event.beta-tiltFrom.beta)/40)*.5;
+});
 function resize(){
 var ratio=sitePerf.lite?.75:Math.min(devicePixelRatio||1,innerWidth<700?1.25:1.5);
 width=hero.clientWidth;
@@ -215,7 +227,7 @@ camX+=(mouseX-camX)*.045;
 camY+=(mouseY-camY)*.045;
 scrollEase+=(scrollY-scrollEase)*.1;
 var eye=[camX*2.2+Math.sin(t*.13)*.12,2.55-camY*.45+Math.min(scrollEase,900)*.0011,5.1];
-var view=viewMatrix(eye,[camX*.5,1.32,-4]);
+var view=viewMatrix(eye,[-camX*1.1,1.32,-4]);
 placePins(view);
 gl.clearColor(0,0,0,0);
 gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
