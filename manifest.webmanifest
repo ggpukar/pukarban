@@ -2,7 +2,7 @@
   "name": "Prabin Ban — Portfolio and free tools",
   "short_name": "Prabin Ban",
   "description": "Portfolio of Prabin Ban, with free everyday tools for Nepal that work offline.",
-  "start_url": "./index.html",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
   "background_color": "#F7F8FC",
@@ -12,8 +12,8 @@
     {"src": "assets/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
   ],
   "shortcuts": [
-    {"name": "All tools", "url": "./tools/index.html"},
-    {"name": "Vehicle tax calculator", "url": "./tools/vehicle-tax.html"},
-    {"name": "Nepali calendar", "url": "./tools/calendar.html"}
+    {"name": "All tools", "url": "./tools/"},
+    {"name": "Vehicle tax calculator", "url": "./tools/vehicle-tax"},
+    {"name": "Nepali calendar", "url": "./tools/calendar"}
   ]
 }

@@ -2,8 +2,8 @@
 var loaded={};
 // Remembers this tool for the "Recently used" row on the tools home page.
 try{
-var here=location.pathname.split('/').pop()||'index.html',recent=JSON.parse(localStorage.getItem('recentTools'))||[];
-recent=[here].concat(recent.filter(function(page){return page!==here})).slice(0,8);
+var here=location.pathname.split('/').pop().replace(/\.html$/,'')||'./',recent=JSON.parse(localStorage.getItem('recentTools'))||[];
+recent=[here].concat(recent.map(function(page){return String(page).replace(/\.html$/,'')}).filter(function(page){return page!==here})).slice(0,8);
 localStorage.setItem('recentTools',JSON.stringify(recent));
 }catch(e){}
 window.ToolKit={

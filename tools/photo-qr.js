@@ -110,7 +110,7 @@ return data;
 });
 }).then(function(data){
 status.textContent='Done. Scan the code to check it.';
-showResult(new URL('photo.html?id='+data.id,location.href).href,data.expires);
+showResult(new URL('photo?id='+data.id,location.href).href,data.expires);
 }).catch(function(error){
 status.textContent=error.message==='encode'||error.name==='InvalidStateError'?'This photo could not be read. Try a JPG or PNG.':error instanceof TypeError?'Upload failed. Check your connection and try again.':error.message;
 }).then(ready);

@@ -1,13 +1,15 @@
 (function(){
-var el=ToolKit.el,KEY='resumeDraft';
+var el=ToolKit.el,KEY='resumeDraft',PHOTO_W=350,PHOTO_H=450;
 var SECTIONS={
 experience:{title:'Experience',labels:['Job title','Organisation','Dates','What you did (one point per line)']},
 education:{title:'Education',labels:['Degree or course','School or college','Dates','Details (one point per line)']},
 projects:{title:'Projects',labels:['Project name','Link or tools used','Dates','What it does (one point per line)']}
 };
 var ORDER=['experience','education','projects'],BASICS=['name','headline','email','phone','location','website','summary','skills','languages'];
+var CONTACT=[['email','Email'],['phone','Phone'],['location','Location'],['website','Website']];
 var sheet=document.getElementById('rs-sheet'),status=document.getElementById('rs-status'),result=document.getElementById('rs-result'),clear=document.getElementById('rs-clear');
-var nextId=1,clearTimer;
+var photoInput=document.getElementById('rs-photo'),photoRow=document.getElementById('rs-photo-row'),photoThumb=document.getElementById('rs-photo-thumb'),photoNote=document.getElementById('rs-photo-note');
+var nextId=1,clearTimer,photo='';
 
 function basic(key){return document.getElementById('rs-'+key)}
 function addEntry(key,values){
@@ -32,7 +34,7 @@ row.appendChild(remove);
 box.appendChild(row);
 }
 function read(){
-var data={};
+var data={photo:photo};
 BASICS.forEach(function(key){data[key]=basic(key).value.trim()});
 ORDER.forEach(function(key){
 data[key]=[].map.call(document.getElementById('rs-'+key+'-list').children,function(row){
@@ -41,58 +43,116 @@ return [].map.call(row.querySelectorAll('.tool-input'),function(field){return fi
 });
 return data;
 }
-function contact(data){return [data.email,data.phone,data.location,data.website].filter(Boolean).join(' · ')}
 function points(text){return text.split('\n').map(function(line){return line.replace(/^[-•*]\s*/,'').trim()}).filter(Boolean)}
+function items(text){return text.split(/[,\n]/).map(function(item){return item.replace(/^[-•*]\s*/,'').trim()}).filter(Boolean)}
 function heading(text){return el('h3','rs-heading',text)}
+function isEmpty(data){
+return !data.photo&&BASICS.every(function(key){return !data[key]})&&ORDER.every(function(key){return !data[key].length});
+}
+
 function update(){
 var data=read();
 sheet.textContent='';
-sheet.appendChild(el('h2','rs-name',data.name||'Your name'));
-if(data.headline)sheet.appendChild(el('p','rs-headline',data.headline));
-if(contact(data))sheet.appendChild(el('p','rs-contact',contact(data)));
+if(isEmpty(data)){
+sheet.appendChild(el('p','rs-empty','Start filling in the form and your resume will appear here.'));
+}else{
+var aside=el('aside','rs-aside'),main=el('div','rs-main');
+if(data.photo){
+var img=el('img','rs-photo');
+img.src=data.photo;
+img.alt='';
+aside.appendChild(img);
+}
+var contacts=CONTACT.filter(function(c){return data[c[0]]});
+if(contacts.length){
+aside.appendChild(heading('Contact'));
+contacts.forEach(function(c){
+var item=el('p','rs-contact-item');
+item.appendChild(el('span','rs-contact-label',c[1]));
+item.appendChild(el('span','',data[c[0]]));
+aside.appendChild(item);
+});
+}
+[['Skills',data.skills],['Languages',data.languages]].forEach(function(group){
+if(!group[1])return;
+aside.appendChild(heading(group[0]));
+var list=el('ul','rs-tags');
+items(group[1]).forEach(function(item){list.appendChild(el('li','',item))});
+aside.appendChild(list);
+});
+if(data.name)main.appendChild(el('h2','rs-name',data.name));
+if(data.headline)main.appendChild(el('p','rs-headline',data.headline));
 if(data.summary){
-sheet.appendChild(heading('Summary'));
-sheet.appendChild(el('p','rs-text',data.summary));
+main.appendChild(heading('Profile'));
+main.appendChild(el('p','rs-text',data.summary));
 }
 ORDER.forEach(function(key){
 if(!data[key].length)return;
-sheet.appendChild(heading(SECTIONS[key].title));
+main.appendChild(heading(SECTIONS[key].title));
 data[key].forEach(function(entry){
-var top=el('div','rs-entry-top');
-top.appendChild(el('strong','',entry[0]));
+var block=el('div','rs-item'),top=el('div','rs-entry-top');
+top.appendChild(el('strong','',entry[0]||entry[1]));
 if(entry[2])top.appendChild(el('span','rs-dates',entry[2]));
-sheet.appendChild(top);
-if(entry[1])sheet.appendChild(el('p','rs-org',entry[1]));
+block.appendChild(top);
+if(entry[1]&&entry[0])block.appendChild(el('p','rs-org',entry[1]));
 var lines=points(entry[3]);
 if(lines.length){
 var list=el('ul','rs-points');
 lines.forEach(function(line){list.appendChild(el('li','',line))});
-sheet.appendChild(list);
+block.appendChild(list);
 }
+main.appendChild(block);
 });
 });
-[['Skills',data.skills],['Languages',data.languages]].forEach(function(item){
-if(!item[1])return;
-sheet.appendChild(heading(item[0]));
-sheet.appendChild(el('p','rs-text',item[1]));
-});
+sheet.appendChild(aside);
+sheet.appendChild(main);
+}
 result.textContent='';
 status.textContent='';
 ToolKit.store.set(KEY,data);
 }
+
+// Crops the middle of the photo to passport shape (35 × 45 mm) and saves it as a small JPEG.
+function cropPhoto(file){
+return createImageBitmap(file).then(function(image){
+var ratio=PHOTO_W/PHOTO_H,sw=image.width,sh=image.height;
+if(sw/sh>ratio)sw=sh*ratio;else sh=sw/ratio;
+var canvas=document.createElement('canvas'),ctx=canvas.getContext('2d');
+canvas.width=PHOTO_W;
+canvas.height=PHOTO_H;
+ctx.fillStyle='#FFF';
+ctx.fillRect(0,0,PHOTO_W,PHOTO_H);
+ctx.drawImage(image,(image.width-sw)/2,(image.height-sh)/2*.6,sw,sh,0,0,PHOTO_W,PHOTO_H);
+image.close();
+return canvas.toDataURL('image/jpeg',.88);
+});
+}
+function showPhoto(){
+photoRow.hidden=!photo;
+if(photo)photoThumb.src=photo;
+}
+
 function canEncode(data){
-return /^[\x20-\x7E\n\r\t -ÿ–—‘’“”•…]*$/.test(JSON.stringify(data).replace(/\\n/g,''));
+var copy={};
+Object.keys(data).forEach(function(key){if(key!=='photo')copy[key]=data[key]});
+return /^[\x20-\x7E\n\r\t -ÿ–—‘’“”•…]*$/.test(JSON.stringify(copy).replace(/\\n/g,''));
 }
 function buildPdf(data){
-var lib=PDFLib,W=595.28,H=841.89,M=50,INK=lib.rgb(.08,.13,.24),SOFT=lib.rgb(.29,.33,.47),ACCENT=lib.rgb(0,.22,.58);
+var lib=PDFLib,W=595.28,H=841.89,M=42,SIDE=184,PAD=22;
+var INK=lib.rgb(.08,.13,.24),SOFT=lib.rgb(.29,.33,.47),ACCENT=lib.rgb(0,.22,.58),RED=lib.rgb(.86,.08,.24),TINT=lib.rgb(.93,.95,.98),WHITE=lib.rgb(1,1,1);
+var MX=SIDE+28,MW=W-MX-M,SX=PAD,SWID=SIDE-2*PAD;
 return lib.PDFDocument.create().then(function(doc){
-return Promise.all([doc.embedFont(lib.StandardFonts.Helvetica),doc.embedFont(lib.StandardFonts.HelveticaBold)]).then(function(fonts){
-var regular=fonts[0],bold=fonts[1],page=doc.addPage([W,H]),y=H-M;
-function room(space){
-if(y-space<M){
-page=doc.addPage([W,H]);
-y=H-M;
+var fonts=[doc.embedFont(lib.StandardFonts.Helvetica),doc.embedFont(lib.StandardFonts.HelveticaBold)];
+if(data.photo)fonts.push(doc.embedJpg(data.photo));
+return Promise.all(fonts).then(function(loaded){
+var regular=loaded[0],bold=loaded[1],picture=loaded[2],pages=[];
+function pageAt(i){
+while(pages.length<=i){
+var p=doc.addPage([W,H]);
+p.drawRectangle({x:0,y:0,width:SIDE,height:H,color:TINT});
+pages.push(p);
 }
+return pages[i];
 }
 function wrap(text,font,size,width){
 var lines=[],line='';
@@ -100,76 +160,131 @@ text.split(/\s+/).forEach(function(word){
 while(font.widthOfTextAtSize(word,size)>width){
 var cut=word.length-1;
 while(cut>1&&font.widthOfTextAtSize(word.slice(0,cut),size)>width)cut--;
-if(line){
-lines.push(line);
-line='';
-}
+if(line){lines.push(line);line=''}
 lines.push(word.slice(0,cut));
 word=word.slice(cut);
 }
 var next=line?line+' '+word:word;
-if(font.widthOfTextAtSize(next,size)>width){
-lines.push(line);
-line=word;
-}else line=next;
+if(font.widthOfTextAtSize(next,size)>width){lines.push(line);line=word}else line=next;
 });
 if(line)lines.push(line);
 return lines;
 }
-function paragraph(text,font,size,color,x,width,gap){
-wrap(text,font,size,width||W-M-(x||M)).forEach(function(line){
-room(size+gap);
-y-=size;
-page.drawText(line,{x:x||M,y:y,size:size,font:font,color:color});
-y-=gap;
+// Two columns that each move on to the next page when full.
+function column(x,width){
+var col={index:0,y:H-M};
+col.room=function(space){
+if(col.y-space<M){col.index++;col.y=H-M}
+};
+col.text=function(text,font,size,color,gap,indent){
+wrap(text,font,size,width-(indent||0)).forEach(function(line){
+col.room(size+gap);
+col.y-=size;
+pageAt(col.index).drawText(line,{x:x+(indent||0),y:col.y,size:size,font:font,color:color});
+col.y-=gap;
+});
+};
+col.title=function(text,lineColor){
+col.room(48);
+col.y-=18;
+pageAt(col.index).drawText(text.toUpperCase(),{x:x,y:col.y,size:10.5,font:bold,color:ACCENT});
+col.y-=6;
+pageAt(col.index).drawLine({start:{x:x,y:col.y},end:{x:x+width,y:col.y},thickness:.8,color:lineColor||ACCENT});
+col.y-=9;
+};
+return col;
+}
+var side=column(SX,SWID),main=column(MX,MW);
+pageAt(0);
+if(picture){
+var pw=112,ph=144,px=(SIDE-pw)/2,py=H-M-ph;
+pages[0].drawRectangle({x:px-3,y:py-3,width:pw+6,height:ph+6,color:WHITE});
+pages[0].drawImage(picture,{x:px,y:py,width:pw,height:ph});
+side.y=py-10;
+}
+var contacts=CONTACT.filter(function(c){return data[c[0]]});
+if(contacts.length){
+side.title('Contact');
+contacts.forEach(function(c){
+side.text(c[1].toUpperCase(),bold,7.5,SOFT,2);
+side.text(data[c[0]],regular,9.5,INK,7);
 });
 }
-function sectionTitle(text){
-room(60);
-y-=12;
-y-=12;
-page.drawText(text.toUpperCase(),{x:M,y:y,size:11,font:bold,color:ACCENT});
-y-=5;
-page.drawLine({start:{x:M,y:y},end:{x:W-M,y:y},thickness:.75,color:ACCENT});
-y-=8;
+[['Skills',data.skills],['Languages',data.languages]].forEach(function(group){
+if(!group[1])return;
+side.title(group[0]);
+items(group[1]).forEach(function(item){
+side.room(14);
+pageAt(side.index).drawRectangle({x:SX,y:side.y-7.5,width:3,height:3,color:RED});
+side.text(item,regular,9.5,INK,4,9);
+});
+});
+if(data.name){
+main.text(data.name,bold,25,INK,4);
+pageAt(main.index).drawRectangle({x:MX,y:main.y-4,width:46,height:3,color:RED});
+main.y-=10;
 }
-paragraph(data.name,bold,24,INK,M,0,5);
-if(data.headline)paragraph(data.headline,regular,12.5,ACCENT,M,0,4);
-if(contact(data))paragraph(contact(data),regular,10,SOFT,M,0,3);
+if(data.headline)main.text(data.headline,regular,12.5,ACCENT,4);
 if(data.summary){
-sectionTitle('Summary');
-points(data.summary).forEach(function(line){paragraph(line,regular,10.5,INK,M,0,4)});
+main.title('Profile');
+points(data.summary).forEach(function(line){main.text(line,regular,10.5,INK,4)});
 }
 ORDER.forEach(function(key){
 if(!data[key].length)return;
-sectionTitle(SECTIONS[key].title);
+main.title(SECTIONS[key].title);
 data[key].forEach(function(entry,i){
-if(i)y-=7;
-room(32);
-var dateWidth=entry[2]?regular.widthOfTextAtSize(entry[2],10):0,top=y-11;
-if(entry[2])page.drawText(entry[2],{x:W-M-dateWidth,y:top,size:10,font:regular,color:SOFT});
-paragraph(entry[0]||entry[1]||' ',bold,11,INK,M,W-2*M-(dateWidth?dateWidth+14:0),3);
-if(entry[1]&&entry[0])paragraph(entry[1],regular,10.5,SOFT,M,0,3);
+if(i)main.y-=8;
+main.room(34);
+var dateWidth=entry[2]?regular.widthOfTextAtSize(entry[2],9.5):0;
+if(entry[2])pageAt(main.index).drawText(entry[2],{x:MX+MW-dateWidth,y:main.y-11,size:9.5,font:regular,color:SOFT});
+var titleLines=wrap(entry[0]||entry[1]||' ',bold,11,MW-(dateWidth?dateWidth+12:0));
+titleLines.forEach(function(line){
+main.room(14);
+main.y-=11;
+pageAt(main.index).drawText(line,{x:MX,y:main.y,size:11,font:bold,color:INK});
+main.y-=3;
+});
+if(entry[1]&&entry[0])main.text(entry[1],regular,10,SOFT,3);
 points(entry[3]).forEach(function(line){
-room(14);
-page.drawText('•',{x:M+3,y:y-10.5,size:10.5,font:regular,color:INK});
-paragraph(line,regular,10.5,INK,M+14,W-2*M-14,3);
+main.room(14);
+pageAt(main.index).drawText('•',{x:MX+2,y:main.y-10.5,size:10.5,font:regular,color:RED});
+main.text(line,regular,10.5,INK,3,12);
 });
 });
 });
-[['Skills',data.skills],['Languages',data.languages]].forEach(function(item){
-if(!item[1])return;
-sectionTitle(item[0]);
-points(item[1]).forEach(function(line){paragraph(line,regular,10.5,INK,M,0,4)});
-});
-doc.setTitle(data.name+' resume');
-doc.setAuthor(data.name);
+var title=data.name?data.name+' resume':'Resume';
+doc.setTitle(title);
+if(data.name)doc.setAuthor(data.name);
 doc.setProducer('');
 doc.setCreator('');
 return doc.save();
 });
 });
 }
+
+photoInput.addEventListener('change',function(){
+var file=photoInput.files[0];
+photoNote.textContent='';
+if(!file)return;
+if(!/^image\//.test(file.type)){
+photoNote.textContent='Choose a photo file, such as JPG or PNG.';
+photoInput.value='';
+return;
+}
+cropPhoto(file).then(function(dataUrl){
+photo=dataUrl;
+photoInput.value='';
+showPhoto();
+update();
+}).catch(function(){
+photoNote.textContent='This photo could not be read. Try a JPG or PNG.';
+});
+});
+document.getElementById('rs-photo-remove').addEventListener('click',function(){
+photo='';
+showPhoto();
+update();
+});
 document.getElementById('rs-pdf').addEventListener('click',function(){
 var data=read();
 result.textContent='';
@@ -207,6 +322,8 @@ clearTimeout(clearTimer);
 delete clear.dataset.armed;
 clear.textContent='Clear everything';
 BASICS.forEach(function(key){basic(key).value=''});
+photo='';
+showPhoto();
 ORDER.forEach(function(key){
 document.getElementById('rs-'+key+'-list').textContent='';
 addEntry(key);
@@ -218,6 +335,8 @@ var draft=ToolKit.store.get(KEY,{});
 BASICS.forEach(function(key){
 if(typeof draft[key]==='string')basic(key).value=draft[key];
 });
+if(typeof draft.photo==='string'&&draft.photo.indexOf('data:image/jpeg;base64,')===0)photo=draft.photo;
+showPhoto();
 ORDER.forEach(function(key){
 document.getElementById('rs-add-'+key).addEventListener('click',function(){addEntry(key)});
 var saved=Array.isArray(draft[key])?draft[key]:[];

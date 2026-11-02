@@ -35,10 +35,14 @@ html[data-theme=dark] .tool-card p,html[data-theme=dark] #tool-count,html[data-t
 html[data-theme=dark] .tool-open,html[data-theme=dark] .tool-main a:not(.tool-btn){color:#8FB4FF}
 html[data-theme=dark] .tool-input,html[data-theme=dark] #tool-search{background:#172447;border-color:#5C6E9E;color:#EEF1FA}
 html[data-theme=dark] .ne-out{background:#172447}
+html[data-theme=dark] .clock-country{color:#A8B3D1}
+html[data-theme=dark] .zone-table thead th{background:#111C3B}
 html[data-theme=dark] .qr-tabs{border-color:#2C3A66;background:#111C3B}
 html[data-theme=dark] .qr-tab{color:#EEF1FA}
 html[data-theme=dark] .qr-tab:hover{background:#1F2D57}
 html[data-theme=dark] .qr-tab[aria-selected=true]{background:#EEF1FA;color:#14213D}
+html[data-theme=dark] .tool-icon{background:#1F2D57;color:#8FB4FF}
+html[data-theme=dark] .tool-card:hover .tool-icon{background:#DC143C;color:#FFF}
 html[data-theme=dark] .tool-fav{color:#A8B3D1}
 html[data-theme=dark] .tool-fav:hover{background:#1F2D57}
 html[data-theme=dark] .tool-fav[aria-pressed=true]{color:#FF8FA3}

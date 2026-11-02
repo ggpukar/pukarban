@@ -6,7 +6,8 @@ var texts=cards.map(function(card){return (card.textContent+' '+card.getAttribut
 var favourites=read(FAVOURITES);
 
 function read(key){
-try{var list=JSON.parse(localStorage.getItem(key));return Array.isArray(list)?list:[]}catch(e){return []}
+// Older visits saved pages with .html on the end, so it is dropped to match the clean links.
+try{var list=JSON.parse(localStorage.getItem(key));return Array.isArray(list)?list.map(function(page){return String(page).replace(/\.html$/,'')}):[]}catch(e){return []}
 }
 function save(key,list){
 try{localStorage.setItem(key,JSON.stringify(list))}catch(e){}
