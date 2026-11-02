@@ -15,6 +15,7 @@ var ITEMS=[
 ['Weather search','Tool','tools/weather.html','forecast rain temperature'],
 ['Image compressor','Tool','tools/image-compressor.html','photo resize reduce jpg png'],
 ['QR code generator','Tool','tools/qr-code.html','qr link scan'],
+['Photo to QR code','Tool','tools/photo-qr.html','photo picture image share scan upload'],
 ['Land unit converter','Tool','tools/land-units.html','ropani aana bigha kattha'],
 ['Preeti ↔ Unicode converter','Tool','tools/preeti-unicode.html','nepali font'],
 ['PDF merge and split','Tool','tools/pdf-tools.html','pdf join combine pages'],

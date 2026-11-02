@@ -54,7 +54,7 @@ html[data-theme=dark] .cal-today{background:#FF4D6D}
 html[data-theme=dark] .cal-today .cal-bs,html[data-theme=dark] .cal-today .cal-ad{color:#14213D}
 html[data-theme=dark] .land-table tr+tr,html[data-theme=dark] .pdf-item,html[data-theme=dark] .rs-entry,html[data-theme=dark] .ne-table td{border-color:#2C3A66}
 html[data-theme=dark] .pdf-action{color:#EEF1FA}
-html[data-theme=dark] #qr-canvas{border-color:#2C3A66}
+html[data-theme=dark] #qr-canvas,html[data-theme=dark] #pq-canvas{border-color:#2C3A66}
 
 /* Typing practice */
 html[data-theme=dark] .tt-words{color:#A8B3D1}
