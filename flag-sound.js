@@ -18,7 +18,16 @@ player.pauseVideo();
 }
 function setOn(value){
 on=value;
+if(on)loadPlayer();
 apply();
+}
+// The YouTube player is only downloaded once the sound is first turned on.
+function loadPlayer(){
+if(loadPlayer.started)return;
+loadPlayer.started=true;
+var api=document.createElement('script');
+api.src='https://www.youtube.com/iframe_api';
+document.head.appendChild(api);
 }
 function firstGesture(e){
 removeEventListener('click',firstGesture);
@@ -62,7 +71,4 @@ addEventListener('click',firstGesture);
 addEventListener('keydown',firstGesture);
 document.addEventListener('visibilitychange',apply);
 new IntersectionObserver(function(entries){inHero=entries[0].isIntersecting;apply()}).observe(document.getElementById('flags'));
-var api=document.createElement('script');
-api.src='https://www.youtube.com/iframe_api';
-document.head.appendChild(api);
 })();
